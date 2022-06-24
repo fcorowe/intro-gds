@@ -1,0 +1,245 @@
+---
+title: "Data fundamentals"
+linktitle: "2: Data fundamentals"
+date: "2022-05-16"
+class_date: "2022-05-16"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-author-date.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+menu:
+  homework:
+    parent: Homework
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- BLOGDOWN-HEAD -->
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#session-outcomes">Session Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#task-1-describe-data">Task 1: Describe data</a></li>
+<li><a href="#task-2-diagnose-data">Task 2: Diagnose data</a>
+<ul>
+<li><a href="#uk-general-election-results-2019">UK General Election Results 2019</a></li>
+<li><a href="#uk-general-election-results-2017-and-2019">UK General Election Results 2017 and 2019</a></li>
+</ul></li>
+<li><a href="#task-3-fix-data">Task 3: Fix data</a></li>
+<li><a href="#task-4-compute-from-data">Task 4: Compute from data</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+
+<div id="session-outcomes" class="section level2">
+<h2>Session Outcomes</h2>
+<p>By the end of this homework session you should be able to:</p>
+<p>{{% callout objective %}}
+- [x] Describe data according to its structure and contents.
+- [x] Calculate descriptive summaries over datasets.
+- [x] Apply high-level functions in <code>dplyr</code> and <code>tidyr</code> for working with data.
+{{% /callout %}}</p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This homework requires you to apply the concepts and skills developed in the class session on <a href="/class/02-class/">data fundamentals</a>. Do complete each of the tasks and be sure to save your work as this homework will be submitted as part of your portfolio for Assignment 1.</p>
+</div>
+<div id="task-1-describe-data" class="section level2">
+<h2>Task 1: Describe data</h2>
+<p>Complete the data description table below identifying the <strong>measurement level</strong> of each variable in the (fictional) New York bikeshare stations dataset below.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Variable name</th>
+<th>Variable value</th>
+<th>Measurement level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>name</code></td>
+<td>“Central Park”</td>
+<td><enter here></td>
+</tr>
+<tr class="even">
+<td><code>capacity</code></td>
+<td>80</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>rank_capacity</code></td>
+<td>45</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>date_opened</code></td>
+<td>“2014-05-23”</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>longitude</code></td>
+<td>-74.00149746</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>latitude</code></td>
+<td>40.74177603</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="task-2-diagnose-data" class="section level2">
+<h2>Task 2: Diagnose data</h2>
+<p>Below are two different tables with results from UK General Elections. We will be working with these data in the next session. Identify whether or not each is in <strong>tidy</strong> format <span class="citation">(<a href="#ref-wickham_tidy_2014" role="doc-biblioref">Wickham 2014</a>)</span>. If they are not, provide a layout for a tidy version. No need to use code here, just edit the markdown table. If you’re struggling to work out how to organise markdown tables, you may wish to use this <a href="https://www.tablesgenerator.com/markdown_tables">tables generator</a>.</p>
+<div id="uk-general-election-results-2019" class="section level3">
+<h3>UK General Election Results 2019</h3>
+<table>
+<thead>
+<tr class="header">
+<th>party</th>
+<th>percent_vote</th>
+<th>num_mps</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Conservative</td>
+<td>43.6</td>
+<td>365</td>
+</tr>
+<tr class="even">
+<td>Labour</td>
+<td>32.2</td>
+<td>202</td>
+</tr>
+<tr class="odd">
+<td>Scottish National Party</td>
+<td>3.9</td>
+<td>48</td>
+</tr>
+<tr class="even">
+<td>Liberal Democrats</td>
+<td>11.6</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>Democratic Union Party</td>
+<td>0.8</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="uk-general-election-results-2017-and-2019" class="section level3">
+<h3>UK General Election Results 2017 and 2019</h3>
+<table>
+<colgroup>
+<col width="27%" />
+<col width="21%" />
+<col width="15%" />
+<col width="20%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>party</th>
+<th>percent_vote_2017</th>
+<th>num_mps_2017</th>
+<th>percent_vote_2019</th>
+<th>num_mps_2019</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Conservative</td>
+<td>42.4</td>
+<td>317</td>
+<td>43.6</td>
+<td>365</td>
+</tr>
+<tr class="even">
+<td>Labour</td>
+<td>40.0</td>
+<td>262</td>
+<td>32.2</td>
+<td>202</td>
+</tr>
+<tr class="odd">
+<td>Scottish National Party</td>
+<td>3.0</td>
+<td>35</td>
+<td>3.9</td>
+<td>48</td>
+</tr>
+<tr class="even">
+<td>Liberal Democrats</td>
+<td>7.4</td>
+<td>12</td>
+<td>11.6</td>
+<td>11</td>
+</tr>
+<tr class="odd">
+<td>Democratic Union Party</td>
+<td>0.9</td>
+<td>10</td>
+<td>0.8</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="task-3-fix-data" class="section level2">
+<h2>Task 3: Fix data</h2>
+<p>In the <a href="/homework/02-homework_files/02-template.Rmd"><i class="fab fa-r-project"></i> 02-template.Rmd</a> file for this session I have provided links to two derived tables (<code>ny_spread_columns</code> and <code>ny_spread_rows</code>) from the New York bikeshare trip data that are not in a tidy format.</p>
+<p>Using functions from <code>dplyr</code> and <code>tidyr</code> reorganise these data so that they conform to the rules of <strong>tidy</strong> data <span class="citation">(<a href="#ref-wickham_tidy_2014" role="doc-biblioref">Wickham 2014</a>)</span>.</p>
+<p>A candidate tidy organisation of the data is below. Each row is an origin-destination pair for a weekday or weekend, and each variable describes:</p>
+<ul>
+<li><code>o_station</code>: station id of the origin station</li>
+<li><code>d_station</code>: station id of the destination station</li>
+<li><code>wkday</code>: identifies whether the OD pair describes weekday or weekend ny_trips</li>
+<li><code>count</code>: count of trips recorded for that observation (OD pair and weekday/weekend)</li>
+<li><code>dist</code>: total distance (cumulative) in kms of all trips recorded for that observation (OD pair and weekday/weekend)</li>
+<li><code>duration</code>: total duration in minutes (cumulative) of all trips recorded for that observation (OD pair and weekday/weekend)</li>
+</ul>
+<p>{{% callout note %}}
+You may wish to start with reorganising <code>ny_spread_rows</code> as I deliberately made <code>ny_spread_columns</code> quite challenging. The intention here was to replicate the sorts of arduous data formatting operations that need to be performed when working with real datasets. As always there are different approaches to this, but it can be achieved with use of <code>pivot_longer</code>, <code>pivot_wider</code>, plus a call to <code>separate()</code>. This may be one to post to the course Slack.
+{{% /callout %}}</p>
+<pre><code>## # A tibble: 386,762 x 6
+##    o_station d_station wkday   count  dist duration
+##        &lt;int&gt;     &lt;int&gt; &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;
+##  1        72       116 weekend     1  1.15     18.2
+##  2        72       127 weekend    10 18.0     339.
+##  3        72       128 weekend     2  3.18     69.6
+##  4        72       146 weekend    12 27.6     402.
+##  5        72       151 weekend     2  2.87     54.9
+##  6        72       161 weekend     2  2.52     64.8
+##  7        72       164 weekend     5 13.3      73.3
+##  8        72       167 weekend     1  2.07     17.2
+##  9        72       168 weekend     2  1.70     42.7
+## 10        72       173 weekend     9  9.59    194.
+## # … with 386,752 more rows</code></pre>
+</div>
+<div id="task-4-compute-from-data" class="section level2">
+<h2>Task 4: Compute from data</h2>
+<p>Using <code>dplyr</code> functions, calculate the average distance, duration and speed of trips occurring for each observation. Print out to the Console the top 10 most heavily cycled OD pairs (and their associated summary statistics) separately for weekdays and weekends. You may wish to join on your <code>ny_stations</code> table in order to fetch the station names corresponding to the origin and destination stations.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-wickham_tidy_2014" class="csl-entry">
+Wickham, H. 2014. <span>“Tidy Data.”</span> <em>Journal of Statistical Software</em> 59 (10): 1–23.
+</div>
+</div>
+</div>

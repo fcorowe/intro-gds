@@ -1,0 +1,122 @@
+---
+title: "Model building 1"
+linktitle: "6: Model building 1"
+date: "2022-06-13"
+class_date: "2022-06-13"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-author-date.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+menu:
+  homework:
+    parent: Homework
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+<!-- BLOGDOWN-HEAD -->
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#session-outcomes">Session Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#task-1-calculate-and-plot">Task 1: Calculate and plot</a></li>
+<li><a href="#task-2-explore-model-and-evaluate">Task 2: Explore, model and evaluate</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+
+<div id="session-outcomes" class="section level2">
+<h2>Session Outcomes</h2>
+<p>By the end of this homework session you should be able to:</p>
+<p>{{% callout objective %}}
+- [x] Calculate grouped statistics and use those statistics for ordering plot outputs.
+- [x] Extract parameters from linear regression models and explore their structure graphically.
+- [x] Make use of functional programming techniques for working over datasets.
+{{% /callout %}}</p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This homework requires you to apply the concepts and skills developed in the class session on <a href="/class/06-class/">model building 1</a>. Do complete the task and be sure to save your work as it will be submitted as part of your portfolio for Assignment 1.</p>
+</div>
+<div id="task-1-calculate-and-plot" class="section level2">
+<h2>Task 1: Calculate and plot</h2>
+<p>Recreate the <a href="/class/06-class/#quantifying-and-exploring-co-variation-1">scatterplots in the class materials</a> displaying the Leave against candidate explanatory variable – faceted by each explanatory variable and ordered by correlation coefficient.</p>
+<p>You will need to use the <code>data_for_models</code> data frame. First, calculate correlation coefficients for each explanatory variable, then generate a vector of variable names, stored in an object, ordered according to correlation coefficient. To help you out, I’ve provided a template of <code>dplyr</code> commands that you will want to use and some indicative output. In order to summarise over each explanatory variable in a <code>group_by()</code>, you first need to <code>pivot_longer()</code> so that all explanatory variables are represented in a single column. Of course you are welcome to take a different approach.</p>
+<pre class="r"><code># Place your code for calculating correlation coefficients by explanatory
+# variable here.
+
+expl_cors &lt;- data_for_models %&gt;%
+  pivot_longer(...) %&gt;%
+  group_by(...) %&gt;%
+  summarise(...) %&gt;%
+  arrange(...)
+
+expl_cors
+# # A tibble: 10 x 2
+#    expl_var           cor
+#    &lt;chr&gt;            &lt;dbl&gt;
+#  1 degree          -0.772
+#  2 professional    -0.565
+#  3 younger         -0.538
+#  4 eu_born         -0.483
+#  5 no_car          -0.396
+#  6 white            0.411
+#  7 own_home         0.430
+#  8 christian        0.487
+#  9 not_good_health  0.562
+# 10 heavy_industry   0.710
+
+# You will then want to then extract a vector of ordered
+# variable names as an object.
+
+expl_cors_order
+# [1] &quot;degree&quot;          &quot;professional&quot;    &quot;younger&quot;         &quot;eu_born&quot;
+# [5] &quot;no_car&quot;          &quot;white&quot;           &quot;own_home&quot;        &quot;christian&quot;
+# [9] &quot;not_good_health&quot; &quot;heavy_industry&quot;</code></pre>
+<p>Now generate the scatterplots with Leave against each explanatory variable, faceted by explanatory variable and with the facets ordered according to correlation coefficient.</p>
+<pre class="r"><code>#######################
+# Enter your code in the chunk provided.
+######################</code></pre>
+<ul>
+<li><a href="https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots">Save your plot</a> as a <code>.png</code> file and insert the file as a Figure into your <code>.Rmd</code> document (<a href="https://rmd4sci.njtierney.com/figures-tables-captions-.html">guidance here</a>).</li>
+</ul>
+</div>
+<div id="task-2-explore-model-and-evaluate" class="section level2">
+<h2>Task 2: Explore, model and evaluate</h2>
+<p>A variable that is intuitively relevant to this study, but that behaves counter to expectation is <em>EU-born</em> – the proportion of residents in a constituency born outside of the UK but within the EU. In the <a href="/class/06-class/#techniques">technical</a> element to the session, you generated a data frame of model outputs regressing each candidate explanatory variable on Leave. This is stored in <code>single_model_fits</code>. The second set of <a href="class/06-class/#modelling-for-co-variation-1">scatterplots</a> use information contained in <code>single_model_fits</code> to colour observations according to their residuals from each of these model objects. The scatterplot for <em>EU-born</em> is interesting – some observations with very large negative coefficients and some with very large positive coefficients.</p>
+<p>Extract the residuals from the <em>EU-born</em> model object contained in <code>single_model_fits</code>. Then map it in a similar way to the <a href="/class/06-class/#exploring-bias-1">map-lineup</a> – that is, a red-blue colour scheme centred on 0 (not the line-up itself).</p>
+<pre class="r"><code>#######################
+# Enter your code in the chunk provided.
+######################</code></pre>
+<ul>
+<li><a href="https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots">Save your plot</a> as a <code>.png</code> file and insert the file as a Figure into your <code>.Rmd</code> document (<a href="https://rmd4sci.njtierney.com/figures-tables-captions-.html">guidance here</a>).</li>
+</ul>
+<p>What do you notice about the geography of these residuals? Make a few short observations in the template provided.</p>
+<ul>
+<li>Insight 1
+<ul>
+<li><em>Enter your answer in the template</em></li>
+</ul></li>
+<li>Insight 2
+<ul>
+<li><em>Enter your answer in the template</em></li>
+</ul></li>
+<li>Insight 3
+<ul>
+<li><em>Enter your answer in the template</em></li>
+</ul></li>
+</ul>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+</div>
