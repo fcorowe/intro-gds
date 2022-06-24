@@ -1,6 +1,6 @@
 ---
-title: Syllabus
-slug: syllabus
+title: Overview
+slug: overview
 citeproc: true
 bibliography: ../../static/bib/references.bib
 csl: ../../static/bib/chicago-syllabus-no-bib.csl
