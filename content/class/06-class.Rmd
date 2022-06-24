@@ -1,0 +1,480 @@
+---
+title: "Visualization for model building 1: Expose, estimate, evaluate"
+linktitle: "6: Visualization for model building 1"
+date: "2022-06-13"
+class_date: "2022-06-13"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-author-date.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+menu:
+  class:
+    parent: Class
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(here)
+```
+
+## Session outcomes
+
+By the end of this session you should gain the following **_knowledge_**:
+
+{{% callout objective %}}
+- [x] Be **reminded** of the basics of linear regression modelling.
+- [x] **Appreciate** problems of model bias.
+{{% /callout %}}
+
+By the end of this session you should gain the following **_practical skills_**:
+
+{{% callout objective %}}
+- [x] **Specify** linear regression models in R.
+- [x] **Extract** model outputs and diagnostics in a [`tidy`](https://vita.had.co.nz/papers/tidy-data.pdf) manner.
+- [x] **Apply** [functional-style programming](https://purrr.tidyverse.org/articles/other-langs.html) for working over multiple model outputs.
+{{% /callout %}}
+
+## Introduction
+
+So far the analysis presented in this module has been very data-driven. We have demonstrated how, having [described data](/class/02-class/) in a consistent way, heuristics around [visual approaches and techniques](/class/03-class/) can be applied to usefully expose structure in datasets. The session on [exploratory data analysis](/class/04-class/) involved some model building, but these were largely value-free models derived from contingency tables, based on few prior assumptions.
+
+In the next two sessions we will work on a dataset with a more explicit, and theoretically-informed, motivation. We will explore *variation* in voting behaviour in the UK's 2016 referendum on leaving the EU. You might remember that whilst there was a slight majority for Leave (51.9%), the vote varied between different parts of the country. And there were many theories and explanations offered around the time for why particular places voted the way they did -- related to the demographic composition of those areas. We will explore whether the sorts of compositional demographic factors discussed -- [left behind places](https://www.theguardian.com/politics/2016/jun/25/left-behind-eu-referendum-vote-ukip-revolt-brexit) -- vary systematically with area-level Leave voting. We will use a regression framework to model the relative effect of each of these compositional factors in structuring variation in the vote and visualization techniques to support estimation of model parameters and evaluation of model bias. Different from the previous sessions, the [Concepts](/class/06-class/#concepts-1/) element is structured more as a narrated data analysis and the [Techniques](/class/06-class/#techniques-1/) element more of a how-to for working with regression models in R.
+
+
+{{% callout note %}}
+This session assumes some basic familiarity with linear regression modelling. There are entire courses on the topic, so it's not possible to cover the fundamentals in the next two sessions alone. For a clear and detailed overview, with excellent social science examples, I would recommend @bartholomew_analysis_2008.
+{{% /callout %}}
+
+## Concepts
+
+### Quantifying and exploring variation
+
+Variation is central to most data analysis, and certainly regression modelling: quantifying variation, exploring how it is structured and accounting for (or explaining) it using a combination of empirical data and prior theory/knowledge.
+
+In Figure \@ref(fig:map-uniform) is a map and bar chart displaying total variation in vote shares for Leave in Great Britain (GB), estimated at Parliamentary Constituency level [see @hanretty_areal_2017]. The values themselves are the difference in estimated vote shares from an expectation that the Leave vote for a constituency ($y_{i}$), our *outcome* of interest, is the same as the national (GB) average of 51.9% ($\bar{y}$). Although a slightly contrived formulation, we could express this as an intercept-only linear regression model, where $\beta_{1}$, the estimated **slope** is 'turned off' (takes the value $0$), and $\beta_{0}$, the **intercept**, is $\bar{y}$, the GB average vote share for Leave:
+
+\begin{align*}
+       y_{i}= \beta_{0} + \beta_{1} + \varepsilon_{i}
+\end{align*}
+
+So we estimate the Leave vote in each constituency ($y_{i}$) as a function of:
+
+* $\beta_{0}$, the intercept, the GB average vote share ($\bar{y}$) $+$
+* $\beta_{1}=0$, a negated slope, $+$
+* $\varepsilon_{i}$, a statistical error term capturing the difference between $y_{i}$ (the observed value) and the *unobservable* *true* 'population' value of the Leave vote in each constituency
+
+How does this relate to the idea of characterising variation? The length and colour of each bar in Figure \@ref(fig:map-uniform) is scaled according to model **residuals**: estimates of the statistical errors ($\hat{\varepsilon}_{i}$), the difference between $y_{i}$ (the observed value) and the *unobservable* expected value of the Leave vote in our dataset ($\hat{y}_{i}$). The sum of these bar lengths (residuals) is therefore the total **variance** $(\frac{\sum({y_{i...n}-\bar{y}}^2}{n-1})$ -- variance that we later try to reduce, or explain, by updating our regression model to generate new expected values using information on the demographic composition of constituencies.
+
+Figure \@ref(fig:map-uniform) is similar to the maps that were [published widely in press reports](https://www.theguardian.com/politics/2016/jun/24/eu-voting-map-lays-bare-depth-of-division-across-britain) in the aftermath of the vote, and demonstrates that there is indeed substantial variation in Leave voting between different parts of the country. The uniform model consistently underestimates Leave in Scotland and most of London. Outside of this, constituencies voting in smaller proportions than would be expected for Leave are distributed more in pockets around the country: the dark red dot with surrounding red area in the east of the country is Cambridge and Cambridgeshire, constituencies in Bristol (south west), Manchester and Liverpool (north west), Brighton (south),  are also reasonably strong red.
+
+```{r map-uniform, echo=FALSE, fig.cap="Residuals from uniform model comparing constituency Leave vote to GB average.", fig.align="left", out.width="90%"}
+include_graphics("/class/06-class_files/map-uniform.png", error = FALSE)
+```
+When **evaluating** the effectiveness of modelled values, there are various checks that can be performed. An obvious one here is wether there is bias in the residuals -- whether they have any underlying structure that suggests that they are grouped in a way not captured by the model. Given the motivation behind our analysis, it is no surprise that there is a geographic pattern to the residuals in Figure \@ref(fig:map-uniform), but also a histogram of the residuals (Figure \@ref(fig:hist-uniform)) shows a slight left skew. There are more constituencies with positive values than negative -- the Leave vote is underestimated by the uniform model for 57% of constituencies -- and certain constituencies with extreme negative values -- the strongest vote for Leave was Boston and Skegness (76%) but the strongest for Remain was Hackney North and Stoke Newington (80%).
+
+```{r hist-uniform, echo=FALSE, fig.cap="Histogram of residuals from uniform model comparing constituency Leave vote to GB average.", fig.align="left", out.width="90%"}
+include_graphics("/class/06-class_files/hist-uniform.png", error = FALSE)
+```
+
+### Quantifying and exploring co-variation
+
+More interesting is whether the pattern of variation in Figure \@ref(fig:map-uniform) is *correlated* with compositional factors, [identified in press and other reporting](https://www.theguardian.com/news/datablog/2016/jun/24/the-areas-and-demographics-where-the-brexit-vote-was-won) that we think explain this variation; and also whether bias or structure in residuals exists even after accounting for these compositional factors.
+
+In Table \@ref(tab:variables) is a list of candidate explanatory variables describing the demographic composition of constituencies, selected based on the narrative around 'left-beind' places.  Each variable is expressed as a proportion of the constituency's population. So the *degree educated* variable describes the proportion of residents in the constituency educated at least to degree-level. Comparison across these variables is challenging due to the fact that their ranges differ: the *EU-born* variable ranges from 0.6% to 17%; the *white* variable from 14% to 98%. There are also obvious ceilings that limit how successful explanatory variables are likely to be at discriminating variation. Common practice for addressing the range problem is to [z-score transform](https://en.wikipedia.org/wiki/Standard_score) the variables, so that each value is expressed in terms of standard deviation units from that variable's mean, as in Figure \@ref(fig:hist-expl).
+
+
+```{r variables, echo=FALSE, fig.cap="Selected 2011 Census variables", out.width="100%"}
+vars <- tibble::tibble(
+  `Census variable` = c("degree-educated", "professional occupations", "younger adults",
+  "heavy industry", "not good health", "white British/Irish", "Christian", "EU-born (not UK)",
+  "own home", "don't own car")
+    )
+  kbl(vars,  caption = "Selected 2011 Census variables.") %>%
+      pack_rows("post-industrial / knowlegde economy", 1, 4) %>%
+      pack_rows("diversity/values/outcomes", 5, 8) %>%
+      pack_rows("metropolitan / 'big city'", 9, 10)
+```
+
+```{r hist-expl, echo=FALSE, fig.cap="Histograms of candidate explanatory variables measuring demographic composition of constituencies.", fig.align="left", out.width="100%"}
+include_graphics("/class/06-class_files/hist-expl.png", error = FALSE)
+```
+
+To explore whether these demographics vary systematically with Leave voting in each constituency, Figure \@ref(fig:scatters) presents scatterplots from which the extent of linear association can be inferred. Each dot is a constituency, arranged on the x-axis according to value of each candidate explanatory variable and the y-axis according to the share of Leave vote. The scatterplots are faceted by explanatory variable and ordered left-to-right and top-to-bottom according to correlation coefficient. The variable most heavily correlated with Leave voting is that measuring levels of *degree* education: as the share of a constituency's population educated at least to *degree-level* increases, the share of Leave vote in that constituency decreases. An association in the same direction, but to a lesser extent, is observed for variables representing similar concepts:  *professional occupations*, *younger adults*, *EU-born*, *no-car* and the reverse for *Christian*, *not-good health* and *heavy industry*.
+
+```{r scatters, echo=FALSE, fig.cap="Scatterplots of constituency Leave vote against candidate explanatory variables.", fig.align="left", out.width="100%"}
+include_graphics("/class/06-class_files/scatters.png", error = FALSE)
+```
+
+{{% callout note %}}
+ You will remember from introductory stats courses that that the correlation coefficient can be used to summarise the strength of linear association between two variables. It is a quantity that ranges from perfect negative correlation, -1 -- as one value increases another decreases in the same proportion -- to perfect positive correlation, +1 -- as one value increases another increases in the same proportion. A value of 0 indicates no association -- the values increase and decrease independently of each other.
+
+ ```{r correlations, echo=FALSE, fig.cap="Scatterplots of synthetic bivariate data with extent of correlation coefficient systematically varied.", fig.align="left", out.width="100%"}
+ include_graphics("/class/06-class_files/correlations.png", error = FALSE)
+ ```
+{{% /callout %}}
+
+
+<!-- * To look at this in multivariate space -- PCPs. -->
+
+### Modelling for co-variation
+
+Linear regression provides a framework for explicitly describing these linear associations. The ultimate objective is to quantify how much of the variation in an outcome variable, summarised in Figure \@ref(fig:map-uniform), can be explained using information on other variables, the candidate demographic variables in Figure \@ref(fig:scatters).
+
+To express this in equation form, we can update the uniform model such that Leave vote is a *function* of the candidate explanatory variables. For single-variable linear regression,  we could update with the proportion of residents educated at least to *degree-level* ($\textcolor{highlight}{d_{i1}}$):
+
+\begin{align*}
+       y_{i}&= \beta_{0} + \beta_{1}\textcolor{highlight}{d_{i1}} + \varepsilon_{i}  \\
+\end{align*}
+
+
+So we now estimate the Leave vote in each constituency ($y_{i}$) as a function of:
+
+* $\beta_{0}$, the intercept, the GB average vote share ($\bar{y}$) $+$
+* $\beta_{1}=\beta_{1}\textcolor{highlight}{d_{i1}}$, the slope, indicating in which direction and to what extent *degree-educated* is associated with Leave,  $+$
+* $\varepsilon_{i}$, the difference between $y_{i}$ (the observed value) and the *unobservable* true 'population' value of the Leave vote in that constituency (statistical error)
+
+There are different algorithms that can be used to estimate these parameters. Most obvious is ordinary least squares (OLS), which aims to minimise $\sum{\hat{\varepsilon}_{i...n}}$, the sum of the (squared) residuals between the observed Leave vote in a constituency, $y_{i}$, and that expected, $\hat{y_{i}}$, given the association with the *degree-educated* explanatory variable $d_{i1}$.
+
+To explore the associations further, we could update the scatterplots with regression lines, fit via OLS, modelling the Leave vote separately as a linear function of each explanatory variable. As well as the regression line, observations are now coloured according to the size and direction of their residuals. The plots are also annotated according to the coefficient of determination ($R^2$) -- the proportion of the total constituency-level variation in the Leave vote explained by each model formulation. This tells us how much better than the uniform model, which captures the total variation (Figure  \@ref(fig:map-uniform)), is each of the single variable explanatory models.
+
+Colouring dots representing constituencies by residuals is instructive. In most of the scatterplots there seems to be a grouping of large negative residuals (dark red) where, after taking into account the association between Leave voting and demographics across all constituencies in GB, the Leave vote is consistently *underrepresented*. You might be able to guess at where these are located, certainly generating maps of these residuals may expose whether they are grouped in a particular way.
+
+```{r scatters-resids, echo=FALSE, fig.cap="Scatterplots of constituency Leave vote against candidate explanatory variables, annotated with regression lines.", fig.align="left", out.width="100%"}
+include_graphics("/class/06-class_files/scatters-resids.png", error = FALSE)
+```
+
+<!-- * Linear regression is termed parametric as the outputs are parameters that summarise relationships: -->
+
+### Extracting and representing model parameters
+
+It is of course possible, and likely, that some of these variables account for different elements of the variation in the Leave vote than others. You will be aware that the linear regression model can be extended to include many explanatory variables:
+
+\begin{align*}
+      y_{i}&= \beta_{0} +\beta_{1}x_{i1} + ... + \beta_{k}x_{ik} + \varepsilon_{i}  \\
+\end{align*}
+
+So this results in *separate* $\beta_{k}$ coefficients for separate explanatory variables. These coefficients can be interpreted as the degree of association between the explanatory variable $k$ and the outcome variable, keeping all the other explanatory variables constant -- or the distinct correlation between an explanatory variable $k$ and the outcome variable, net of the other correlated variables.
+
+ <!-- which allows us to isolate the distinct effect that a single variable has on the outcome. -->
+
+In Figure \@ref(fig:plot-outputs) are regression coefficients ($\beta_{k}$) from a multiple regression model with *degree-educated*, *no car*, *white*, *heavy industry*, *EU-born* and *not good health* selected as explanatory variables. Coefficients are reported as dots with estimates of uncertainty represented as lines, displaying 95% [confidence intervals](http://www.sumsar.net/blog/2013/12/an-animation-of-the-construction-of-a-confidence-interval/).
+<!-- the range of values the true (*unobservable*) coefficient is likely to take -->
+
+Most variables' coefficients are in the direction that would be expected given the associations in Figure \@ref(fig:scatters-resids). Net of variation in the other compositional factors, increased levels of *degree education* in a constituency have the effect of reducing the Leave vote. The two exceptions are *EU-born*  and *white*: after controlling for variation in the other demographic variables, increased proportions of residents identifying as *white* has the effect of reducing the Leave vote and increased proportions of residents that are *EU-born* has the effect of increasing the Leave vote. Since the confidence interval for *white* crosses zero, this coefficient is subject to much uncertainty.  In the next session we will discuss some approaches to exploring whether these sorts of counter-intuitive effects are genuine or as a result of a poorly-specified model.
+
+
+```{r plot-outputs, echo=FALSE, fig.cap="Output from multiple regression model of Leave vote by demographic composition of constituency.", fig.align="left", out.width="90%"}
+include_graphics("/class/06-class_files/plot-outputs.png", error = FALSE)
+```
+
+{{% callout note %}}
+**Assumptions**
+
+Again, you might remember that issues of multicollinearity, amongst other things, mean that variable selection in multiple regression requires a little thought. Ideally you want model specifications that are easy to interpret (without variable redundancy) and that explain variation in the outcome reasonably well but reliably. As explanatory variables are added, model fit can increase slightly or substantially, but will never decrease. A common scenario is that a model specified with many explanatory variables fits the data well, but contains coefficients that are inflated in magnitude and that likely vary between different model realisations. These problems are typically addressed in Social Science applications by judicious variable selection and computing coefficient [Variance Inflation Factors](https://en.wikipedia.org/wiki/Variance_inflation_factor) (VIF). The variables here were selected using this *de facto* approach, but see @beecham_regionally_2020 for an application of a common machine learning approach to automatic variable selection applied to (almost) the same dataset, and that could be used to explore the sorts of counter-intuitive directions in the coefficients for *EU-born*  and *white* above.
+
+**Estimating uncertainty**
+
+Given the spirit of this module, you might have wondered about the reasonably abbreviated discussion of techniques for representing model outputs  and their uncertainty estimates (via Confidence Intervals). I am deliberately reserving more involved coverage of this for [session 08]().
+{{% /callout %}}
+
+
+### Exploring bias
+
+The multivariate model explains a reasonably large share (c.80%) of the variation in constituency-level Leave voting. However, our analysis becomes more interesting when we start to explore and characterise model *bias*: any underlying structure to the observations which are better or less-well accounted for by the model. Especially for area-level regression models, it is usual for residuals to contain [spatial autocorrelation](https://rspatial.org/raster/analysis/3-spauto.html). For certain parts of a country, a model will overestimate an outcome given the relationship implied by associations between explanatory and outcome variables; for other parts, the outcome will be underestimated. This might occur due to:
+
+* *Spatial dependence* in **variable values** over space. We know that the geography of GB is quite socially distinctive, so it is reasonable to expect, for example, the range in variables like *heavy industry* and *white* to be bounded to economic regions and metropolitan-peripheral regional contexts.
+* *Spatial nonstationarity* in **processes** over space. It is possible that associations between variables might be grouped over space -- that the associations vary for different parts of the country. For example, high levels of *EU-born* migration might affect political attitudes, and thus area-level voting, differently in different parts of a country.
+
+We can test for and characterise [spatial autocorrelation](https://rspatial.org/raster/analysis/3-spauto.html) by performing a graphical inference test. a Map LineUp [@beecham_maplineups_2017; @wickham_inference_2010], against a null hypothesis of *complete spatial randomness* in residuals. Graphical LineUp tests are visual equivalents of test statistics. A plot of real data is hidden amongst a set of decoys generated under a null hypothesis. If the real can be correctly identified from the decoys, then this lends statistical credibility to the claim that the observed data are not consistent with the specified null [@wickham_inference_2010]. Graphical LineUp tests have been used in various domains, also to test regression assumptions [@loy_model_2017].
+
+The Map LineUp in Figure \@ref(fig:plot-lineup), constructed by randomly permuting observed residuals around constituencies, demonstrates that there *is* obvious spatial (and *regional*) autocorrelation in residuals. In the next session, we will cover approaches to dealing with this -- accounting for *spatial dependence* in **values** and exploring *spatial nonstationarity* in **processes**.
+
+
+```{r plot-lineup, echo=FALSE, fig.cap="Map LineUp of residuals in which the ‘real’ dataset is presented alongside 8 decoy plots generated by randomly permuting the observed residuals around constituencies.", fig.align="left", out.width="100%"}
+include_graphics("/class/06-class_files/lineups.png", error = FALSE)
+```
+
+{{% callout note %}}
+In this session, I have focussed mostly on one assumption of linear regression: that of *independence of errors (residuals)*. Consult  @bartholomew_analysis_2008 for a thorough discussion of these matters, but others not mentioned (and of varying importance) include: *linearity* in the relationship between outcome and explanatory variables; *equal variance* and *normality* in the residuals.
+
+<!-- *Normality* in residuals.
+* I: The errors are independent—there’s no connection between how far any two points lie from the regression line,
+* N: The responses are normally distributed at each level of X, and
+* E: The variance or, equivalently, the standard deviation of the responses is equal for all levels of X. -->
+{{% /callout %}}
+
+<!-- https://maczokni.github.io/crimemapping_textbook_bookdown/regression-analysis-a-refresher.html#homework-5 -->
+
+## Techniques
+
+The technical element to this session demonstrates how linear regression models can be specified in R, as well as approaches for extracting model summaries and diagnostics; and of course representing them visually. Data recording estimated vote shares for Leave by Parliamentary Constituency, as well as constituency-level 2011 Census demographics, are available via the `parlitools` package used in [session 3](/class/03-class/).
+
+* Download the [<i class="fab fa-r-project"></i> 06-template.Rmd](/homework/06-homework_files/06-template.Rmd) file for this session and save it to the `reports` folder of your `vis-for-gds` project.
+* Open your `vis-for-gds` project in RStudio and load the template file by clicking `File` > `Open File ...` > `reports/06-template.Rmd`.
+
+### Import
+
+The template file lists the required packages: `tidyverse`, `sf`, `parlitools` and also the `tidymodels` package for extracting model outputs. The required datasets are loaded automatically when `library(parlitools)` is called. There is code for loading a simplified shapefile representing constituencies and also for extracting the relevant 2011 Census demographics that form explanatory variables in our model.
+
+
+### Transform
+
+In the [concepts section](/class/06-class/#quantifying-and-exploring-co-variation-1), I mentioned that explanatory variables are [z-score transformed](https://en.wikipedia.org/wiki/Standard_score). Here, the distance between observed values for each 2011 Census variable is expressed in standard deviation units from the mean across constituencies for that variable. In the code below, also in the template, [`across()`](https://dplyr.tidyverse.org/reference/across.html) is used to apply this formula to each explanatory variable.
+
+`across()` is a really useful `dplyr` function. The first argument is the set of columns you would like the same function to be applied to and the second is the function you would like to apply. Remembering that `mutate()` works over columns of a data frame, and that a single column of a dataframe is a vector of values, the notation `.x` is used to access each element of the vector of values of the columns being worked across.
+
+
+```{r transform, echo=TRUE, eval=FALSE, message=FALSE}
+explanatory_z_scores <- explanatory %>%
+  mutate(
+    across(
+      c(younger:heavy_industry), ~(.x-mean(.x))/sd(.x)
+    )
+  )
+```
+
+### Model
+
+Linear models can be fit with the `lm()` function and coefficients extracted with `summary()`.
+
+<!-- To specify a linear regression model with a single predictor: -->
+
+```{r model, echo=TRUE, eval=FALSE, message=FALSE}
+model <- lm(leave ~ degree, data=data_for_models)
+
+summary(model)
+
+# Call:
+# lm(formula = leave ~ degree, data = data_for_models)
+#
+# Residuals:
+#      Min       1Q   Median       3Q      Max
+# -0.25521 -0.02548  0.01957  0.05143  0.11237
+#
+# Coefficients:
+#               Estimate Std. Error t value Pr(>|t|)
+# (Intercept)  0.8044108  0.0097570   82.44   <2e-16 ***
+# degree      -0.0106109  0.0003483  -30.46   <2e-16 ***
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#
+# Residual standard error: 0.07279 on 630 degrees of freedom
+# Multiple R-squared:  0.5956,	Adjusted R-squared:  0.595
+# F-statistic: 927.9 on 1 and 630 DF,  p-value: < 2.2e-16
+
+```
+
+### Tidy models
+
+[`tidymodels`](https://www.tidymodels.org/), and specifically the [`broom`](https://broom.tidymodels.org/) package, provides a useful set of functions for extracting model outputs in a format that adheres to tidy data [@wickham_tidy_2014] -- e.g. as a data frame.
+
+Some examples:
+
+```{r tidy-models, echo=TRUE, eval=FALSE, message=FALSE}
+# tidy() return estimated coefficients as a data frame
+tidy(model)
+# # A tibble: 2 x 5
+#   term        estimate std.error statistic   p.value
+#   <chr>          <dbl>     <dbl>     <dbl>     <dbl>
+# 1 (Intercept)   0.804   0.00976       82.4 0.
+# 2 degree       -0.0106  0.000348     -30.5 5.67e-126
+
+
+# glance() returns a single row containing summaries of model fit.
+glance(model)
+# # A tibble: 1 x 12
+#   r.squared adj.r.squared  sigma statistic   p.value    df logLik    AIC    BIC
+#       <dbl>         <dbl>  <dbl>     <dbl>     <dbl> <dbl>  <dbl>  <dbl>  <dbl>
+# 1     0.596         0.595 0.0728      928. 5.67e-126     1   760. -1514. -1501.
+# # … with 3 more variables: deviance <dbl>, df.residual <int>, nobs <int>
+
+# augment() returns a data frame of residuals and predictions (fitted values) for the model realisation.
+augment(model)
+# # A tibble: 632 x 8
+#    leave degree .fitted   .resid    .hat .sigma     .cooksd .std.resid
+#    <dbl>  <dbl>   <dbl>    <dbl>   <dbl>  <dbl>       <dbl>      <dbl>
+#  1 0.601   16.6   0.628 -0.0269  0.00393 0.0728 0.000270       -0.370
+#  2 0.522   27.1   0.517  0.00546 0.00159 0.0729 0.00000447      0.0750
+#  3 0.431   29.0   0.497 -0.0662  0.00169 0.0728 0.000703       -0.910
+# ...
+```
+
+The advantage of generating model diagnostics and outputs that are tidy, is that this eases the process of working with many model realisations. This is a common requirement for modern data analysis, where statistical inferences are made empirically from resampling.
+
+In Figure \@ref(fig:scatters-resids), scatterplots are coloured according to model residuals and annotated with model diagnostics from single-variable linear regression models generated separately for each candidate explanatory variable. These models can be generated with reasonably little code, by making use of `broom` and a style of [functional programming](https://adv-r.hadley.nz/fp.html#:~:text=Functional) in R, which is supported by the [`purrr`](https://purrr.tidyverse.org/) package.
+
+Example code:
+
+```{r tidy-models-example, echo=TRUE, eval=FALSE, message=FALSE}
+single_model_fits <- data_for_models %>%
+  pivot_longer(cols=younger:heavy_industry, names_to="expl_var", values_to="z_score") %>%
+  nest(data=-expl_var) %>%  # Nest to generate list-column by expl_var.
+  mutate(
+    # Use map() to iterate over the list of datasets.
+    model = map(data, ~lm(leave ~ z_score, data = .x)),
+    # glance() for each model fit.
+    fits = map(model, glance),
+    # tidy() for coefficients.
+    coefs = map(model, tidy),
+    # augment() for predictions/residuals.
+    values=map(model, augment),
+  )
+
+  single_model_fits %>%
+    unnest(cols = fits) %>% # unnest output from glance.
+    select(-c(data, model)) # remove other list-columns.
+
+# # A tibble: 10 x 15
+#    expl_var     r.squared adj.r.squared  sigma statistic   p.value    df logLik    AIC
+#    <chr>            <dbl>         <dbl>  <dbl>     <dbl>     <dbl> <dbl>  <dbl>  <dbl>
+#  1 younger          0.289         0.288 0.0965      257. 1.05e- 48     1   582. -1158.
+#  2 own_home         0.185         0.184 0.103       143. 7.42e- 30     1   539. -1071.
+#  3 no_car           0.157         0.155 0.105       117. 3.81e- 25     1   528. -1050.
+#  4 white            0.169         0.168 0.104       128. 3.79e- 27     1   532. -1059.
+#  5 eu_born          0.233         0.232 0.100       191. 3.42e- 38     1   558. -1110.
+#  6 christian        0.238         0.236 0.100       196. 4.95e- 39     1   560. -1114.
+#  7 professional     0.320         0.319 0.0944      296. 1.08e- 54     1   596. -1186.
+#  8 degree           0.596         0.595 0.0728      928. 5.67e-126     1   760. -1514.
+#  9 not_good_he…     0.316         0.315 0.0947      291. 5.93e- 54     1   594. -1182.
+# 10 heavy_indus…     0.504         0.503 0.0806      640. 5.43e- 98     1   696. -1385.
+# # … with 6 more variables: BIC <dbl>, deviance <dbl>, df.residual <int>, nobs <int>,
+# #   coefs <list>, values <list>
+```
+
+Code description (there is a little to get your head around here):
+
+1. **Setup**: In order to generate separate models for separate explanatory variables, we need to generate [nested data frames](https://cran.r-project.org/web/packages/tidyr/vignettes/nest.html). These data frames are stored in a special type of column (a `list-column`) in which the values of the column is a list of data frames -- in this case one for each explanatory variable that we would like to generate a model over. You can think of parameterising `nest()` in a similar way to `group_by`. We first `pivot_longer()` to generate a data frame where each observation contains the recorded Leave vote for a constituency and its corresponding `z_score` value for each explanatory variable.  There are 10 explanatory variables and so `nest()` returns a data frame with the dimensions `10x2` -- a variable identifying the explanatory variable on which the model is to be built (`expl_var`) and a `list-column`, each element containing a data frame  with the dimensions `632x7`.
+2. **Build model**: In `mutate()`, `purrr`'s [`map()`](https://purrr.tidyverse.org/reference/map.html) function is used to iterate over the list of datasets and fit a model to each nested dataset. The new column `model` is a `list-column` this time containing a list of model objects.
+3. **Generate outputs**: Next, the different model outputs can be generated using `glance(), tidy(), augment()`, with `map()` to iterate over the list of model objects. The new columns are now `list-columns` of data frames containing model outputs.
+4. **Extract outputs**: Finally, we will want to variously extract the values from these nested data. This can be achieved using `unnest()`and supplying to the `cols` argument the names of the `list-columns` that we want to flatten over. 
+
+
+### Plot tidy models
+
+
+In Figure \@ref(fig:scatters-resids) estimated regression coefficients are plotted for a multivariate linear regression model. The `ggplot` specification is reasonably straightforward.
+
+The code:
+
+```{r plot-tidy-models, echo=TRUE, eval=FALSE, message=FALSE}
+model <- lm(leave ~ degree  + eu_born + white  + no_car + christian +
+       not_good_health + heavy_industry, data=data_for_models)
+outputs <- tidy(model)
+outputs %>%
+  filter(term != "(Intercept)") %>%
+  ggplot(
+    aes(x=reorder(term, -estimate),
+        y=estimate,ymin=estimate-1.96*std.error, ymax=estimate+1.96*std.error)) +
+  geom_pointrange() +
+  coord_flip()
+```
+
+The plot specification:
+
+1. **Data**: A data frame of model coefficients extracted from the multivariate model object using `tidy()`.
+2. **Encoding**: y-position varies according to the size of the coefficient estimate and the 95% confidence intervals, defined using `ymin` and `ymax`.
+3. **Marks**: `geom_pointrange()`, which understands `ymin` and `ymax`, for the dots with Confidence Intervals
+4. **Setting**: `coord_flip()` to make variable names easier to read.
+
+### Plot residuals
+
+In order to explore spatial autocorrelation in residuals, we used a Map LineUp test [@beecham_maplineups_2017; @wickham_inference_2010]. Using the sorts of functional programming techniques mentioned above, these tests are actually reasonably straightforward to construct.
+
+First generate a model object and extract residuals from it, again making use of `nest()`, `map()` and `tidy()`:
+
+```{r extract-model-values, echo=TRUE, eval=FALSE, message=FALSE}
+# Generate model object and extract residuals
+model_values <- data_for_models %>%
+  mutate(type="full_dataset",) %>%
+  nest(data=-type) %>%
+  mutate(
+    model=map(data, ~lm(leave ~ degree  + eu_born + white  + no_car + christian +
+                          not_good_health + heavy_industry, data=.x)),
+    values=map(model, augment),
+    resids=map(values, . %>% select(.resid))
+  ) %>%
+  unnest(cols = c(data, resids)) %>%
+  select(-model)
+# Store max value of residuals for setting limits in map colour scheme.
+max_resid <- max(abs(model_values$.resid))
+```
+
+Next, create a function that generates in this case nine permutations of the same dataset. I am deliberately not discussing this in too much detail, but you might notice that each permutation is stored in separate columns and is generated using [`sample()`](http://www.rexamples.com/14/Sample()) with one permutation randomly held back -- this represents the *real* dataset.
+
+```{r lineup-function, echo=TRUE, eval=FALSE, message=FALSE}
+# Function for generating random permutations + one real.
+do_lineup <- function(data, col_offset) {
+  real <- sample(1:9,1)
+  for(i in 1:9) {
+    if(i==real) {
+      data <- cbind(data, data$value)
+      colnames(data)[i+col_offset] <- paste0("permutation", i)
+    }
+    else {
+      permutation <- sample(data$value,nrow(data))
+      data <- cbind(data, permutation)
+      colnames(data)[i+col_offset] <- paste0("permutation", i)
+    }
+  }
+  return(data %>% select(-value) %>% mutate(real=paste0("permutation", real)))
+}
+```
+
+The permutations are simply constituency names that are randomly shuffled (permuted). To add residuals data to these, we again make use of `nest()` to generate a `list-column` of randomly permuted constituencies, and then for each permutation add a new column bringing in the residuals values from the `model_values` data frame that is *not* randomly permuted.
+
+```{r lineup-data, echo=TRUE, eval=FALSE, message=FALSE}
+# Create the lineup data: swaps for constituencies
+lineup_permutations <- do_lineup(model_values %>% select(value=ons_const_id) %>% unique, 1) %>%
+  pivot_longer(cols=(permutation1:permutation9),names_to="perm", values_to="area_name") %>%
+  arrange(perm)
+
+lineup_data <- lineup_permutations %>%
+  nest(data=-perm) %>%
+  mutate(
+    resids=map(data, ~model_values %>% select(.resid))
+  ) %>%
+  unnest(c(data, resids))
+```
+
+Finally, plot choropleths in the usual way, faceting according to the permutation variable `perm` in `lineup_data`:
+
+```{r plot-lineup-code, echo=TRUE, eval=FALSE, message=FALSE}
+cons_outline %>%
+  inner_join(lineup_data, by=c("pcon19cd"="area_name")) %>%
+  ggplot() +
+  geom_sf(aes(fill=.resid), colour="#757575", size=0.001)+
+  coord_sf(crs=27700, datum=NA) +
+  facet_wrap(~perm, ncol=5) +
+  scale_fill_distiller(palette="RdBu", direction=1,
+                       limits=c(-max_resid, max_resid))
+```
+
+
+<!--  * Models as functions
+* Vocabulary: outcome variable (whose variation you are trying to understand), explanatory (other variables that you want to use to explain variation), predicted value (output o the model function -- expected outcome conditioing on explanatory variables), residuals (a measure of how far each case is from the predicted value)
+
+Why models and not graphics
+* Can reveal patterns that not evident in graphics -- in regression framework we can *condition* on explanatory variables and talk about the effect of single variables net of others.
+* Deal with uncertainty and false discovery -- we infer/overinterpet from scatterplots
+
+* https://wilkelab.org/SDS375/
+* https://mjskay.github.io/ggdist/articles/freq-uncertainty-vis.html
+Use tidymodels : https://cfss.uchicago.edu/notes/start-with-models/  -->
+
+## Conclusions
+
+Variation is central to most data analysis, and certainly regression modelling: quantifying variation, exploring how it is structured and accounting for (or explaining) it using a combination of data and prior theory/knowledge. This session introduced a linear regression modelling framework with the explicit aim of analysing whether variation in constituency-level voting in the UK's 2016 EU Referendum  varies systematically with the demographic composition of constituencies. Visual approaches were used to explore associations between constituency-level voting and demographics and also to characterise bias in the specified models -- to identify potential (geographic and regional) groupings that our models ignore.
+
+
+
+## References

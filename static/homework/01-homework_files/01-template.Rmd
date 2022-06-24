@@ -1,0 +1,59 @@
+---
+author: "<your-name>"
+date: "<the-date>"
+title: "Session 01"
+output: html_document
+---
+
+## Introduction
+
+Welcome to Visualization for Geographic Data Science (vis-for-gds). For each session you will be working in these `.Rmd` templates, which provide scaffolding for completing the activities that appear in class and for the homework. Do make your best attempt to work through these, as you will be required to submit them as a **Portfolio** of activity worth 30% of the total module marks.
+
+## Setup
+
+The code block below points to the packages you need to recreate the charts that appeared in the session. If you have been following the instructions in class you will have already installed the `tidyverse` and so simply need to make it available in session with `library(<package-name>)`.
+
+```{r setup, echo=TRUE, eval=TRUE, message=FALSE}
+# Bundle of packages for doing modern data analysis.
+library(tidyverse)
+```
+
+## Class
+
+### Plotting Anscombe's Quartet
+
+There was reasonably little in the way of data analysis in this first session. However, early on we discussed and plotted [Anscombe's Quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet). You actually automatically loaded this dataset when you pointed to the `tidyverse` package. Should you wish to inspect it, type `View(anscombe)` in the R Console.
+
+Below is some code for generating scatterplots of the Anscombe datasets. No need to worry about the code for the time being, but it consists of a bit of data reshaping using [`tidyr`](https://tidyr.tidyverse.org/) (we'll cover in the next session 2), combined with a [`ggplot2`](https://ggplot2.tidyverse.org/) specification for generating the scatterplots (lots on this in session 3).
+
+```{r plot-anscombe, echo=TRUE, eval=TRUE, message=FALSE}
+plot <- anscombe %>%
+  pivot_longer(
+    everything(),
+    names_to = c(".value", "dataset"), names_pattern = "(.)(.)"
+    ) %>%
+  ggplot(aes(x, y))+
+  geom_point(colour="#003c8f", fill="#003c8f", pch=21) +
+  stat_smooth(method=lm, se=FALSE, size=0.6, colour="#636363")+
+  facet_wrap(~dataset, nrow=2)+
+  theme_bw()
+
+print(plot)
+```
+
+If you're feeling particularly motivated, and want to extend the Anscombe example, you may wish to play around with [`datasauRus`](https://itsalocke.com/datasaurus/) package.
+
+When you work with R Markdown documents it is cumbersome to constantly be knitting and typesetting the document. Most often you will want to run each code chunk separately  so that the results can be explored in your Environment. To do this, simply click on the green arrow to the top right each code block, whenever you wish to run a bit of code chunk.
+
+### Writing plot to your project folder
+
+If you've followed the instructions in class, you should have created an RStudio project and saved this `.Rmd` file in you project's `reports` folder. Let's now save our Anscombe quartet plot to the project's `figures` folder either by **evaluating** the code block below when you next click "Knit" (HINT: you will need to edit `eval=<TRUE|FALSE>`).
+
+```{r plot-out-anscombe, echo=TRUE, eval=FALSE, message=FALSE}
+# Save plot
+ggsave("./figures/anscombe.png", plot=plot,width=7, height=4, dpi=300)
+```
+
+## Homework
+
+No technical homework from this first session. Instead you will be working you will be doing additional reading and research to increase your familiarity with the R, RStudio and R Markdown.

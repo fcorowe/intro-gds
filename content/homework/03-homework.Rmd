@@ -1,0 +1,114 @@
+---
+title: "Visualization fundamentals"
+linktitle: "3: Visualization fundamentals"
+date: "2022-05-23"
+class_date: "2022-05-23"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-author-date.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+menu:
+  homework:
+    parent: Homework
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+```
+
+## Session Outcomes
+
+By the end of this homework session you should be able to:
+
+{{% callout objective %}}
+- [x] Formally describe data graphics according to their visual encoding.
+- [x] Reproduce graphics by writing `ggplot2` specifications.
+- [x] Combine `dplyr` and conditional statements to prep data for plotting.
+{{% /callout %}}
+
+## Introduction
+
+This homework requires you to apply the concepts and skills developed in the class session on [visualization fundamentals](/class/03-class/). Do complete each of the tasks and be sure to save your work as this homework will be submitted as part of your portfolio for Assignment 1.
+
+## Task 1: Describe and evaluate
+
+```{r spoke-map, echo=FALSE, fig.cap="Map of Butler Con-Lab Swing in 2019 General Election.", out.width="100%"}
+include_graphics("/class/03-class_files/spoke-map.png", error = FALSE)
+```
+
+Complete the description table below identifying each **data item** that is encoded along with its **measurement level**, **visual mark** and **visual channel**  and the effectiveness rank, according to @munzner_visualization_2014, of this encoding.
+
+| Data item      | Measurement level | Visual mark      | Visual channel  | Rank         |
+|----------------|-------------------|------------------|-----------------|--------------|
+| `location`     | <enter here>      |  <enter here>    | <enter here>    | <enter here> |
+| `...`          |`...`              |  `...`           | `...`           | `...`        |
+| `...`          |`...`              |  `...`           | `...`           | `...`        |
+| `...`          |`...`              |  `...`           | `...`           | `...`        |
+| `...`          |`...`              |  `...`           | `...`           | `...`        |
+| `...`          |`...`              |  `...`           | `...`           | `...`        |
+
+
+## Task 2: Reproduce
+
+
+### Histograms faceted by region
+
+Write some code for reproducing something similar to the graphic below -- a set of histograms of the Swing variable, faceted by region. Place your code into the [<i class="fab fa-r-project"></i> 03-template.Rmd](/homework/03-homework_files/03-template.Rmd) file for this session.
+
+```{r hist-region-code, echo=TRUE, eval=FALSE}
+#######################
+# Enter your code in the chunk provided.
+######################
+```
+
+* [Save your plot](https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots) as a `.png` file and insert the file as a Figure into your `.Rmd` document ([guidance here](https://rmd4sci.njtierney.com/figures-tables-captions-.html)).
+
+```{r hist-region, echo=FALSE, fig.cap="Histograms of Swing variable, grouped by region.", out.width="100%"}
+include_graphics("/class/03-class_files/hist-region.png", error = FALSE)
+```
+
+### Scatterplots with multiple encodings
+
+Write some code for reproducing something similar to the graphic below -- a scatterplot comparing 2017 and 2019 vote shares for Labour. Be sure to include **every** encoding as it appears in the graphic (e.g. `shape` and `alpha` according to whether constituencies flipped allegiance). Hint: you may need to use a **conditional statement** to generate a variable for emphasising constituencies that flipped parties between 2017 and 2019. Place your code into the [<i class="fab fa-r-project"></i> 03-template.Rmd](/homework/03-homework_files/03-template.Rmd) file for this session.
+
+```{r scatters-code, echo=TRUE, eval=FALSE}
+#######################
+# Enter your code in the chunk provided.
+######################
+```
+
+* [Save your plot](https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots) as a `.png` file and insert the file as a Figure into your `.Rmd` document ([guidance here](https://rmd4sci.njtierney.com/figures-tables-captions-.html)).
+
+
+```{r scatters-lab, echo=FALSE, fig.cap="Plots of 2019 versus 2017 vote shares.", out.width="100%"}
+include_graphics("/class/03-class_files/scatters-lab.png", error = FALSE)
+```
+
+## Task 3: Create a map
+
+Write some code for reproducing something similar to the graphic below -- a map of the estimated Leave:Remain vote margin by Parliamentary Constituency. Note that I am using a [diverging](https://colorbrewer2.org/#type=diverging&scheme=BrBG&n=3) colour scheme here to distinguish whether the Constituency was majority Leave and Remain  -- brown or green -- and also the *size* of that majority -- the darker the colour, the larger the majority.
+
+ Place your code into the [<i class="fab fa-r-project"></i> 03-template.Rmd](/homework/03-homework_files/03-template.Rmd) file for this session.
+
+```{r map-code, echo=TRUE, eval=FALSE}
+#######################
+# Enter your code in the chunk provided.
+######################
+```
+
+* [Save your plot](https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots) as a `.png` file and insert the file as a Figure into your `.Rmd` document ([guidance here](https://rmd4sci.njtierney.com/figures-tables-captions-.html)).
+
+
+```{r referendum-map, echo=FALSE, fig.cap="Map of 2016 EU Referendum vote, estimated by Parliamentary Constituency in GB.", out.width="100%"}
+include_graphics("/class/03-class_files/referendum-map.png", error = FALSE)
+```
+
+## References

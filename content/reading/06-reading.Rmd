@@ -1,0 +1,43 @@
+---
+title: "Visualization for model building 1"
+linktitle: "6: Visualization for model building 1"
+date: "2022-06-13"
+class_date: "2022-06-13"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: false
+menu:
+  reading:
+    parent: Reading
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+
+### Area-level analysis of Brexit vote
+
+- [@beecham_regionally_2020]
+- [@beecham_locally_2018]
+- [@harris_voting_2016]
+
+
+### Graphical inference
+
+- [@beecham_maplineups_2017]
+- [@wickham_inference_2010]
+
+### Model-building in R
+
+- [@healy_data_2018]\
+-- Chapter 7\
+[Free online](https://socviz.co/).
+- [@wickham_r_2017]\
+-- Chapters 22, 23, 24, 25\
+[Free online](https://r4ds.had.co.nz/).

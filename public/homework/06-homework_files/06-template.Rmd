@@ -1,0 +1,105 @@
+---
+author: "<your-name>"
+date: "<the-date>"
+title: "Session 06"
+output: html_document
+---
+
+## Class
+
+Reopen your `vis-for-gds` project and save this `.Rmd` to the `reports` folder. When working through the materials from this session run each code chunk separately by clicking the small green arrow beside each code chunk. By default I have set `eval=FALSE` on most code chunks, so when you knit the code chunk will not execute.
+
+The technical element to this session involves analysing estimated vote shares for Leave in the UK's 2016 Referendum on EU membership.
+
+### Setup
+
+The code block below points to the packages you need to do the work discussed in the session. Uncomment the `intall_packages()` lines if you have not already downloaded `tidymodels`.
+
+```{r setup, echo=TRUE, eval=FALSE, message=FALSE}
+library(tidyverse) # Bundle of packages for doing modern data analysis.
+library(sf) # Spatial operations
+library(here) # For navigating project directory
+
+library(parlitools) # Contains required data.
+# install.packages("tidymodels") # Uncomment for download.
+library(tidymodels) # For working with model outputs.
+```
+
+### Import
+
+Run the code block below to download and process the data required for this session.
+
+```{r collect-data, echo=TRUE, eval=FALSE, message=FALSE}
+# Load constituency boundaries, simplified using mapshapr
+url <- "https://www.roger-beecham.com/datasets/cons_outline.geojson"
+cons_outline <- st_read(url, crs=27700)
+
+# Collect explanatory variables (from census_11 table in parlitools)
+explanatory <- census_11 %>%
+  transmute(
+    ons_const_id=ons_const_id, constituency_name=constituency_name, region=region,
+    population=population, population_density=population_density,
+    younger=age_20_to_24+age_25_to_29+age_30_to_44,
+    own_home=house_owned,
+    no_car=cars_none, white=ethnicity_white_british+ethnicity_white_irish,eu_born=born_other_eu, christian,
+    professional=nssechigher_manager+nssechigher_professional, degree=qual_level_4,
+    not_good_health=health_fair+health_bad+health_very_bad, heavy_industry=industry_manufacturing+industry_transport
+    )
+
+  # Collect outcome variable (from leave_votes_west table in parlitools)
+  outcome <- leave_votes_west %>%
+    select(ons_const_id, constituency_name, leave=figure_to_use) %>%
+    inner_join(explanatory %>% select(ons_const_id, region)) %>%
+    mutate(gb_leave=.519, resid_unform=leave-gb_leave)
+
+# Z-score transform explanatory variables.
+explanatory_z_scores <- explanatory %>%
+  mutate(
+    across(
+      .cols=c(younger:heavy_industry), .funs=~(.x-mean(.x))/sd(.x)
+    )
+  )
+
+# Generate data frame containing data for models.
+data_for_models <- explanatory_z_scores %>%
+  inner_join(outcome %>% select(ons_const_id, leave, region))
+```
+
+## Homework
+
+
+### Task 1: Calculate and plot
+
+```{r calculate-correlations, echo=TRUE, eval=FALSE, message=FALSE}
+# Place your code for calculating correlation coefficients by explanatory
+# variable here. Note that you will then want to extract a vector of ordered
+# variable names as an object.
+
+```
+
+
+```{r plot-scatters, echo=TRUE, eval=FALSE, message=FALSE}
+# Place your code for generating scatterplots here.
+```
+
+### Task 2: Explore, model and evaluate
+
+
+```{r map-residuals, echo=TRUE, eval=FALSE}
+#######################
+# Enter your code in the chunk provided.
+######################
+```
+
+
+#### Insight 1
+
+> *Enter your answer here*
+
+#### Insight 2
+
+> *Enter your answer here*
+
+#### Insight 3
+
+> *Enter your answer here*

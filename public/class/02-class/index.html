@@ -1,0 +1,2409 @@
+<!DOCTYPE html>
+<html lang="en-us" 
+      xmlns:og="http://ogp.me/ns#" 
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Contents Session outcomes Introduction Concepts Data structure Types of variable Types of observation Tidy data Techniques Import Describe Transform Tidy Conclusions References Session outcomes By the end of this session you should gain the following knowledge:
+Learn the vocabulary and concepts used to describe data. Appreciate the characteristics and importance of tidy data (Wickham 2014) for data processing and analysis. By the end of this session you should gain the following practical skills:">
+
+  
+  <link rel="alternate" hreflang="en-us" href="../../class/02-class/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#424242">
+  
+
+  
+  
+  
+  <script src="../../js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:ital,wght@0,300;1,300%7CRoboto+Slab:wght@300%7CFjalla+One&display=swap">
+      
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="../../css/wowchemy.4b6c25a3164c48e8d6c072f275594e58.css">
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+  <link rel="manifest" href="../../index.webmanifest">
+  
+
+  <link rel="icon" type="image/png" href="../../images/icon_huc37306104a4011cad6e5f9118ea6dd2c_187381_32x32_fill_lanczos_center_3.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../images/icon_huc37306104a4011cad6e5f9118ea6dd2c_187381_180x180_fill_lanczos_center_3.png">
+
+  <link rel="canonical" href="../../class/02-class/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@rjbeecham">
+  <meta property="twitter:creator" content="@rjbeecham">
+  
+  <meta property="og:site_name" content="Visualization for Geographic Data Science">
+  <meta property="og:url" content="/class/02-class/">
+  <meta property="og:title" content="Data fundamentals: Describe, wrangle, tidy | Visualization for Geographic Data Science">
+  <meta property="og:description" content="Contents Session outcomes Introduction Concepts Data structure Types of variable Types of observation Tidy data Techniques Import Describe Transform Tidy Conclusions References Session outcomes By the end of this session you should gain the following knowledge:
+Learn the vocabulary and concepts used to describe data. Appreciate the characteristics and importance of tidy data (Wickham 2014) for data processing and analysis. By the end of this session you should gain the following practical skills:"><meta property="og:image" content="/media/vis-for-gds.png">
+  <meta property="twitter:image" content="/media/vis-for-gds.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2022-05-16T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2022-05-16T00:00:00&#43;00:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  <link rel="shortcut icon" href="../../favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../../img/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../img/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../img/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../img/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../img/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../img/apple-touch-icon-152x152.png" />
+  <link rel="icon" type="image/png" href="../../img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../../img/favicon-16x16.png" sizes="16x16" />
+  <meta name="application-name" content="GEOG5009M: Visualization for Geographic Data Science" />
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta name="msapplication-TileImage" content="/img/mstile-144x144.png" />
+
+
+  <title>Data fundamentals: Describe, wrangle, tidy | Visualization for Geographic Data Science</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70"
+    data-target="#TableOfContents"
+    >
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="../../">Visualization for Geographic Data Science</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="../../">Visualization for Geographic Data Science</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../syllabus/"><span>Syllabus</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../schedule/"><span>Schedule</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../reading/"><span>Reading</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="../../class/"><span>Class</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../homework/"><span>Homework</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../useful/"><span>Useful</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+            
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="https://vis-for-gds.slack.com" target="_blank" rel="noopener"><span><i class="fab fa-slack"></i></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+
+    
+
+<div class="container-fluid docs">
+    <div class="row flex-xl-nowrap">
+        <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+            
+
+
+
+
+
+  
+    
+  
+
+
+
+
+<form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-3" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <span><i class="fas fa-bars"></i></span>
+  </button>
+
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+
+  
+  
+  
+    
+  
+
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="../../class/">Overview</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="../../class/">Class sessions</a>
+      </li>
+
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="../../class/01-class/">Class</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="../../class/01-class/">1: Introduction</a>
+      </li>
+
+      
+      <li class="active">
+        <a href="../../class/02-class/">2: Data fundamentals</a>
+      </li>
+
+      
+    </ul>
+    
+
+  </div>
+  
+  
+</nav>
+
+        </div>
+
+        
+
+        <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+            <article class="article">
+
+                <div class="docs-article-container">
+                    <h1>Data fundamentals: Describe, wrangle, tidy</h1>
+
+                    
+
+                    
+
+                    
+                    <div class="due-date p-2 mb-3 bg-secondary text-white">
+                        Materials from class on Monday, May 16, 2022
+                    </div>
+                    
+
+                    <div class="article-style">
+                        
+<!-- BLOGDOWN-HEAD -->
+<script src="../../rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="../../rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#session-outcomes">Session outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#concepts">Concepts</a>
+<ul>
+<li><a href="#data-structure">Data structure</a></li>
+<li><a href="#types-of-variable">Types of variable</a></li>
+<li><a href="#types-of-observation">Types of observation</a></li>
+<li><a href="#tidy-data">Tidy data</a></li>
+</ul></li>
+<li><a href="#techniques">Techniques</a>
+<ul>
+<li><a href="#import">Import</a></li>
+<li><a href="#describe">Describe</a></li>
+<li><a href="#transform">Transform</a></li>
+<li><a href="#tidy">Tidy</a></li>
+</ul></li>
+<li><a href="#conclusions">Conclusions</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+
+<div id="session-outcomes" class="section level2">
+<h2>Session outcomes</h2>
+<p>By the end of this session you should gain the following <strong><em>knowledge</em></strong>:</p>
+<p><div class="alert alert-objective">
+  <div>
+    <ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>Learn</strong> the vocabulary and concepts used to <strong>describe</strong> data.</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>Appreciate</strong> the characteristics and importance of <strong>tidy data</strong> <span class="citation">(<a href="#ref-wickham_tidy_2014" role="doc-biblioref">Wickham 2014</a>)</span> for data processing and analysis.</li>
+</ul>
+
+  </div>
+</div>
+</p>
+<p>By the end of this session you should gain the following <strong><em>practical skills</em></strong>:</p>
+<p><div class="alert alert-objective">
+  <div>
+    <ul>
+<li><input checked="" disabled="" type="checkbox"> <strong>Load</strong> flat file datasets in RStudio via querying an API.</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>Calculate</strong> descriptive summaries over datasets.</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>Apply</strong> high-level functions in <code>dplyr</code> and <code>tidyr</code> for working with data.</li>
+<li><input checked="" disabled="" type="checkbox"> <strong>Create</strong> statistical graphics that expose high-level structure in data for cleaning purposes.</li>
+</ul>
+
+  </div>
+</div>
+</p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This session covers some of the basics around how to describe and organise data. Whilst this might sound prosaic, there are several reasons why being able to consistently describe a dataset is important. First: it is the initial step in any analysis and helps delimit the research themes and technical procedures that can be deployed. This is especially relevant to modern Data Science-type workflows (like those supported by <code>tidyverse</code>), where it is common to apply the same analysis templates for working over data. Describing your dataset with a consistent vocabulary enables you to identify which analysis templates to reuse. Second relates to the point in <a href="../../class/01-class/#what-vis-for-gds-1">session 1</a> that Geographic Data Science projects usually involve repurposing datasets for social science research for the first time. It is often not obvious whether the data contain sufficient detail and structure to characterise the target behaviours to be researched and the target populations they are assumed to represent. This leads to additional levels of uncertainty and places greater importance on the initial step of data processing, description and exploration.</p>
+<p><!-- Data will be "messy", with missing observations, potentially inconsistent structure and levels of precision.
+Paying attention to   --></p>
+<p>Through the session we will learn both language and concepts for describing and thinking about data, but also how to deploy some of the most important data processing and organisation techniques in <code>R</code> to wrangle over a real dataset. We will be working throughout with data from New York’s <a href="https://www.citibikenyc.com/">Citibike</a> scheme, accessed through the <code>bikedata</code> package, an API to Citibike’s <a href="https://www.citibikenyc.com/system-data">publicly available origin-destination trip data</a>.</p>
+<p><div class="alert alert-note">
+  <div>
+    The idea of applying a consistent vocabulary to describing your data applies especially to working with modern visualization toolkits (<a href="https://ggplot2.tidyverse.org/">ggplot2</a>, <a href="https://www.tableau.com/en-gb">Tableau</a>, <a href="https://vega.github.io/vega-lite/">vega-lite</a>), and will be covered in some detail during the next session as we introduce Visualization Fundamentals and the <a href="https://www.springer.com/gp/book/9780387245447">Grammar of Graphics</a>.
+  </div>
+</div>
+</p>
+</div>
+<div id="concepts" class="section level2">
+<h2>Concepts</h2>
+<div id="data-structure" class="section level3">
+<h3>Data structure</h3>
+<p>In the module we will work with <a href="http://adv-r.had.co.nz/Data-structures.html#data-frames">data frames</a> in R. These are spreadsheet like representations where rows are <strong>observations</strong> (case/record) and columns are <strong>variables</strong>. Each variable (column) in a data frame is a <a href="http://adv-r.had.co.nz/Data-structures.html#vectors">vector</a> that must be of equal length. Where observations have missing values for certain variables – that is, where they may violate this equal-length requirement – the missing values must be substituted with something, usually with <code>NA</code> or similar. This constraint occasionally causes difficulties, for example when working with variables that contain values of different length for an observation. In these cases we create a special class of column, a <a href="https://jennybc.github.io/purrr-tutorial/ls13_list-columns.html"><code>list-column</code></a>, something we’ll return to later in the module.</p>
+<p>Organising data according this simple structure – rows as observations, columns as variables – makes working with data more straightforward. A specific set of tools, made available via the <code>tidyverse</code>, can be deployed for doing most data <strong>tidy</strong>ing tasks <span class="citation">(<a href="#ref-wickham_tidy_2014" role="doc-biblioref">Wickham 2014</a>)</span>.</p>
+</div>
+<div id="types-of-variable" class="section level3">
+<h3>Types of variable</h3>
+<table>
+<caption>
+<span id="tab:variable-types">Table 1: </span>A breakdown of <span class="citation">Stevens (<a href="#ref-stevens_on_1946" role="doc-biblioref">1946</a>)</span> variable types, operators and measures of central tendency that can be applied to each.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Measurement
+</th>
+<th style="text-align:left;">
+Description
+</th>
+<th style="text-align:left;">
+Example
+</th>
+<th style="text-align:left;">
+Operators
+</th>
+<th style="text-align:left;">
+Midpoint
+</th>
+<th style="text-align:left;">
+Dispersion
+</th>
+</tr>
+</thead>
+<tbody>
+<tr grouplength="2">
+<td colspan="6" style="border-bottom: 0px solid;">
+Categories
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;width: 8em; " indentlevel="1">
+<code>Nominal</code>
+</td>
+<td style="text-align:left;">
+Non-orderable categories
+</td>
+<td style="text-align:left;">
+Political parties; street names
+</td>
+<td style="text-align:left;">
+= ≠
+</td>
+<td style="text-align:left;">
+mode
+</td>
+<td style="text-align:left;">
+entropy
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;width: 8em; " indentlevel="1">
+<code>Ordinal</code>
+</td>
+<td style="text-align:left;">
+Orderable categories
+</td>
+<td style="text-align:left;">
+<a href="https://www.gov.uk/terrorism-national-emergency">Terrorism threat levels</a>
+</td>
+<td style="text-align:left;">
+… | &lt;&gt;
+</td>
+<td style="text-align:left;">
+… | median
+</td>
+<td style="text-align:left;">
+… | percentile
+</td>
+</tr>
+<tr grouplength="2">
+<td colspan="6" style="border-bottom: 0px solid;">
+Measures
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;width: 8em; " indentlevel="1">
+<code>Interval</code>
+</td>
+<td style="text-align:left;">
+Numeric measurements
+</td>
+<td style="text-align:left;">
+Temperatures; years
+</td>
+<td style="text-align:left;">
+… | + -
+</td>
+<td style="text-align:left;">
+… | mean
+</td>
+<td style="text-align:left;">
+… | variance
+</td>
+</tr>
+<tr>
+<td style="text-align:left; padding-left:  2em;width: 8em; " indentlevel="1">
+<code>Ratio</code>
+</td>
+<td style="text-align:left;">
+… | Counts
+</td>
+<td style="text-align:left;">
+Distances; prices
+</td>
+<td style="text-align:left;">
+… | × ÷
+</td>
+<td style="text-align:left;">
+… | mean
+</td>
+<td style="text-align:left;">
+… | variance
+</td>
+</tr>
+</tbody>
+</table>
+<p>A classification you may have encountered for describing variables is that developed by <span class="citation">Stevens (<a href="#ref-stevens_on_1946" role="doc-biblioref">1946</a>)</span>, which considers the <em>level of measurement</em> of a variable. <span class="citation">Stevens (<a href="#ref-stevens_on_1946" role="doc-biblioref">1946</a>)</span> classed variables into two groups: variables that describe <em>categories</em> of things and variables that describe <em>measurements</em> of things. Categories include attributes like gender, titles, <code>Subscribers</code> or <code>Casual</code> users of a bikeshare scheme and ranked orders (1st, 2nd, 3rd largest etc.). Measurements include quantities like distance, age, travel time, number of journeys made on a bikeshare scheme.</p>
+<p>Categories can be further subdivided into those that are unordered (<strong>nominal</strong>) from those that are ordered (<strong>ordinal</strong>). Measurements can also be subdivided. <strong>Interval</strong> measurements are quantities that can be ordered and where the difference between two values is meaningful. <strong>Ratio</strong> measurements have both these properties, but also have a meaningful <code>0</code> – where <code>0</code> means the absence of something – and where the ratio of two values can be computed. The most common cited example of an interval measurement is temperature (in degrees C). Temperatures can be ordered and compared additively, but <code>0</code> degrees C does not mean the absence of temperature and 20 degrees C is not twice as “hot” as 10 degrees C.</p>
+<p>Why is this important? The measurement level of a variable determines the types of data analysis procedures that can be performed and therefore allows us to efficiently make decisions when working with a dataset for the first time (Table <a href="#tab:variable-types">1</a>).</p>
+</div>
+<div id="types-of-observation" class="section level3">
+<h3>Types of observation</h3>
+<p>Observations either together form an entire <strong>population</strong> or a subset, or <strong>sample</strong> that we expect represents a <strong>target population</strong>.</p>
+<p>You no doubt will be familiar with these concepts, but we have to think a little more about this in Geographic Data Science applications as we may often be working with datasets that are so-called population-level. The <a href="(https://www.citibikenyc.com/system-data)">Citibike dataset</a> is a complete, population-level dataset in that every journey made through the scheme is recorded. Whether or not this is truly a population-level dataset, however, depends on the analysis purpose. When analysing the bikeshare dataset are we interested <strong>only</strong> in describing use within the Citibike scheme? Or are we taking the patterns observed through our analysis to make claims and inferences about cycling more generally?</p>
+<p>If the latter, then there are problems as the level of detail we have on our sample is pretty trivial compared to traditional datasets, where we deliberately design data collection activities with a specified target population in mind. It may therefore be difficult to gauge how representative Citibike users and Citibike cycling is of New York’s general cycling population. The flipside is that passively collected data do not suffer from the same problems such as non-response bias and social-desirability bias as traditionally collected datasets.</p>
+</div>
+<div id="tidy-data" class="section level3">
+<h3>Tidy data</h3>
+<p>I mentioned that we would be working with data frames organised such that columns always and only refer to variables and rows always and only refer to observations. This arrangement, called <strong>tidy</strong> <span class="citation">(<a href="#ref-wickham_tidy_2014" role="doc-biblioref">Wickham 2014</a>)</span>, has two key advantages. First, if data are arranged in a consistent way, then it is easier to apply and re-use tools for wrangling them due to data having the same underlying structure. Second, placing variables into columns, with each column containing a vector of values, means that we can take advantage of <code>R</code>’s vectorised functions for transforming data – we will demonstrate this in the technical element of this session.</p>
+<p>The three rules for tidy data:</p>
+<ol style="list-style-type: decimal">
+<li>Each variable forms a column.</li>
+<li>Each observation forms a row.</li>
+<li>Each type of observational unit forms a table.</li>
+</ol>
+<div id="drug-treatment-dataset" class="section level4">
+<h4>Drug treatment dataset</h4>
+<p>To elaborate further, we can use the example given in <span class="citation">Wickham (<a href="#ref-wickham_tidy_2014" role="doc-biblioref">2014</a>)</span>, a drug treatment dataset in which two different treatments were administered to participants.</p>
+<p>The data could be represented as:</p>
+<table>
+<caption>
+<span id="tab:drugs-one">Table 2: </span>Table 1 of <span class="citation">Wickham (<a href="#ref-wickham_tidy_2014" role="doc-biblioref">2014</a>)</span>.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+person
+</th>
+<th style="text-align:left;">
+treatment_a
+</th>
+<th style="text-align:left;">
+treatment_b
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+John Smith
+</td>
+<td style="text-align:left;">
+–
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jane Doe
+</td>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mary Johnson
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<p>An alternative organisation could be:</p>
+<table>
+<caption>
+<span id="tab:drugs-two">Table 3: </span>Alternative organisation of Table 1 of <span class="citation">Wickham (<a href="#ref-wickham_tidy_2014" role="doc-biblioref">2014</a>)</span>.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+treatment
+</th>
+<th style="text-align:left;">
+John Smith
+</th>
+<th style="text-align:left;">
+Jane Doe
+</th>
+<th style="text-align:left;">
+Mary Johnson
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+treatment_a
+</td>
+<td style="text-align:left;">
+–
+</td>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatment_b
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Both present the same information unambiguously – Table <a href="#tab:drugs-two">3</a> is simply Table <a href="#tab:drugs-one">2</a> transposed. However, neither is <strong>tidy</strong> as the observations are spread across both the rows and columns. This means that we need to apply different procedures to extract, perform computations on, and visually represent, these data.</p>
+<p>Much better would be to organise the table into a <strong>tidy</strong> form. To do this we need to identify the <strong>variables</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><code>person</code>: a categorical nominal variable which takes three values: John Smith, Jane Doe, Mary Johnson.</li>
+<li><code>treatment</code>: a categorical nominal variable which takes values: a and b.</li>
+<li><code>result</code>: a measurement ratio (I think) variable which six recorded values (including the missing value): -, 16, 3, 2, 11,</li>
+</ol>
+<p>Each <strong>observation</strong> is then a test result returned for each combination of <code>person</code> and <code>treatment</code>.</p>
+<p>So, a <strong>tidy</strong> organisation for this dataset would be:</p>
+<table>
+<caption>
+<span id="tab:drugs-tidy">Table 4: </span>Tidy version of Table 1 of <span class="citation">Wickham (<a href="#ref-wickham_tidy_2014" role="doc-biblioref">2014</a>)</span>.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+person
+</th>
+<th style="text-align:left;">
+treatment
+</th>
+<th style="text-align:left;">
+result
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+John Smith
+</td>
+<td style="text-align:left;">
+a
+</td>
+<td style="text-align:left;">
+–
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+John Smith
+</td>
+<td style="text-align:left;">
+b
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jane Doe
+</td>
+<td style="text-align:left;">
+a
+</td>
+<td style="text-align:left;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Jane Doe
+</td>
+<td style="text-align:left;">
+b
+</td>
+<td style="text-align:left;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mary Johnson
+</td>
+<td style="text-align:left;">
+a
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mary Johnson
+</td>
+<td style="text-align:left;">
+b
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="gapminder-population-dataset" class="section level4">
+<h4>Gapminder population dataset</h4>
+<p>In <a href="https://r4ds.had.co.nz/tidy-data.html#tidy-data-1">chapter 12</a> of <span class="citation">Wickham and Grolemund (<a href="#ref-wickham_r_2017" role="doc-biblioref">2017</a>)</span>, the benefits of this layout, particularly for working with R, are demonstrated with the <a href="https://www.gapminder.org/data/"><code>gapminder</code></a> dataset. I recommend reading this short chapter in full. We will be applying similar approaches in the technique part of this class (which follows shortly) and also the <a href="">homework</a>. To consolidate our conceptual understanding of <strong>tidy</strong> data let’s quickly look at the <code>gapminder</code> data, as it is a dataset we’re probably more likely to encounter.</p>
+<p>First, a <strong>tidy</strong> version of the data:</p>
+<table>
+<caption>
+<span id="tab:gapminder-tidy">Table 5: </span>Tidy excerpt from <code>gapminder</code> dataset.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+country
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:left;">
+cases
+</th>
+<th style="text-align:left;">
+population
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+745
+</td>
+<td style="text-align:left;">
+19987071
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:left;">
+2666
+</td>
+<td style="text-align:left;">
+20595360
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+37737
+</td>
+<td style="text-align:left;">
+172006362
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:left;">
+80488
+</td>
+<td style="text-align:left;">
+174504898
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+China
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+212258
+</td>
+<td style="text-align:left;">
+1272915272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+China
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:left;">
+213766
+</td>
+<td style="text-align:left;">
+1280428583
+</td>
+</tr>
+</tbody>
+</table>
+<p>So the <strong>variables</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><code>country</code>: a categorical nominal variable.</li>
+<li><code>year</code>: a date (cyclic ratio) variable.</li>
+<li><code>cases</code>: a ratio (count) variable.</li>
+<li><code>population</code>: a ratio (count) variable.</li>
+</ol>
+<p>Each <strong>observation</strong> is therefore a recorded count of cases and population for a country in a year.</p>
+<p>An alternative organisation of this dataset that appears in <span class="citation">Wickham and Grolemund (<a href="#ref-wickham_r_2017" role="doc-biblioref">2017</a>)</span> is below. This is <strong>untidy</strong> as the observations are spread across two rows. This makes operations that we might want to perform on the <code>cases</code> and <code>population</code> variables – for example computing exposure rates – somewhat tedious.</p>
+<table>
+<caption>
+<span id="tab:gapminder-untidy1">Table 6: </span>Untidy excerpt of <a href="https://www.gapminder.org/data/"><code>gapminder</code></a> dataset: observations spread across rows
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+country
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:left;">
+type
+</th>
+<th style="text-align:left;">
+count
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+cases
+</td>
+<td style="text-align:left;">
+745
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+population
+</td>
+<td style="text-align:left;">
+19987071
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:left;">
+cases
+</td>
+<td style="text-align:left;">
+2666
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:left;">
+population
+</td>
+<td style="text-align:left;">
+20595360
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+cases
+</td>
+<td style="text-align:left;">
+37737
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+population
+</td>
+<td style="text-align:left;">
+174504898
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+…
+</td>
+<td style="text-align:left;">
+…
+</td>
+<td style="text-align:left;">
+…
+</td>
+<td style="text-align:left;">
+…
+</td>
+</tr>
+</tbody>
+</table>
+<p>This actually doesn’t appear in <span class="citation">Wickham and Grolemund (<a href="#ref-wickham_r_2017" role="doc-biblioref">2017</a>)</span>, but imagine that the <code>gapminder</code> dataset instead reported values of <code>cases</code> separately by gender. A type of representation I’ve often seen in social science domains, probably as it is helpful for data entry, is where observations are spread across the columns. This too creates problems for performing aggregate functions, but also for specifying visualization designs (in <a href="https://ggplot2.tidyverse.org/"><code>ggplot2</code></a>) as we will discover in the next session.</p>
+<table>
+<caption>
+<span id="tab:gapminder-untidy2">Table 7: </span>Untidy possible excerpt of <a href="https://www.gapminder.org/data/"><code>gapminder</code></a> dataset: observations spread across columns
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+country
+</th>
+<th style="text-align:left;">
+year
+</th>
+<th style="text-align:left;">
+f_cases
+</th>
+<th style="text-align:left;">
+m_cases
+</th>
+<th style="text-align:left;">
+f_population
+</th>
+<th style="text-align:left;">
+m_population
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+447
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+9993400
+</td>
+<td style="text-align:left;">
+9993671
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Afghanistan
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:left;">
+1599
+</td>
+<td style="text-align:left;">
+1067
+</td>
+<td style="text-align:left;">
+10296280
+</td>
+<td style="text-align:left;">
+10299080
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+16982
+</td>
+<td style="text-align:left;">
+20755
+</td>
+<td style="text-align:left;">
+86001181
+</td>
+<td style="text-align:left;">
+86005181
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brazil
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:left;">
+39440
+</td>
+<td style="text-align:left;">
+41048
+</td>
+<td style="text-align:left;">
+87251329
+</td>
+<td style="text-align:left;">
+87253569
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+China
+</td>
+<td style="text-align:left;">
+1999
+</td>
+<td style="text-align:left;">
+104007
+</td>
+<td style="text-align:left;">
+108252
+</td>
+<td style="text-align:left;">
+636451250
+</td>
+<td style="text-align:left;">
+636464022
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+China
+</td>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:left;">
+104746
+</td>
+<td style="text-align:left;">
+109759
+</td>
+<td style="text-align:left;">
+640212600
+</td>
+<td style="text-align:left;">
+640215983
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="techniques" class="section level2">
+<h2>Techniques</h2>
+<p>The technical element to this session involves importing, describing, transforming and tidying data from a large bikeshare scheme – New York’s <a href="https://www.citibikenyc.com/">Citibike</a> scheme.</p>
+<ul>
+<li>Download the <a href="../../homework/02-homework_files/02-template.Rmd"><i class="fab fa-r-project"></i> 02-template.Rmd</a> file for this session and save it to the <code>reports</code> folder of your <code>vis-for-gds</code> project that you created in session 1.</li>
+<li>Open your <code>vis-for-gds</code> project in RStudio and load the template file by clicking <code>File</code> &gt; <code>Open File ...</code> &gt; <code>reports/02-template.Rmd</code>.</li>
+</ul>
+<div id="import" class="section level3">
+<h3>Import</h3>
+<p>In the template file there is a discussion of how to <strong>setup</strong> your R session with key packages – <code>tidyverse</code> , <code>fst</code>, <code>lubridate</code>, <code>sf</code> – and also the <a href="https://github.com/ropensci/bikedata"><code>bikedata</code></a> package for accessing bikeshare data.</p>
+<p>Available via the <code>bikedata</code> package are trip and occupancy data for a number of bikeshare schemes (as below). We will work with data from New York’s <a href="https://www.citibikenyc.com/">Citibike</a> scheme for June 2020. A list of all cities covered by the <code>bikedata</code> package is below:</p>
+<pre class="r"><code>bike_cities()
+##    city     city_name      bike_system
+## 1    bo        Boston           Hubway
+## 2    ch       Chicago            Divvy
+## 3    dc Washington DC CapitalBikeShare
+## 4    gu   Guadalajara           mibici
+## 5    la   Los Angeles            Metro
+## 6    lo        London        Santander
+## 7    mo      Montreal             Bixi
+## 8    mn   Minneapolis         NiceRide
+## 9    ny      New York         Citibike
+## 10   ph  Philadelphia           Indego
+## 11   sf      Bay Area       FordGoBike</code></pre>
+<p>In the template there are code chunks demonstrating how to download and process these data using <a href="https://github.com/ropensci/bikedata">bikedata</a>’s API. This is mainly for illustrative purposes and the code chunks take some time to execute. We ultimately use the <a href="https://www.fstpackage.org/"><code>fst</code></a> package for serializing and reading in the these data. So I suggest you ignore the import code and calls to the <code>bikedata</code> API and instead follow the instructions for downloading and reading in the <code>.fst</code> file with the trips data and also the <code>.csv</code> <i class="fas fa-file-csv"></i> file containing stations data, with:</p>
+<pre class="r"><code># Create subdirectory in data folder for storing bike data.
+if(!dir.exists(here(&quot;data&quot;, &quot;bikedata&quot;))) dir.create(here(&quot;data&quot;, &quot;bikedata&quot;))
+
+# Read in .csv file of stations data from url.
+tmp_file &lt;- tempfile()
+url &lt;- &quot;https://www.roger-beecham.com/datasets/ny_stations.csv&quot;
+curl::curl_download(url, tmp_file, mode=&quot;wb&quot;)
+ny_stations &lt;- read_csv(tmp_file)
+
+# Read in .fst file of trips data from url.
+tmp_file &lt;- tempfile()
+cs_url &lt;- &quot;https://www.roger-beecham.com/datasets/ny_trips.fst&quot;
+curl::curl_download(url, tmp_file, mode=&quot;wb&quot;)
+ny_trips &lt;- read_fst(tmp_file)
+
+# Write out to subdirectory for future use.
+write_fst(trips, here(&quot;data&quot;, &quot;ny_trips.fst&quot;))
+write_csv(stations, here(&quot;data&quot;, &quot;ny_stations.csv&quot;))
+
+# Clean workspace.
+rm(url, tmp_file)</code></pre>
+<p><div class="alert alert-note">
+  <div>
+    <code>fst</code> implements in the background various operations such as multi-threading to reduce load on disk space. It therefore makes it possible to work with large datasets in-memory in <code>R</code> rather than connecting to a database and serving up summaries/subsets to be loaded into R. We will be working with just 2 million records, but with <code>fst</code> it is possible to work in-memory with much larger datasets – in <span class="citation">Lovelace et al. (<a href="#ref-lovelace_is_2020" role="doc-biblioref">2020</a>)</span> we ended up working with 80 million + trip records.
+  </div>
+</div>
+</p>
+<p>If you completed the reading and research from the <a href="../../homework/01-homework/">Session 1 Homework</a>, some of the above should be familiar to you. The key arguments to look at are <code>read_csv()</code> and <code>read_fst()</code>, into which we pass the path to the file. In this case we created a <code>tmpfile()</code> within the R session. We then write these data out and save locally to the project’s <code>data</code> folder. This is useful as we only want to download the data once. In the <code>write_*&lt;&gt;</code> functions we reference this location using the <a href="https://here.r-lib.org/"><code>here</code></a> package’s <code>here()</code> function. <a href="https://here.r-lib.org/"><code>here</code></a> is really useful for reliably creating paths relative to your project’s root. To read in these data for future sessions:</p>
+<pre class="r"><code># Read in these local copies of the trips and stations data.
+ny_trips &lt;- read_fst(here(&quot;data&quot;, &quot;ny_trips.fst&quot;))
+ny_stations &lt;- read_csv(here(&quot;data&quot;, &quot;ny_stations.csv&quot;))</code></pre>
+<p>Notice that we use <strong>assignment</strong> here (<code>&lt;-</code>) so that these data are loaded as objects and appear in the Environment pane of your RStudio window. An efficient description of data import with <code>read_csv()</code> is also in <a href="https://r4ds.had.co.nz/data-import.html">Chapter 11</a> of <span class="citation">Wickham and Grolemund (<a href="#ref-wickham_r_2017" role="doc-biblioref">2017</a>)</span>.</p>
+<code>ny_stations</code> and <code>ny_trips</code> are data frames, spreadsheet type representations containing observations in rows and variables in columns. Inspecting the layout of the stations data with <code>View(ny_stations)</code> you will notice that the top line is the header and contains column (variable) names.
+<div class="figure"><span style="display:block;" id="fig:view-annotate"></span>
+<img src="../../../../../../../../../../../class/02-class_files/view.png" alt="`ny_trips` and `ny_stations` as they appear when calling `View()`." width="100%" />
+<p class="caption">
+Figure 1: <code>ny_trips</code> and <code>ny_stations</code> as they appear when calling <code>View()</code>.
+</p>
+</div>
+</div>
+<div id="describe" class="section level3">
+<h3>Describe</h3>
+<p>There are several functions for generating a quick overview of a data frame’s contents. <code>glimpse&lt;dataset-name&gt;</code> is particularly useful. It provides a summary of the data frame dimensions – we have c. 1.9 million trip observations in <code>ny_trips</code> and 11 variables<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. The function also prints out the object type for each of these variables, with the variables either of type <code>int</code> or <code>chr</code> in this case.</p>
+<pre class="r"><code>glimpse(ny_trips)
+## Rows: 1,882,273
+## Columns: 11
+## $ id               &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21…
+## $ city             &lt;chr&gt; &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;…
+## $ trip_duration    &lt;dbl&gt; 1062, 3810, 1017, 226, 1437, 355, 99, 1810, 87, 2714, 2096, 1611, 529, 69…
+## $ start_time       &lt;chr&gt; &quot;2020-06-01 00:00:03&quot;, &quot;2020-06-01 00:00:03&quot;, &quot;2020-06-01 00:00:09&quot;, &quot;202…
+## $ stop_time        &lt;chr&gt; &quot;2020-06-01 00:17:46&quot;, &quot;2020-06-01 01:03:33&quot;, &quot;2020-06-01 00:17:06&quot;, &quot;202…
+## $ start_station_id &lt;chr&gt; &quot;ny3419&quot;, &quot;ny366&quot;, &quot;ny389&quot;, &quot;ny3255&quot;, &quot;ny367&quot;, &quot;ny248&quot;, &quot;ny3232&quot;, &quot;ny3263…
+## $ end_station_id   &lt;chr&gt; &quot;ny3419&quot;, &quot;ny336&quot;, &quot;ny3562&quot;, &quot;ny505&quot;, &quot;ny497&quot;, &quot;ny247&quot;, &quot;ny390&quot;, &quot;ny496&quot;,…
+## $ bike_id          &lt;chr&gt; &quot;39852&quot;, &quot;37558&quot;, &quot;37512&quot;, &quot;39674&quot;, &quot;21093&quot;, &quot;39594&quot;, &quot;43315&quot;, &quot;16571&quot;, &quot;…
+## $ user_type        &lt;chr&gt; &quot;Customer&quot;, &quot;Subscriber&quot;, &quot;Customer&quot;, &quot;Customer&quot;, &quot;Customer&quot;, &quot;Subscriber…
+## $ birth_year       &lt;chr&gt; &quot;1997&quot;, &quot;1969&quot;, &quot;1988&quot;, &quot;1969&quot;, &quot;1997&quot;, &quot;1990&quot;, &quot;1938&quot;, &quot;1995&quot;, &quot;1971&quot;, &quot;…
+## $ gender           &lt;dbl&gt; 2, 0, 2, 0, 2, 1, 2, 2, 2, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</code></pre>
+<pre class="r"><code>glimpse(ny_stations)
+## Rows: 1,010
+## Columns: 6
+## $ id        &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 2…
+## $ city      &lt;chr&gt; &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;ny&quot;, &quot;n…
+## $ stn_id    &lt;chr&gt; &quot;ny116&quot;, &quot;ny119&quot;, &quot;ny120&quot;, &quot;ny127&quot;, &quot;ny128&quot;, &quot;ny143&quot;, &quot;ny144&quot;, &quot;ny146&quot;, &quot;ny150&quot;,…
+## $ name      &lt;chr&gt; &quot;W 17 St &amp; 8 Ave&quot;, &quot;Park Ave &amp; St Edwards St&quot;, &quot;Lexington Ave &amp; Classon Ave&quot;, &quot;B…
+## $ longitude &lt;chr&gt; &quot;-74.00149746&quot;, &quot;-73.97803415&quot;, &quot;-73.95928168&quot;, &quot;-74.00674436&quot;, &quot;-74.00297088&quot;, …
+## $ latitude  &lt;chr&gt; &quot;40.74177603&quot;, &quot;40.69608941&quot;, &quot;40.68676793&quot;, &quot;40.73172428&quot;, &quot;40.72710258&quot;, &quot;40.6…</code></pre>
+<table>
+<caption>
+<span id="tab:data-types">Table 8: </span>A breakdown of data types in R.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Type
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<code>lgl</code>
+</td>
+<td style="text-align:left;">
+Logical – vectors that can contain only <code>TRUE</code> or <code>FALSE</code> values
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>int</code>
+</td>
+<td style="text-align:left;">
+Integers – whole numbers
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>dbl</code>
+</td>
+<td style="text-align:left;">
+Double – real numbers with decimals
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>chr</code>
+</td>
+<td style="text-align:left;">
+Character – text strings
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>dttm</code>
+</td>
+<td style="text-align:left;">
+Date-times – a date + a time
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>fctr</code>
+</td>
+<td style="text-align:left;">
+Factors – represent categorical variables of fixed and potentially orderable values
+</td>
+</tr>
+</tbody>
+</table>
+<p>The object type of a variable in a data frame relates to that variable’s <em>measurement level</em>. It is often useful to convert to types with greater specificity. For example, we may which to convert the <code>start_time</code> and <code>stop_time</code> variables to a date-time format so that various time-related functions could be used. For efficient storage, we may wish to convert the <em>station identifier</em> variables as <code>int</code> types by removing the redundant “ny” text which prefaces <code>end_station_id</code>, <code>end_station_id</code>, <code>stn_id</code>. The geographic coordinates are currently stored as type <code>chr</code>. These could be regarded as quantitative variables, floating points with decimals. So converting to type <code>dbl</code> or as a <a href="https://r-spatial.github.io/sf/articles/sf1.html#simple-feature-geometry-types"><code>POINT</code></a> geometry type (more on this later in the module) may be sensible.</p>
+<p>In the <a href="../../homework/02-homework_files/02-template.Rmd"><i class="fab fa-r-project"></i> 02-template.Rmd</a> file there are code chunks for doing these conversions. There are some slightly more involved data transform procedures in this code. Don’t fixate too much on these, but the upshot can be seen when running <code>glimpse()</code> on the converted data frames:</p>
+<pre class="r"><code>glimpse(ny_trips)
+## Rows: 1,882,273
+## Columns: 10
+## $ id               &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 2…
+## $ trip_duration    &lt;dbl&gt; 1062, 3810, 1017, 226, 1437, 355, 99, 1810, 87, 2714, 2096, 1611, 529, 695, 206,…
+## $ start_time       &lt;dttm&gt; 2020-06-01 00:00:03, 2020-06-01 00:00:03, 2020-06-01 00:00:09, 2020-06-01 00:00…
+## $ stop_time        &lt;dttm&gt; 2020-06-01 00:00:03, 2020-06-01 00:00:03, 2020-06-01 00:00:09, 2020-06-01 00:00…
+## $ start_station_id &lt;int&gt; 3419, 366, 389, 3255, 367, 248, 3232, 3263, 390, 319, 237, 3630, 3610, 3708, 465…
+## $ end_station_id   &lt;int&gt; 3419, 336, 3562, 505, 497, 247, 390, 496, 3232, 455, 3263, 3630, 3523, 3740, 379…
+## $ bike_id          &lt;int&gt; 39852, 37558, 37512, 39674, 21093, 39594, 43315, 16571, 28205, 41760, 30745, 380…
+## $ user_type        &lt;chr&gt; &quot;Customer&quot;, &quot;Subscriber&quot;, &quot;Customer&quot;, &quot;Customer&quot;, &quot;Customer&quot;, &quot;Subscriber&quot;, &quot;Sub…
+## $ birth_year       &lt;int&gt; 1997, 1969, 1988, 1969, 1997, 1990, 1938, 1995, 1971, 1989, 1990, 1969, 1984, 19…
+## $ gender           &lt;chr&gt; &quot;female&quot;, &quot;unknown&quot;, &quot;female&quot;, &quot;unknown&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, …</code></pre>
+<pre class="r"><code>glimpse(ny_stations)
+## Rows: 1,010
+## Columns: 5
+## $ id        &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, …
+## $ stn_id    &lt;int&gt; 116, 119, 120, 127, 128, 143, 144, 146, 150, 151, 157, 161, 164, 167, 168, 173, 174, 19…
+## $ name      &lt;chr&gt; &quot;W 17 St &amp; 8 Ave&quot;, &quot;Park Ave &amp; St Edwards St&quot;, &quot;Lexington Ave &amp; Classon Ave&quot;, &quot;Barrow S…
+## $ longitude &lt;dbl&gt; -74.00150, -73.97803, -73.95928, -74.00674, -74.00297, -73.99338, -73.98069, -74.00911,…
+## $ latitude  &lt;dbl&gt; 40.74178, 40.69609, 40.68677, 40.73172, 40.72710, 40.69240, 40.69840, 40.71625, 40.7208…</code></pre>
+</div>
+<div id="transform" class="section level3">
+<h3>Transform</h3>
+<div id="transform-with-dplyr" class="section level4">
+<h4>Transform with <code>dplyr</code></h4>
+<table>
+<caption>
+<span id="tab:dplyr-verbs">Table 9: </span>dplyr funcitions (verbs) for manipulating data frames.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+function()
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<code>filter()</code>
+</td>
+<td style="text-align:left;">
+Picks rows (observations) if their values match a specified criteria
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>arrange()</code>
+</td>
+<td style="text-align:left;">
+Reorders rows (observations) based on their values
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>select()</code>
+</td>
+<td style="text-align:left;">
+Picks a subset of columns (variables) by name (or name characteristics)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>rename()</code>
+</td>
+<td style="text-align:left;">
+Changes the name of columns in the data frame
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>mutate()</code>
+</td>
+<td style="text-align:left;">
+Adds new columns (or variables)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>group_by()</code>
+</td>
+<td style="text-align:left;">
+Chunks the dataset into groups for grouped operations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>summarise()</code>
+</td>
+<td style="text-align:left;">
+Calculate single-row (non-grouped) or multiple-row (if grouped) summary values
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>..and more</code>
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://dplyr.tidyverse.org/"><code>dplyr</code></a> is one of the most important packages for supporting modern data analysis workflows. The package provides a <strong>grammar of data manipulation</strong>, with access to functions that can be variously combined to support most data processing and transformation activity. Once you become familiar with <code>dplyr</code> functions (or <strong>verbs</strong>) you will find yourself generating analysis templates to re-use whenever you work on a new dataset.</p>
+<p>All <code>dplyr</code> functions work in the same way:</p>
+<ol style="list-style-type: decimal">
+<li>Start with a data frame.</li>
+<li>Pass some arguments to the function which control what you do to the data frame.</li>
+<li>Return the updated data frame.</li>
+</ol>
+<p>So every <code>dplyr</code> function expects a data frame and will always return a data frame.</p>
+</div>
+<div id="use-pipes-with-dplyr" class="section level4">
+<h4>Use pipes <code>%&gt;%</code> with <code>dplyr</code></h4>
+<p><code>dplyr</code> is most effective when its functions are chained together – you will see this shortly as we explore the New York bikeshare data. This chaining of functions can be achieved using the <strong>pipe</strong> operator (<code>%&gt;%</code>). Pipes are used for passing information in a program. They take the output of a set of code (a <code>dplyr</code> specification) and make it the input of the next set (another <code>dplyr</code> specification).</p>
+<p>Pipes can be easily applied to <code>dplyr</code> functions, and the functions of all packages that form the <code>tidyverse</code>. I mentioned in <a href="../../class/01-class">Session 1</a> that <code>ggplot2</code> provides a framework for specifying a <strong>layered grammar of graphics</strong> (more on this in Session 3). Together with the pipe operator (<code>%&gt;%</code>), <code>dplyr</code> supports a <strong>layered grammar of data manipulation</strong>.</p>
+</div>
+<div id="count-rows" class="section level4">
+<h4><code>count()</code> rows</h4>
+<p>This might sound a little abstract so let’s use and combine some <code>dplyr</code> functions to generate some statistical summaries on the New York bikeshare data.</p>
+<p>First we’ll count the number of trips made in Jun 2020 by gender. <code>dplyr</code> has a convenience function for counting, so we could run the code below, also in the <a href="../../homework/02-homework_files/02-template.Rmd"><i class="fab fa-r-project"></i> 02-template.Rmd</a> for this session. I’ve commented the code block to convey what each line achieves.</p>
+<pre class="r"><code>ny_trips %&gt;%  # Take the ny_trips data frame.
+  count(gender, sort=TRUE) # Run the count function over the data frame and set the sort parameter to TRUE.
+##    gender       n
+## 1    male 1044621
+## 2  female  586361
+## 3 unknown  251291</code></pre>
+<p>There are a few things happening in the <code>count()</code> function. It takes the <code>gender</code> variable from <code>ny_trips</code>, organises or <em>groups</em> the rows in the data frame according to its values (<code>female</code> | <code>male</code> | <code>unknown</code>), counts the rows and then orders the <em>summarised</em> output descending on the counts.</p>
+</div>
+<div id="summarise-over-rows" class="section level4">
+<h4><code>summarise()</code> over rows</h4>
+<table>
+<caption>
+<span id="tab:aggregate-functions">Table 10: </span>A breakdown of aggregate functions commonly used with <code>summarise()</code>.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Function
+</th>
+<th style="text-align:left;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<code>n()</code>
+</td>
+<td style="text-align:left;">
+Counts the number of observations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>n_distinct(var)</code>
+</td>
+<td style="text-align:left;">
+Counts the number of unique observations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>sum(var)</code>
+</td>
+<td style="text-align:left;">
+Sums the values of observations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>max(var)</code>|<code>min(var)</code>
+</td>
+<td style="text-align:left;">
+Finds the min|max values of observations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>mean(var)</code>|<code>median(var)</code>|<code>sd(var)</code>| <code>...</code>
+</td>
+<td style="text-align:left;">
+Calculates central tendency of observations
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>...</code>
+</td>
+<td style="text-align:left;">
+Many more
+</td>
+</tr>
+</tbody>
+</table>
+<p>Often you will want to do more than simply counting and you may also want to be more explicit in the way the data frame is <em>grouped</em> for computation. We’ll demonstrate this here with a more involved analysis of the usage data and using some key aggregate functions (Table <a href="#tab:aggregate-functions">10</a>).</p>
+<p>A common workflow is to combine <code>group_by()</code> and <code>summarise()</code>, and in this case <code>arrange()</code> to replicate the <code>count()</code> example.</p>
+<pre class="r"><code>ny_trips %&gt;% # Take the ny_trips data frame.
+  group_by(gender) %&gt;% # Group by gender.
+  summarise(count=n()) %&gt;% # Count the number of observations per group.
+  arrange(desc(count)) # Arrange the grouped and summarised (collapsed) rows according to count.
+## # A tibble: 3 x 2
+##  gender    count
+##  &lt;chr&gt;     &lt;int&gt;
+## 1 male    1044621
+## 2 female   586361
+## 3 unknown  251291</code></pre>
+<p>In <code>ny_trips</code> there is a variable measuring trip duration in seconds (<code>trip_duration</code>) and distinguishing casual users from those formally registered to use the scheme (<code>user_type</code> - <code>Customer</code> vs. <code>Subscriber</code>). It may be instructive to calculate some summary statistics to see how trip duration varies between these groups.</p>
+<p>The code below uses <code>group_by()</code>, <code>summarise()</code> and <code>arrange()</code> in exactly the same way, but with the addition of other aggregate functions profiles the <code>trip_duration</code> variable according to central tendency and by <code>user_type</code>.</p>
+<pre class="r"><code>ny_trips %&gt;% # Take the ny_trips data frame.
+  group_by(user_type) %&gt;% # Group by user type.
+  summarise( # Summarise over the grouped rows, generate a new variable for each type of summary.
+    count=n(),
+    avg_duration=mean(trip_duration/60),
+    median_duration=median(trip_duration/60),
+    sd_duration=sd(trip_duration/60),
+    min_duration=min(trip_duration/60),
+    max_duration=max(trip_duration/60)
+    ) %&gt;%
+  arrange(desc(count)) # Arrange on the count variable.
+
+## # A tibble: 2 x 6
+##  user_type    count avg_duration median_duration sd_duration min_duration max_duration
+##  &lt;chr&gt;        &lt;int&gt;        &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+## 1 Subscriber 1306688         20.2            14.4        110.         1.02         33090
+## 2 Customer    575585         43.6            23.2        393.         1.02         46982</code></pre>
+<p>Clearly there are some outlier trips that may need to be examined. Bikeshare schemes are built to incentivise short journeys of &lt;30 minutes, but the maximum trip duration recorded above is clearly erroneous – 32 days. Ignoring these sorts of outliers by calculating the trip durations at the 95th percentiles is instructive. The max trip duration at the 95th percentile for <code>Subscribers</code> was almost 27 minutes and for <code>Customers</code> was 1 hours 26 mins. It makes sense that more casual users may have longer trip durations, as they are more likely to be tourists or occasional cyclists using the scheme for non-utility trips. However, they do skew the mean travel time.</p>
+<p>Returning to the breakdown of usage by gender, an interesting question is whether or not the male-female split in bikehare is similar to that of the cycling population of New York City as a whole. This might tell us something about whether the bikeshare scheme could be <em>representative</em> of wider cycling. This could be achieved with the code below. A couple of new additions: we use <code>filter()</code>, to remove observations where the gender of the cyclist is <code>unknown</code>. We also use <code>mutate()</code> for the first time, which allows us to modify or create new variables.</p>
+<pre class="r"><code>ny_trips %&gt;% # Take the ny_trips data frame.
+  filter(gender != &quot;unknown&quot;) %&gt;% # Filter out rows with the value &quot;unknown&quot; on gender.
+  group_by(gender) %&gt;% # Group by gender.
+  summarise(count=n()) %&gt;% # Count the number of observations per group.
+  mutate(prop=count/sum(count)) %&gt;% # Add a new column called `prop`, divide the value in the row for the variable count by the sum of the count variable across all rows.
+  arrange(desc(count)) # Arrange on the count variable.
+
+## # A tibble: 2 x 3
+##  gender   count  prop
+##  &lt;chr&gt;    &lt;int&gt; &lt;dbl&gt;
+## 1 male   1044621 0.640
+## 2 female  586361 0.360</code></pre>
+<p>As I’ve commented each line you hopefully get a sense of what is happening in the code above. I mentioned that <code>dplyr</code> functions read like <strong>verbs</strong>. This is a very deliberate design decision. With the code laid out as above – each <code>dplyr</code> verb occupying a single line, separated by a pipe (<code>%&gt;%</code>) – you can generally understand the code with a cursory glance. There are obvious benefits to this. Once you become familiar with <code>dplyr</code> it becomes very easy to read, write and share code.</p>
+<p><div class="alert alert-note">
+  <div>
+    Remembering that <strong>pipes</strong> (<code>%&gt;%</code>) take the output of a set of code and make it the input of the next set, what do you think would happen if you were to comment out the call to <code>arrange()</code> in the code block above? Try it for yourself. You will notice that I use separate lines for each call to the <strong>pipe</strong> operator. This is good practice for supporting readibility of your code.
+  </div>
+</div>
+</p>
+</div>
+<div id="manipulate-dates-with-lubridate" class="section level4">
+<h4>Manipulate dates with <a href="https://lubridate.tidyverse.org/"><code>lubridate</code></a></h4>
+<p>Let’s continue this investigation of usage by gender, and whether bikeshare might be representative of regular cycling, by profiling how usage varies over time. To do this we will need to work with <code>date-time</code> variables. The <a href="https://lubridate.tidyverse.org/"><code>lubridate</code></a> package provides various convenience functions for this.</p>
+<p>In the code block below we extract the <em>day of week</em> and <em>hour of day</em> from the <code>start_time</code> variable using <code>lubridate</code>’s <a href="https://lubridate.tidyverse.org/reference/day.html">day accessor</a> functions. Documentation on these can be accessed in the usual way (<code>?&lt;function-name&gt;</code>), but reading down the code it should be clear to you how this works. Next we count the number of trips made by hour of day, day of week and gender. The summarised data frame will be re-used several times in our analysis, so we store it as an object with a suitable name (<code>ny_temporal</code>) using the assignment operator.</p>
+<pre class="r"><code># Create a hod dow summary by gender and assign it the name &quot;ny_temporal&quot;.
+ny_temporal &lt;- ny_trips %&gt;%  # Take the ny_trips data frame.
+  mutate(
+    day=wday(start_time, label=TRUE), # Create a new column identify dow.
+    hour=hour(start_time)) %&gt;% # Create a new column identify hod.
+  group_by(gender, day, hour) %&gt;% # Group by day, hour, gender.
+  summarise(count=n()) %&gt;% # Count the grouped rows.
+  ungroup()</code></pre>
+<p><div class="alert alert-note">
+  <div>
+    Whether or not to store derived data tables, like the newly assigned <code>ny_temporal</code>, in a session is not an easy decision. You want to try to avoid cluttering your Environment pane with many data objects. Often when generating charts it is necessary to create these sorts of derived tables as input data (to <code>ggplot2</code>) – and so when doing visual data analysis you may end up with an unhelpfully large number of these derived tables. The general rule I apply: if the derived table is to be used &gt;3 times in a data analysis or is computationally intensive, assign it (<code>&lt;-</code>) to an object.
+  </div>
+</div>
+</p>
+<p>In Figure <a href="#fig:plot-temporal">2</a> below these derived data are plotted. The template contains <code>ggplot2</code> code for creating the graphic. Don’t obsess too much on it – more on this next session. The plot demonstrates a familiar weekday-weekend pattern of usage. Trip frequencies peak in the morning and evening rush hours during weekdays and mid/late-morning and afternoon during weekends. This is consistent with typical travel behaviour. Notice though that the weekday afternoon peak is much larger than the morning peak. There are several speculative explanations for this and re-running the plot on <code>Subscriber</code> users only may be instructive. A secondary observation is that whilst men and women share this overall pattern of usage, the relative number of trips taken by each day of week varies. Men make many more trips at peak times during the start of the week than they do later in the week. The same pattern does not appear for women. This is certainly something to follow up on, for example by collecting data over a longer period of time.</p>
+<div class="figure"><span style="display:block;" id="fig:plot-temporal"></span>
+<img src="../../../../../../../../../../../class/02-class_files/hod_dow.png" alt="Line charts generated with `ggplot2`. Plot data computed using `dplyr` and `lubridate`." width="100%" />
+<p class="caption">
+Figure 2: Line charts generated with <code>ggplot2</code>. Plot data computed using <code>dplyr</code> and <code>lubridate</code>.
+</p>
+</div>
+<p><div class="alert alert-note">
+  <div>
+    Our analysis is based on data from June 2020, a time when New York residents were emerging from lockdown. It would be instructive to compare with data from a non-Covid year. If there is a very clear contrast in usage between this data and a control (non-Covid) year, this suggests bikeshare data may be used for monitoring <em>behavioural change</em>. The fact that bikeshare is collected continuously makes this possible. Check out <a href="https://github.com/jwoLondon/mobv">Jo Wood’s current work</a> analysing Covid-related change in movement behaviours across a range of cities.
+  </div>
+</div>
+</p>
+</div>
+<div id="relate-tables-with-join" class="section level4">
+<h4>Relate tables with <code>join()</code></h4>
+<p>Trip distance is not recorded directly in the <code>ny_trips</code> table, but may be important for profiling usage behaviour. Calculating trip distance is eminently achievable as the <code>ny_trips</code> table contains the origin and destination station of every trip and the <code>ny_stations</code> table contains coordinates corresponding to those stations. To relate the two tables, we need to specify a <strong>join</strong> between them.</p>
+<p>A sensible approach is to:</p>
+<ol style="list-style-type: decimal">
+<li>Select all uniquely cycled trip pairs (origin-destination pairs) that appear in the <code>ny_trips</code> table.</li>
+<li>Bring in the corresponding coordinate pairs representing the origin and destination stations by joining on the <code>ny_stations</code> table.</li>
+<li>Calculate the distance between the coordinate pairs representing the origin and destination.</li>
+</ol>
+<p>The code below is one way of achieving this.</p>
+<pre class="r"><code>od_pairs &lt;- ny_trips %&gt;% # Take the ny_trips data frame.
+select(start_station_id, end_station_id) %&gt;% unique() %&gt;% # Select trip origin and destination (OD) station columns and extract unique OD pairs.
+  left_join(ny_stations %&gt;% select(stn_id, longitude, latitude), by=c(&quot;start_station_id&quot;=&quot;stn_id&quot;)) %&gt;% # Select lat, lon columns from ny_stations and join on the origin column.
+  rename(o_lon=longitude, o_lat=latitude) %&gt;% # Rename new lat, lon columns -- associate with origin station.
+  left_join(ny_stations %&gt;% select(stn_id, longitude, latitude), by=c(&quot;end_station_id&quot;=&quot;stn_id&quot;)) %&gt;% # Select lat, lon columns from ny_stations and join on the destination column.
+  rename(d_lon=longitude, d_lat=latitude) %&gt;%  # Rename new lat, lon columns -- associate with destination station.
+  rowwise() %&gt;% # For computing distance calculation one row-at-a-time.
+  mutate(dist=geosphere::distHaversine(c(o_lat, o_lon), c(d_lat, d_lon))/1000) %&gt;% # Calculate distance and express in kms.
+  ungroup()</code></pre>
+<p>The code block above introduces some new functions: <code>select()</code> to pick or drop variables, <code>rename()</code> to rename variables and a convenience function for calculating straight line distance from polar coordinates (<code>distHaversine()</code>). The key function to emphasise is the <code>left_join()</code>. If you’ve worked with relational databases and <code>SQL</code>, <code>dplyr</code>’s join functions will be familiar to you. In a <code>left_join</code>, all the values from the main table are retained, the one on the left – <code>ny_trips</code>, and variables from the table on the right (<code>ny_stations</code>) are added. We specify explicitly the variable on which the tables should be joined with the <code>by=</code> parameter, <code>station_id</code> in this case. If there is a <code>station_id</code> in <code>ny_trips</code> that doesn’t exist in <code>ny_stations</code> then <code>NA</code> is returned.</p>
+<p>Other <strong>join</strong> functions provided by <code>dplyr</code> are in the table below. Rather than discussing each, I recommend consulting <a href="https://r4ds.had.co.nz/relational-data.html">Chapter 13</a> of <span class="citation">Wickham and Grolemund (<a href="#ref-wickham_r_2017" role="doc-biblioref">2017</a>)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+<code>*_join(x, y) ...</code>
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+</thead>
+<caption>
+<span id="tab:table-joins">Table 11: </span>A breakdown of <code>dplyr</code> join functions.
+</caption>
+<tbody>
+<tr>
+<td style="text-align:left;width: 10em; ">
+<code>left_join()</code>
+</td>
+<td style="text-align:left;">
+all rows from x
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; ">
+<code>right_join()</code>
+</td>
+<td style="text-align:left;">
+all rows from y
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; ">
+<code>full_join()</code>
+</td>
+<td style="text-align:left;">
+all rows from both x and y
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; ">
+<code>semi_join()</code>
+</td>
+<td style="text-align:left;">
+all rows from x where there are matching values in y, keeping just columns from x
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; ">
+<code>inner_join()</code>
+</td>
+<td style="text-align:left;">
+all rows from x where there are matching values in y, return all combination of multiple matches in the case of multiple matches
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 10em; ">
+<code>anti_join</code>
+</td>
+<td style="text-align:left;">
+return all rows from x where there are not matching values in y, never duplicate rows of x
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure"><span style="display:block;" id="fig:plot-dist"></span>
+<img src="../../../../../../../../../../../class/02-class_files/dist.png" alt="Histograms generated with `ggplot2`. Plot data computed using `dplyr` and `lubridate`" width="100%" />
+<p class="caption">
+Figure 3: Histograms generated with <code>ggplot2</code>. Plot data computed using <code>dplyr</code> and <code>lubridate</code>
+</p>
+</div>
+<p>From the newly created distance variable, we can calculate the average (mean) trip distance for the 1.9m trips – 1.6km. This might seem very short, but remember that the distance calculation is problematic in that these are straight-line distances between pairs of docking stations. Really we should be calculating network distances derived from the cycle network in New York. A separate reason – discovered when generating a histogram on the <code>dist</code> variable – is that there are a large number of trips (124,403) that start and end at the same docking station. Initially these might seem to be unsuccessful hires – people failing to undock a bike for example. We could investigate this further by paying attention to the docking stations at which same origin-destination trips occur, as in the code block below.</p>
+<pre class="r"><code>ny_trips %&gt;%
+  filter(start_station_id==end_station_id) %&gt;%
+  group_by(start_station_id) %&gt;% summarise(count=n()) %&gt;%
+  left_join(ny_stations %&gt;%  select(stn_id, name), by=c(&quot;start_station_id&quot;=&quot;stn_id&quot;)) %&gt;%
+  arrange(desc(count))
+
+## # A tibble: 958 x 3
+##    start_station_id count name
+##    &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;
+##  1 ny3423            2017 West Drive &amp; Prospect Park West
+##  2 ny3881            1263 12 Ave &amp; W 125 St
+##  3 ny514             1024 12 Ave &amp; W 40 St
+##  4 ny3349             978 Grand Army Plaza &amp; Plaza St West
+##  5 ny3992             964 W 169 St &amp; Fort Washington Ave
+##  6 ny3374             860 Central Park North &amp; Adam Clayton Powell Blvd
+##  7 ny3782             837 Brooklyn Bridge Park - Pier 2
+##  8 ny3599             829 Franklin Ave &amp; Empire Blvd
+##  9 ny3521             793 Lenox Ave &amp; W 111 St
+## 10 ny2006             782 Central Park S &amp; 6 Ave
+## # … with 948 more rows</code></pre>
+<p>All of the top 10 docking stations are either in parks, near parks or located along river promenades. This coupled with the fact that these trips occur in much greater relative number for casual than regular users (<code>Customer</code> vs <code>Subscriber</code>) is further evidence that these are valid trips.</p>
+</div>
+<div id="write-functions-of-your-own" class="section level4">
+<h4>Write functions of your own</h4>
+<p>Through most of the module we will be making use of functions written by others – mainly those developed for packages that form the <code>tidyverse</code> and therefore that follow a consistent syntax. However, there may be times where you need to abstract over some of your code to make functions of your own. <a href="https://r4ds.had.co.nz/functions.html">Chapter 19</a> of <span class="citation">Wickham and Grolemund (<a href="#ref-wickham_r_2017" role="doc-biblioref">2017</a>)</span> presents some helpful guidelines around the circumstances under which the data scientist typically tends to write functions. Most often this is when you find yourself copy and pasting the same chunks of code with minimal adaptation.</p>
+<p>Functions have three key characteristics:</p>
+<ol style="list-style-type: decimal">
+<li>They are (usually) <strong>named</strong> – the name should be expressive and communicate what the function does (we talk about <code>dplyr</code> <strong>verbs</strong>).</li>
+<li>They have brackets <code>&lt;function()&gt;</code> usually containing <strong>arguments</strong> – inputs which determine what the function does and returns.</li>
+<li>Immediately followed by <code>&lt;function()&gt;</code> are <code>{}</code> used to contain the <strong>body</strong> – in this is code that performs a distinct task, described by the function’s <strong>name</strong>.</li>
+</ol>
+<p>Effective functions are <strong>short</strong>, perform <strong>single</strong> discrete operations and are <strong>intuitive</strong>.</p>
+<p>You will recall that in the <code>ny_trips</code> table there is a variable called <code>birth_year</code>. From this we can derive cyclists’ approximate age. Below I have written a function <code>get_age()</code> for doing this. The function expects two <strong>arguments</strong>: <code>yob</code> – a year of birth as type <code>chr</code>; <code>yref</code> – a reference year. In the <strong>body</strong>, <code>lubridate</code>’s <code>as.period</code> function is used to calculate the time in years that elapsed, the value that the function <strong>returns</strong>. Once defined, and loaded into the session by being executed, it can be used (as below).</p>
+<pre class="r"><code># Function for calculating time elapsed between two dates in years (age).
+get_age &lt;- function(yob, yref) {
+    period &lt;- lubridate::as.period(lubridate::interval(yob, yref),unit = &quot;year&quot;)
+    return(period$year)
+}
+
+ny_trips &lt;- ny_trips %&gt;% # Take the ny_trips data frame.
+  mutate(
+    age=get_age(as.POSIXct(birth_year, format=&quot;%Y&quot;), as.POSIXct(&quot;2020&quot;, format=&quot;%Y&quot;)) # Calculate age from birth_date.
+    )</code></pre>
+<p>We can use the two new derived variables – distance travelled and age – in our analysis. In Figure <a href="#fig:plot-speeds">4</a>, we explore how <strong>approximate</strong> travel speeds vary by age, gender and trip distance. The code used to generate the summary data and plot is in the template file. Again the average “speed” calculation should be treated very cautiously as it is based on straight line distances and it is very difficult to select out “utility” from “leisure” trips. I have tried to do the latter by selecting trips that occur only on weekdays and that are made by <code>Subscriber</code> cyclists. Additionally, due to the heavy subsetting data become a little volatile for certain age groups and so I’ve aggregated the age variable into 5-year bands. Collecting more data is probably a good idea.</p>
+<p>There are nevertheless some interesting patterns. Men tend to cycle at faster speeds than do women, although this gap narrows with the older age groups. The effect of age on speed cycled is more apparent for the longer trips. This trend is reasonably strong, although the volatility in the older age groups for trips &gt;4.5km suggests we probably need more data and a more involved analysis to establish this. For example, it may be that the comparatively rare occurrence of trips in the 65-70 age group is made by only a small subset of cyclists. A larger dataset would result in a regression to the mean effect and negate any noise caused by outlier individuals. Certainly Figure <a href="#tab:variable-types">1</a> is an interesting data graphic – and the type of exploratory analysis demonstrated here, using <code>dplyr</code> functions, is most definitely consistent with that identified in the previous session when introducing <em>Geographic Data Science</em>.</p>
+<div class="figure"><span style="display:block;" id="fig:plot-speeds"></span>
+<img src="../../../../../../../../../../../class/02-class_files/speeds.png" alt="Line charts generated with `ggplot2`. Plot data computed using `dplyr` and `lubridate`" width="100%" />
+<p class="caption">
+Figure 4: Line charts generated with <code>ggplot2</code>. Plot data computed using <code>dplyr</code> and <code>lubridate</code>
+</p>
+</div>
+</div>
+</div>
+<div id="tidy" class="section level3">
+<h3>Tidy</h3>
+<p>The <code>ny_trips</code> and <code>ny_stations</code> data already comply with the rules for <strong>tidy</strong> data <span class="citation">(<a href="#ref-wickham_tidy_2014" role="doc-biblioref">Wickham 2014</a>)</span>. Each row in <code>ny_trips</code> is a distinct trip and each row in <code>ny_stations</code> a distinct station. However throughout the module we will undoubtedly encounter datasets that need to be reshaped. There are two key functions to learn here, made available via the <a href="https://tidyr.tidyverse.org/articles/pivot.html"><code>tidyr</code></a> package: <a href="https://tidyr.tidyverse.org/reference/pivot_longer.html"><code>pivot_longer()</code></a> and <a href="https://tidyr.tidyverse.org/reference/pivot_wider.html"><code>pivot_wider()</code></a>. <code>pivot_longer()</code> is used to tidy data in which observations are spread across columns, as in Table <a href="#tab:gapminder-untidy1">6</a> (the <code>gapminder</code> dataset). <code>pivot_wider()</code> is used to tidy data in which observations are spread across rows, as in Table <a href="#tab:gapminder-untidy2">7</a> (the <code>gapminder</code> dataset). You will find yourself using these functions, particularly <code>pivot_longer()</code>, not only for fixing messy data, but for flexibly reshaping data for use in <code>ggplot2</code> specifications (more on this in sessions 3 and 4) or joining tables.</p>
+<p>A quick breakdown of <code>pivot_longer</code>:</p>
+<pre><code>pivot_longer(
+  data,
+  cols, # Columns to pivot longer (across rows).
+  names_to=&quot;name&quot;, # Name of the column to create from values held in spread *column names*.
+  values_to=&quot;name&quot; # Name of column to create form values stored in spread *cells*
+  )</code></pre>
+<p>A quick breakdown of <code>pivot_wider</code>:</p>
+<pre><code>pivot_wider(
+  data,
+  names_from, # Column in the long format which contains what will be column names in the wide format.
+  values_from # Column in the long format which contains what will be values in the new wide format.
+  )</code></pre>
+<p>In the homework you will be tidying some messy derived tables based on the bikeshare data using both of these functions, but we can demonstrate their purpose in <strong>tidying</strong> the messy <code>gapminder</code> data in Table <a href="#tab:gapminder-untidy2">7</a>. Remember that these data were messy as the observations by gender were spread across the columns:</p>
+<pre><code>untidy_wide
+##   country     year  f_cases m_cases f_population m_population
+##   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;
+## 1 Afghanistan 1999  447     298     9993400      9993671
+## 2 Afghanistan 2000  1599    1067    10296280     10299080
+## 3 Brazil      1999  16982   20755   86001181     86005181
+## 4 Brazil      2000  39440   41048   87251329     87253569
+## 5 China       1999  104007  108252  636451250    636464022
+## 6 China       2000  104746  109759  640212600    640215983</code></pre>
+<p>First we need to gather the problematic columns with <code>pivot_longer()</code>.</p>
+<pre><code>untidy_wide %&gt;%
+  pivot_longer(cols=c(f_cases: m_population), names_to=c(&quot;gender_count_type&quot;), values_to=c(&quot;counts&quot;))
+
+##   country     year  gender_count_type       counts
+##   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;                   &lt;chr&gt;
+##  1 Afghanistan 1999  f_cases                447
+##  2 Afghanistan 1999  m_cases                298
+##  3 Afghanistan 1999  f_population           9993400
+##  4 Afghanistan 1999  m_population           9993671
+##  5 Afghanistan 2000  f_cases                1599
+##  6 Afghanistan 2000  m_cases                1067
+##  7 Afghanistan 2000  f_population           10296280
+##  8 Afghanistan 2000  m_population           10299080
+##  9 Brazil      1999  f_cases                16982
+## 10 Brazil      1999  m_cases                20755
+## # … with 14 more rows</code></pre>
+<p>So this has usefully collapsed the dataset by gender, we now have a problem similar to that in Table <a href="#tab:gapminder-untidy1">6</a> where observations are spread across the rows – in this instance <code>cases</code> and <code>population</code> are better treated as separate variables. This can be fixed by <code>separating</code> the <code>gender_count_type</code> variables and then spreading the values of the new <code>count_type</code> (<code>cases</code>, <code>population</code>) across the columns. Hopefully you can see how this gets us to the <strong>tidy</strong> <code>gapminder</code> data structure in Table <a href="#tab:gapminder-tidy">5</a></p>
+<pre><code>untidy_wide %&gt;%
+  pivot_longer(cols=c(f_cases: m_population), names_to=c(&quot;gender_count_type&quot;), values_to=c(&quot;counts&quot;)) %&gt;%
+  separate(col=gender_count_type, into=c(&quot;gender&quot;, &quot;count_type&quot;), sep=&quot;_&quot;)
+
+##    country     year  gender count_type counts
+##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;
+##  1 Afghanistan 1999  f      cases      447
+##  2 Afghanistan 1999  m      cases      298
+##  3 Afghanistan 1999  f      population 9993400
+##  4 Afghanistan 1999  m      population 9993671
+##  5 Afghanistan 2000  f      cases      1599
+##  6 Afghanistan 2000  m      cases      1067
+##  7 Afghanistan 2000  f      population 10296280
+##  8 Afghanistan 2000  m      population 10299080
+##  9 Brazil      1999  f      cases      16982
+## 10 Brazil      1999  m      cases      20755
+## # … with 14 more rows
+
+untidy_wide %&gt;%
+  pivot_longer(cols=c(f_cases: m_population), names_to=c(&quot;gender_count_type&quot;), values_to=c(&quot;counts&quot;)) %&gt;%
+  separate(col=gender_count_type, into=c(&quot;gender&quot;, &quot;count_type&quot;), sep=&quot;_&quot;) %&gt;%
+  pivot_wider(names_from=count_type, values_from=counts)
+
+##    country     year  gender cases  population
+##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;
+##  1 Afghanistan 1999  f      447    9993400
+##  2 Afghanistan 1999  m      298    9993671
+##  3 Afghanistan 2000  f      1599   10296280
+##  4 Afghanistan 2000  m      1067   10299080
+##  5 Brazil      1999  f      16982  86001181
+##  6 Brazil      1999  m      20755  86005181
+##  7 Brazil      2000  f      39440  87251329
+##  8 Brazil      2000  m      41048  87253569
+##  9 China       1999  f      104007 636451250
+## 10 China       1999  m      108252 636464022
+## 11 China       2000  f      104746 640212600
+## 12 China       2000  m      109759 640215983</code></pre>
+</div>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>Developing the vocabulary and technical skills to systematically describe and organise data is crucial to modern data analysis. This session has covered the fundamentals here: that data consist of <strong>observations</strong> and <strong>variables</strong> of different types <span class="citation">(<a href="#ref-stevens_on_1946" role="doc-biblioref">Stevens 1946</a>)</span> and that in order to work effectively with datasets, especially in a functional way in <code>R</code>, these data must be organised according to the rules of <strong>tidy</strong> data <span class="citation">(<a href="#ref-wickham_tidy_2014" role="doc-biblioref">Wickham 2014</a>)</span>. Most of the session content was dedicated to the techniques that enable these concepts to be operationalised. We covered how to download, transform and reshape a reasonably large set of data from New York’s <a href="">Citibike</a> scheme. In doing so, we generated insights that might inform further data collection and analysis activity. In the next session we will apply and extend this conceptual and technical knowledge as we introduce the fundamentals of visual data analysis and <code>ggplot2</code>’s grammar of graphics.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-lovelace_is_2020" class="csl-entry">
+Lovelace, R., R. Beecham, E. Heinen, E. Vidal Tortosa, Y. Yuanxuan, C. Slade, and A. Roberts. 2020. <span>“Is the London Cycle Hire Scheme Becoming More Inclusive? An Evaluation of the Shifting Spatial Distribution of Uptake Based on 70 Million Trips.”</span> <em>Transportation Research Part A: Policy and Practice</em> 140 (October): 1–15.
+</div>
+<div id="ref-stevens_on_1946" class="csl-entry">
+Stevens, S. 1946. <span>“On the Theory of Scales of Measurement.”</span> <em>Science</em> 103 (2684): 677–80.
+</div>
+<div id="ref-wickham_tidy_2014" class="csl-entry">
+Wickham, H. 2014. <span>“Tidy Data.”</span> <em>Journal of Statistical Software</em> 59 (10): 1–23.
+</div>
+<div id="ref-wickham_r_2017" class="csl-entry">
+Wickham, H., and G. Grolemund. 2017. <em><span>R</span> for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. Sebastopol, California: O’Reilly Media.
+</div>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>Note that the version of the trips data downloaded from my external repo contains a sample of just 500k records – this is not ideal, but was due to data storage limits on my external repo.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+                    </div>
+
+                    
+
+
+
+                    
+                </div>
+
+                <div class="body-footer">
+                    <p> Mon, 16 May 2022</p>
+
+                    
+
+
+
+
+
+                    
+
+
+
+                </div>
+
+            </article>
+
+            <footer>
+    <hr>
+
+    <div class="row course-info">
+        <div class="col-md-7">
+            <p>
+                <strong>GEOG5009M: Visualization for Geographic Data Science (Spring/Summer 2022)</strong><br>
+
+                <a href="https://www.leeds.ac.uk/" target="_blank" rel="noopener">University of Leeds</a> &emsp;&emsp;
+                <a href="https://environment.leeds.ac.uk/geography" target="_blank" rel="noopener">School of Geography</a>
+            </p>
+
+            <p>
+                <a href="http://www.roger-beecham.com/" target="_blank" rel="noopener"><i class="fas fa-user"></i>
+                    Roger Beecham</a> &emsp;&emsp;
+                <a href="mailto:r.j.beecham@leeds.ac.uk"><i class="fas fa-envelope"></i>
+                    r.j.beecham@leeds.ac.uk</a>
+            </p>
+
+            <p>
+                <i class="far fa-calendar-alt"></i> ODL &emsp;&emsp;
+                <i class="far fa-clock"></i> ODL <br>
+                <i class="fas fa-university"></i> ODL
+            </p>
+        </div>
+
+        <div class="col-md-5 credits">
+            <p>All content licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</p>
+            
+            <p>Content <i class="fab fa-creative-commons"></i> 2022 <a href="http://www.roger-beecham.com/" target="_blank" rel="noopener">Roger Beecham</a></p>                    
+            
+            <p><a href="https://github.com/rogerbeecham/vis-for-gds" target="_blank" rel="noopener"><i class="fab fa-github"></i> View the source at GitHub.</a></p>
+        </div>
+    </div>
+</footer>
+
+
+        </main>
+    </div>
+</div>
+
+        
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="../../en-uk/js/wowchemy.min.bb463fbd4cd7a1f3c4b4504053ef5758.js"></script>
+
+    
+
+
+
+
+
+
+    
+    
+
+    
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> 
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> 
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

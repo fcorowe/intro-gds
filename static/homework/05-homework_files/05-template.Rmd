@@ -1,0 +1,140 @@
+---
+author: "<your-name>"
+date: "<the-date>"
+title: "Session 05"
+output: html_document
+---
+
+## Class
+
+Reopen your `vis-for-gds` project and save this `.Rmd` to the `reports` folder. When working through the materials from this session run each code chunk separately by clicking the small green arrow beside each code chunk. By default I have set `eval=FALSE` on most code chunks, so when you knit the code chunk will not execute.
+
+The technical element to this session involves analysing 2011 Census travel-to-work data.
+
+### Setup
+
+The code block below points to the packages you need to do the work discussed in the session. Uncomment the `intall_packages()` lines if you have not already downloaded `pct`.
+
+```{r setup, echo=TRUE, eval=FALSE, message=FALSE}
+library(tidyverse) # Bundle of packages for doing modern data analysis.
+library(sf) # Spatial operations
+library(here) # For navigating project directory
+
+# remotes::install_github("ITSLeeds/pct")
+library(pct)
+```
+
+### Import
+
+Run the code block below to download and process the origin-destination Census data. This is a large datasets so this may take a little time to execute. Also import the London borough geometries -- real and regular grid.
+
+```{r download-data, echo=TRUE, eval=FALSE, message=FALSE}
+# Import OD by travel mode from 2011 Census.
+od_pairs <- get_od(
+  region = "london",
+  type = "within",
+  omit_intrazonal = FALSE,
+  base_url = paste0("https://s3-eu-west-1.amazonaws.com/",
+                    "statistics.digitalresources.jisc.ac.uk", "/dkan/files/FLOW/"),
+  filename = "wu03ew_v2"
+)
+
+# Import .geojson file with geometry data for LondonSquared and real layout of London boroughs.
+london_grid_real <- st_read("https://www.roger-beecham.com/datasets/london_grid_real.geojson")
+```
+
+Look-up table for London boroughs.
+
+```{r borough-lookup, echo=TRUE, eval=FALSE, message=FALSE}
+# Look-up of London boroughs.
+london_las <- pct_regions_lookup %>% filter(region_name=="london") %>%
+  pull(lad16nm)
+```
+
+
+Edges table:
+
+```{r edges-table, echo=TRUE, eval=FALSE, message=FALSE}
+edges <- od_pairs %>%
+  # Filter only *within* London.
+  filter(la_1 %in% london_las, la_2 %in% london_las) %>%
+  group_by(la_1, la_2) %>%
+  summarise(
+    across(c(all:other), sum)
+  ) %>%
+  ungroup %>%
+  transmute(
+    o_bor=la_1, d_bor=la_2, all=all, public_transport=train+bus+light_rail,
+    car=car_driver+car_passenger, active=bicycle+foot
+  )
+```
+
+Nodes table
+
+```{r nodes, echo=TRUE, eval=FALSE, message=FALSE}
+# Summarise over destinations: commutes into- boroughs.
+nodes_d <- od_pairs %>%
+  # Filter only *within* London.
+  filter(la_1 %in% london_las, la_2 %in% london_las) %>%
+  group_by(la_2) %>%
+  summarise(
+    across(c(all:other), sum)
+  ) %>%
+  ungroup %>%
+  rename(bor = la_2) %>%
+  transmute(
+    bor=bor, type="destination", all=all, public_transport=train+bus+light_rail,
+    car=car_driver+car_passenger, active=bicycle+foot
+  )
+
+nodes_o <- od_pairs %>%
+  # Filter only *within* London.
+  filter(la_1 %in% london_las, la_2 %in% london_las) %>%
+  group_by(la_1) %>%
+  summarise(
+    across(c(all:other), sum)
+  ) %>%
+  ungroup %>%
+  rename(bor = la_1) %>%
+  transmute(
+    bor=bor, type="origin", all=all, public_transport=train+bus+light_rail,
+    car=car_driver+car_passenger, active=bicycle+foot
+  )
+
+nodes  <- nodes_o %>% bind_rows(nodes_d)
+```
+
+
+## Homework
+
+### Look-up tasks
+
+#### For jobs filled in the City of London (CTY), from which borough does largest number of workers commute using public transport?
+
+> *Enter your answer here*
+
+
+#### Which borough in London has the largest *absolute* number living and working in that borough (and travelling to work by public transport)?
+
+> *Enter your answer here*
+
+#### For workers living in Barnet (BRN), what are the top 3 boroughs to which they commute?
+
+> *Enter your answer here*
+
+
+### Insights
+
+Identify three isights that can be made around the geography of commuting patterns in London from reading any/each of the graphics. Briefly identify which graphic(s) led to the insight and how. Please do not spend too long over this activity -- the idea is to encourage you to make inferences from graphics, as you will do in your coursework.
+
+#### Insight 1
+
+> *Enter your answer here*
+
+#### Insight 2
+
+> *Enter your answer here*
+
+#### Insight 3
+
+> *Enter your answer here*

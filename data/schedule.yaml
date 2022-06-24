@@ -1,0 +1,55 @@
+lessons:
+
+  - title: "Introduction"
+    date: "Week 1"
+    homework: "01-homework"
+    class: "01-class"
+    reading: "01-reading"
+
+  - title: "Data fundamentals"
+    date: "Week 2"
+    homework: "02-homework"
+    class: "02-class"
+    reading: "02-reading"
+
+  - title: "Visualization fundamentals"
+    date: "Week 3"
+    homework: "03-homework"
+    class: "03-class"
+    reading: "03-reading"
+
+  - title: "Exploratory data analysis"
+    date: "Week 4"
+    homework: "04-homework"
+    class: "04-class"
+    reading: "04-reading"
+
+  - title: "Exploring spatial networks"
+    date: "Week 5"
+    homework: "05-homework"
+    class: "05-class"
+    reading: "05-reading"
+
+  - title: "Model building 1"
+    date: "Week 6"
+    homework: "06-homework"
+    class: "06-class"
+    reading: "06-reading"
+
+  - title: "Model building 2"
+    date: "Week 7"
+    homework: "07-homework"
+    class: "07-class"
+    reading: "07-reading"
+
+  - title: "Uncertainty analysis"
+    date: "Week 8"
+    homework: "08-homework"
+    class: "08-class"
+    reading: "08-reading"
+
+  - title: "Data storytelling"
+    date: "Week 9"
+    homework: "09-homework"
+    class: "09-class"
+    reading: "09-reading"

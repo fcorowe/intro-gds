@@ -1,0 +1,40 @@
+---
+title: "Visualization for model building 2"
+linktitle: "7: Visualization for model building 2"
+date: "2022-06-20"
+class_date: "2022-06-20"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: false
+menu:
+  reading:
+    parent: Reading
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+
+### Area-level analysis of Brexit vote
+
+- [@beecham_regionally_2020]
+- [@beecham_locally_2018]
+- [@harris_voting_2016]
+
+
+### Methodological papers on geographic dependence and non-stationarity (selected)
+
+- [@brunsdon_geographically_2002]
+- [@wolf_on_2021]
+
+### Model-building in R
+
+- [@wickham_r_2017]\
+-- Chapters 22, 23, 24, 25\
+[Free online](https://r4ds.had.co.nz/).

@@ -1,0 +1,11 @@
+---
+title: "Homework for sessions"
+menu:
+  homework:
+    parent: Overview
+    weight: 1
+type: docs
+weight: 1
+---
+
+The homework for each session is posted here. Work your way through the links on the left to complete the homework associated with each session.

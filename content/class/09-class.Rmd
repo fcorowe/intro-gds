@@ -1,0 +1,445 @@
+---
+title: "Visualization for communication and storytelling"
+linktitle: "9: Visualization for communication and storytelling"
+date: "2022-07-04"
+class_date: "2022-07-04"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-author-date.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+menu:
+  class:
+    parent: Class
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r setup, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(here)
+```
+By the end of this session you should gain the following **_knowledge_**:
+
+{{% callout objective %}}
+- [x] **Appreciate** the main characteristics of data-driven stories.
+- [x] **Identify** how visual and rhetorical devices are used to communicate with data.
+{{% /callout %}}
+
+By the end of this session you should gain the following **_practical skills_**:
+
+{{% callout objective %}}
+- [x] **Create** `ggplot2` graphics with non-standard annotations.
+{{% /callout %}}
+
+
+## Introduction
+
+It is now taken-for-granted that we live in an evidence-based society in which data are deeply embedded in most domains and in how we approach most of the world's problems. This recognition has coincided with, amongst other things, the [open source movement](https://en.wikipedia.org/wiki/Open-source-software_movement) which has freed up access to, and technologies for working with, data. The response to Covid-19 is an excellent example. Enter [Covid19 github](https://bit.ly/2xO2Y5S) into a search and you’ll be confronted with hundreds of repositories demonstrating how data related to the pandemic can be collected, processed and analysed.
+
+This is exciting and feels very democratic. But there is responsibility amongst those constructing and sharing evidence-based arguments to do so with integrity; navigating the difficult tension between communicating a clear message -- necessarily reducing some of the complexity -- at the same time as acknowledging uncertainty. Those of you with an interest in these matters might follow [David Spiegelhalter](http://www.statslab.cam.ac.uk/~david/), who's job was created to support public communication of claims made from data, also [Tim Harford](https://timharford.com)'s excellent [More or Less](https://www.bbc.co.uk/programmes/b006qshd) series. In academia there has been a realisation within Information Visualization and Data Journalism of the role of narratives and storytelling in communicating with data [e.g. @henry_data_2018]. Different from the approach to visual data analysis taken in most of this module, this work recognises that there is not a single, optimum solution to any visualization problem that exposes the true picture/story -- no such formulation exists. But that careful design decisions must be made in light of data, audience and intended purpose.
+
+In this session we will review some of this literature with a special focus on approaches to communicating Covid-19 case numbers.
+
+
+{{% callout instruction %}}
+Watch John Burn-Murdoch's talk at IEEE VIS 2020 on lessons learnt from generating (visual) data stories around the Covid-19 pandemic. Skip to 15:15 -- 45:00 to catch John's talk.
+
+{{% /callout %}}
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/xlN_QUdT6os" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+## Concepts
+
+### Data-driven storytelling
+
+<!-- *We think this movement towards data-driven stories, which is apparent in both the data visualization research community and the professional journalism community, has the potential to form a crucial part of keeping the public informed, a movement sometimes referred to as the democratization of data – the making of data understandable to the general public. This exciting new development in the use of data visualization in media has revealed an emerging professional community in the already complex group of disciplines involved in data visualization. Data visualization has roots in many research fields including perception, computer graphics, design, and human-computer interaction, though only recently has this expanded to include journalism.
+
+Data journalism
+here has also been a growing consciousness that some of today’s most relevant stories are buried in data. This data can be quite hard to understand in its raw formats but can become much more generally accessible when visualized. Journalists have not only begun to use standard data visualizations such as charts and maps in their stories, but are also creating new ones that are tailored to the particular data type and to the message of the story they are writing. Since journalists are now able to easily share interactive data visualizations on the Web, the democratization of data visualization is accelerating with new compelling data visualizations emerging in the media daily...
+
+By carefully structuring the information and integrating explanation to guide the consumer, journalists help lead readers towards a valid interpretation of the underlying data. -->
+
+In sessions [2](/class/02-class/), [3](/class/03-class/) and [4](/class/04-class/), I made the case that visual data analysis is concerned with encoding data to visuals in a way that follows established guidelines known to work well for particular tasks.
+Watching John's talk, you hopefully got a sense that designing graphics for *communication* requires slightly deeper thinking, with no obviously "optimal" way to proceed.
+
+This is not to suggest that visual data stories are devoid of underlying theories or frameworks. There are of course entire academic disciplines devoted to communication and storytelling. @roth_cartographic_2020's recent survey paper on visual storytelling in Cartography considers these to usefully identify some of the characteristics of effective visual data stories. @roth_cartographic_2020 enumerates 10 characteristics, but particularly important are that visual design stories are:
+
+* **Designed**: The analyst makes very deliberate decisions in light of audience and purpose. The goal of visual storytelling is not just to *show* but also to *explain*.
+* **Partial**: Essential information is prioritised and made salient, with abstraction and brevity preferred over complexity and completeness.
+* **Intuitive**: Visual narratives take advantage of our natural tendency to communicate via metaphor and story, with a clear "entry point" and clear progression.
+* **Compelling**: Visual stories often capture attention through an array of graphical devices -- sequence, animation and interaction. They generate an aesthetic response.
+* **Relatable and situated**: Visual stories promote empathy, using devices that place the audience in the story setting. They are usually constructed from somewhere -- according to a particular position.
+* **Political**: Visual data stories often promote with clarity particular voices, interpretations or positions.
+
+In the sections that follow, we will review some key Covid-19 visualizations and reflect on how these storytelling devices have been variously deployed.
+
+### Designed and partial
+
+```{r ft-vis, echo=FALSE, fig.cap="[John Burn-Murdoch](https://www.ft.com/john-burn-murdoch)'s international comparison of deaths, as it appeared on [twitter](https://twitter.com/jburnmurdoch/status/1241820210455285760).", fig.align="left", out.width="90%"}
+include_graphics("/class/09-class_files/jbm-logchart.jpeg", error = FALSE)
+```
+
+A version of John Burn Murdoch's international comparison chart is in Figure \@ref(fig:ft-vis). We can evaluate the graphic using some of the principles introduced in [session 3](/class/03-class/) and [session 4](/class/03-class/). In mapping the two quantitive variables to *position on an aligned scale* and *colour hue* to distinguish countries, the graphic uses an encoding that exploits our cognitive abilities. By superimposing lines representing countries on the same coordinate space, it also nicely uses layout to support comparison [@gleicher_visual_2011].
+
+Other important design decisions were mentioned in John's talk. You might have noticed that these were justified with respect to two goals or tasks that he wished the reader to perform. Thinking about @roth_cartographic_2020's characteristics of visual storytelling, the graphic is **designed** with a very deliberate purpose:
+
+> 1. Between country comparison:
+>
+> * "*Are countries on the same course?*"
+
+> 2. Comparison against milestone:
+>
+> * "*How many days does it take a certain county to reach a given number of cases/deaths?*"
+
+
+It is possible to see each of these goals informing the configuration of the graphic and in the careful design decisions made to prioritise essential information -- the graphic is **partial**. Comparison between countries is most obviously supported by the use of a log-scale. This removes the dominant salient pattern in standard scales due to the exponential doubling and instead allows slopes (*growth rates*) to be compared directly. In his talk John makes the point that log scales are, though, not so familiar to the average reader. In other versions of the graphic, useful annotations are provided identifying slope gradients that correspond to different growth rates, again narrowing on the essential goal of the graphic -- between country comparison of growth rates. In the talk John mentioned approaches to dealing with daily volatility in the data and that a decision was made to use a smoothing function based on [splines](https://en.wikipedia.org/wiki/Smoothing_spline) rather than the more widely understood 7-day rolling average. This was not a comfortable decision as it introduced complexity, and so was incorporated discreetly (**partial**/**designed**).
+
+<!-- For example, the fact that rather than showing absolute time, the "temporal" x-axis is anchored according to days that elapsed since *n* cases/deaths are reported for each country.  -->
+
+
+{{% callout note %}}
+You might be interested to know that most [Financial Times graphics](https://www.ft.com/graphics) are built using `ggplot2`. A presentation in which John makes the case for `ggplot2` for Data Journalism [from this link](https://johnburnmurdoch.github.io/slides/r-ggplot/#/).
+{{% /callout %}}
+
+<!-- For example, the fact that rather than showing absolute time, the "temporal" x-axis is anchored according to days that elapsed since *n* cases/deaths are reported for each country.  -->
+
+An interesting design alternative that supports between country comparison is [Aatish Bhatia](https://aatishb.com)'s [Covid Trends](https://aatishb.com/covidtrends/) chart (Figure \@ref(fig:covid-trends)). A double log scale is used and growth rate in new cases is presented on the y-axis with total case numbers, rather than time elapsed, plotted along the x-axis. Whilst the introduction of a double log scale might be judged to increase visual complexity, actually this design narrows or simplifies the reader's visual judgement to looking at the thing that we are most interested in: comparison of country growth rates against the two day doubling (annotated with the diagonal). The chart is also accompanied with an excellent [explanatory video](https://www.hippocraticpost.com/covid-19-update/how-to-tell-if-were-beating-covid-19/), in which many of the characteristics of visual data stories enumerated by @roth_cartographic_2020 can be identified.
+
+
+```{r covid-trends, echo=FALSE, fig.cap="[Aatish Bhatia](https://aatishb.com)'s [Covid Trends](https://aatishb.com/covidtrends/) chart. [Source](https://github.com/aatishb/covidtrends#credits).", fig.align="left", out.width="100%"}
+include_graphics("/class/09-class_files/covid-trends.png", error = FALSE)
+```
+
+### Intuitive and compelling
+
+
+According to @roth_cartographic_2020, visual data stories are often *explanatory*; they make **compelling** use of graphical and rhetorical devices to support understanding. This is especially important in data-driven storytelling as it often involves concepts that are initially quite challenging. In Figure \@ref(fig:lambrechts-connected) is a static image from a [data story written by Flourish](https://flourish.studio/2021/04/06/masters-connected-scatter-maarten-lambrechts/) based on design work by [Marteen Lambrechts](https://twitter.com/maartenzam/status/1319622943526293505). The data story is essentially a design exposition [@beecham_design_2020; @wood_design_2018], guiding readers from the familiar to the unfamiliar. First a standard time series chart of hospitalisations and deaths is presented. Deficiencies in this layout are explained before progressively introducing the transformations involved to generate the preferred graphic, a [connected scatterplot](http://steveharoz.com/research/connected_scatterplot/). Ordering the story in this way explains design decisions and the trade-offs associated with visual design from a familiar starting point and helps justify new, sometimes unfamiliar encodings. Thinking about @roth_cartographic_2020's characteristics of visual storytelling, formulating a design story in this way helps build **intuition** -- there is a clear entry point and clear progression.
+
+
+```{r lambrechts-connected, echo=FALSE, fig.cap="Static image from a data story written by [Flourish](https://flourish.studio/2021/04/06/masters-connected-scatter-maarten-lambrechts/) demonstrating how connected scatterplots can be used to analyse changes in hospitalisations and deaths.", fig.align="left", out.width="90%"}
+include_graphics("/class/09-class_files/lambrechts-connected-flourish.png", error = FALSE)
+```
+
+{{% callout note %}}
+For a more involved design exposition of connected scatterplots, see [Danny Dorling](http://www.dannydorling.org)'s work on [slowdown](https://twitter.com/dannydorling/status/1245010922592231424). Note that Danny also encodes time using line width. This is an important addition, along with colour as demonstrated with [timecurves](https://aviz.fr/~bbach/timecurves/).
+
+I have also tried to use this idea of guided design exposition for explaining complex designs in an [analysis of Covid-19 cases data](https://twitter.com/rJBeecham/status/1317019462453895168) [@beecham_on_2021] -- exploring ways of showing simultaneously absolute and relative change in cases, with geographic context.
+{{% /callout %}}
+
+
+Figure \@ref(fig:ft-anim), again by [John Burn-Murdoch](https://www.ft.com/john-burn-murdoch), is another stellar exposition of how animation can be used to build **intuition**. The main objective is to demonstrate how different 2020 is in terms of admissions to intensive care compared to a normal year. This was in response to claims that Covid-19 behaves much like seasonal flu; to this extent the graphic is also quite **political**. Each year from 2013-14 is added to the chart and the y-axis rescaled to reflect the new numbers. This helps build expectation around normal variablitity in a similar way to the [hypothetical outcome plots](https://medium.com/hci-design-at-uw/hypothetical-outcomes-plots-experiencing-the-uncertain-b9ea60d7c740) covered in the previous session.  The expectation is then roundly debunked by the introduction of the 2020-21 line in red, with animated rescaling of the y-axis used for further emphasis.
+
+```{r ft-anim, echo=FALSE, fig.cap="[John Burn-Murdoch](https://www.ft.com/john-burn-murdoch)'s animated rescaling [via twitter](https://twitter.com/jburnmurdoch/status/1347200811303055364) demonstrating how different in terms of intensive care admissions 2020/21 is to a standard flu season.", fig.align="left", out.width="100%"}
+include_graphics("/class/09-class_files/jbm-anim.gif", error = FALSE)
+```
+
+### Political
+
+Figure \@ref(fig:ft-vaccine) presents a final example of [visual narrative](https://twitter.com/jburnmurdoch/status/1382013080448724994) from [John Burn-Murdoch](https://www.ft.com/john-burn-murdoch)  with an obviously political purpose. The graphic was created in response to claims from the UK's Prime Minister that it is largely restrictions rather than vaccination that has reduced infection rates in the country. Interesting here is how annotation and **visual saliency** is used to direct how the graphic is perceived. If the graphic was only annotated  with points in time when lockdown and vaccination was initiated, it would *invite* us to make judgements about the effects of these two events on infectious rates. That John makes highly salient annotations labelling the (unmeasurable) effect of **lockdown** and **vaccine** is an interesting addition. There is little room for ambiguity.
+
+Initially I was a little surprised by this presentation -- labelling the chart with an unmeasurable effect -- and wondered if it had graphical integrity (see @tufte_visual_1983's [lie factor](https://infovis-wiki.net/wiki/Lie_Factor)). Given the fact that John's work is so carefully considered, communicated transparently and with authority, I think it probably does have integrity. I do wonder whether John's reflections on his experiences of generating data stories earlier in the pandemic informed his thinking here -- that the messages readers interpreted from his cases charts varied depending on the prior expectations and political beliefs of those consuming them.
+
+<!-- * design cues facilitate prioritization of particular interpretations in visualizations -->
+
+
+```{r ft-vaccine, echo=FALSE, fig.cap="[John Burn-Murdoch](https://www.ft.com/john-burn-murdoch)'s analysis [via twitter](https://twitter.com/jburnmurdoch/status/1382013080448724994) evaluating the role of lockdown and the vaccine.", fig.align="left", out.width="100%"}
+include_graphics("/class/09-class_files/jbm-vaccine.jpeg", error = FALSE)
+```
+
+{{% callout note %}}
+An additional aside: The annotations in Figure \@ref(fig:ft-vaccine)  have heavy saliency thanks to John's parsimonious use of axis titles, marks and legends (and other [non-data-ink](https://infovis-wiki.net/wiki/Data-Ink_Ratio)).
+{{% /callout %}}
+
+
+<!-- https://www.statschat.org.nz/wp-content/uploads/2020/04/fox-axis.jpeg -->
+
+
+## Techniques
+
+The technical element demonstrates how to design plots deliberatively with annotations in `ggplot2`. We will recreate a *glyphmap* type graphic that originally appeared in [The Washington Post](https://www.washingtonpost.com/nation/2020/05/24/coronavirus-rural-america-outbreaks/?arc404=true) to tell a story of growth in Covid-19 cases by US county.
+
+```{r wp, echo=FALSE, fig.cap="Glyphmap design displaying growth in COVID-19 cases by US county, based on the design by Thebault and Hauslohner, original in [The Washington Post](https://www.washingtonpost.com/nation/2020/05/24/coronavirus-rural-america-outbreaks/?arc404=true).", fig.align="left", out.width="100%"}
+include_graphics("/class/09-class_files/wp.png", error = FALSE)
+```
+
+In the graphic (Figure \@ref(fig:wp)), each US county is represented as a line which is encoded with daily growth rates in new cases between 3rd May and 26th May.  Lines are positioned at the geographic centre of each county. The graphic is data dense and without careful decisions on which aspects to emphasise, it would be quite unreadable. Line thickness is varied according to relative infection rates (cumulative cases/population size) and growth rate is double encoded with colour value -- darker and steeper lines have higher growth rates. Even with these additions, it is challenging to discern complete trajectories, but instead a typical model or expectation of these trajectories can be learnt from visually scanning the graphic. That there is spatial autocorrelation in  trajectories means an overall pattern of exposure can be inferred, before eyes are then drawn to exceptions. Initially these are towards the extreme end; tall, steep, dark and thick lines, suggesting large absolute numbers, rapid growth rates and high exposure. Secondarily, interesting subtle patterns can be discerned, for example a thick and mid-dark line surrounded by lines that are generally lighter and thinner; a county that appears locally exceptional in having a comparatively high growth and exposure rate.
+
+The design is impressive, and there is an obvious benefit to showing growth rates in their spatial position. However, we are not looking at absolute numbers here. The counties that are most salient are not those with the largest case counts. Rather, they have experienced rapid growth since the number of cases reported on 3rd May. So the graphic is most certainly **partial** and **designed** to suit a particular purpose. A slight adjustment in my implementation in Figure \@ref(fig:wp) was to only show growth rates for counties that had non-negligible case counts on 3rd May ($\geq20$ cases).
+
+Without the careful integration of annotations and non-standard legends, the graphic would not be so successful.  The aim of this technical session is to demonstrate an approach to generating heavily designed annotations -- custom legends, which are often necessary when communicating with maps. For a more extensive demonstration of how charts can be annotated and refined, I highly recommend [Chapter 8](https://socviz.co/refineplots.html#refineplots) of @healy_data_2018 and the [BBC Visual and Data Journalism Cookbook](https://bbc.github.io/rcookbook/).
+
+### Import
+
+* Download the [<i class="fab fa-r-project"></i> 09-template.Rmd](/homework/09-homework_files/09-template.Rmd) file for this session and save it to the `reports` folder of your `vis-for-gds` project.
+* Open your `vis-for-gds` project in RStudio and load the template file by clicking `File` > `Open File ...` > `reports/09-template.Rmd`.
+
+The template file lists the required packages -- `tidyverse` and `sf`. The data were collected using [Kieran Healy](https://kieranhealy.org/)'s [`covdata`](https://kjhealy.github.io/covdata/) package, with attribution to the [county-level cumulative cases dataset](https://kjhealy.github.io/covdata/articles/new-york-times.html) released and maintained by data journalists at the New York Times ([this repo](https://github.com/nytimes/covid-19-data)).
+
+The template provides access to a version of this dataset that I have 'staged' for charting. For this I filtered cases data on the dates covered by the Washington Post graphic (3rd to 25th May); identified counties whose daily case counts were $\geq20$ cases on 3rd May; calculated daily growth rates, anchored to the recorded case counts on 3rd May; calculated 'end' growth rates and daily counts for each county (those recorded on 25th May); and finally a binned growth rate variable identifying counties with daily case counts on 25rd May that were $\leq2\times$, $\geq2\times$, $\geq4\times$,  $\geq7\times$ the daily case counts measured on 3rd May. Also there is a `state_boundaries` dataset to download, which contains `geometry` data for each US state, collected from [US Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html) as well as coordinate variables describing the geographic centroid of each state. The [Albers Equal Area](https://en.wikipedia.org/wiki/Albers_projection) projection is used.
+
+### Plot trajectories
+
+```{r wp-basic, echo=FALSE, fig.cap="Glyphmap design displaying growth in COVID-19 cases by US county, without legend and annotations.", fig.align="left", out.width="100%"}
+include_graphics("/class/09-class_files/wp-basic.png", error = FALSE)
+```
+
+The main graphic is reasonably straightforward to construct.
+
+The code:
+
+```{r plot-trajectories, echo=TRUE, eval=FALSE, message=FALSE}
+county_data %>%
+  ggplot()+
+  geom_sf(data=state_boundaries, fill="#eeeeee", colour="#bcbcbc", size=0.2)+
+  coord_sf(crs=5070, datum=NA, clip="off")+
+  geom_point(
+    data=.%>% filter(date=="2020-05-03"),
+    aes(x=x, y=y, colour=binned_growth_rate, alpha=binned_growth_rate, size=case_rate)
+    )+
+  # Plot case data.
+  geom_path(
+    aes(
+      x=x+(day_num*6000)-6000, y=y+(growth_rate*50000)-50000, group=fips,
+      colour=binned_growth_rate, size=case_rate, alpha=binned_growth_rate
+      ),
+    lineend="round"
+  ) +
+  scale_colour_manual(values=c("#fa9fb5", "#dd3497", "#7a0177", "#49006a"))+
+  scale_size(range=c(.1,2.5))+
+  scale_alpha_ordinal(range=c(.2,1))+
+  guides(colour=FALSE, size=FALSE, alpha=FALSE)+
+  theme_void()
+```
+
+The plot specification:
+
+1. **Data**: The main dataset -- the staged `county_data` file. Separately there is a `state_boundaries` file, used to draw state boundaries and later label states. For the points drawn at the centroid of each US county (`geom_point()`), the data are filtered so that only a single day is represented (`filter(date=="2020-05-03")`).
+2. **Encoding**: For `geom_point()`, x-position and y-position is mapped to county centroid (`x`,`y` in `county_data`), points are coloured according to `binned_growth_rate` (both `colour` and `alpha`) and sized according to that county's `case_rate`. The same colour and size encoding is used for the lines (`geom_path()`). County lines are again anchored at county centroids but offset in `x` according to time elapsed (`day_num`) and in `y` according to `growth_rate`. The constants applied to `growth_rate` (5000) and `day_num` (6000), which control the space occupied by the lines, was arrived at manually through trial and error. In order to draw separate lines for each county, we set the `group=` argument to the county identifier variable `fips`.
+3. **Marks**: `geom_point()` for the start points centred on county centroids and `geom_path()` for the lines.
+4. **Scale**: `scale_colour_manual()` for the binned growth rate colours; `scale_alpha()` for an ordinal transparency range -- the floor for this is 0.2 and not 0, otherwise counties with the smallest binned growth rates would not be visible; `scale_size()` for varying size continuously according to case rate, the range was arrived at through trial and error.
+5. **Setting**: We don't want the default legend to appear and so `guides()` turns these off; additionally `theme_void()` for removing default axes, gridlines etc.
+
+
+### Add labels and annotations
+
+The two-letter state boundaries can be added in a `geom_text()` layer, positioned in `x` and `y` at state centroids. For obvious reasons this needs to appear *after* the first call to `geom_sf()`, which draws the filled state outlines:
+
+```{r label-states, echo=TRUE, eval=FALSE, message=FALSE}
+county_data %>%
+  ggplot()+
+  geom_sf(data=state_boundaries, fill="#eeeeee", colour="#bcbcbc", size=0.2)+
+  geom_text(data=state_boundaries, aes(x=x,y=y,label=STUSPS), alpha=.8)+
+  ...
+  ...
+  ...
+```
+
+For the selected counties, we create a filtered data frame of those counties with just one row for each county. This is a little more tedious as we have to manually identify these in a `filter()`. Note that we filter on `date` first, so that only one row is returned for each county. Within the `mutate()` some manual abbreviations are made for state names and also `end_rate` variable is rounded to whole numbers for better labelling.
+
+```{r label-counties, echo=TRUE, eval=FALSE, message=FALSE}
+# Counties to annotate.
+annotate <- county_data %>% filter(
+    date=="2020-05-03",
+    county==c("Huntingdon") & state=="Pennsylvania" |
+    county==c("Lenawee") & state=="Michigan" |
+    county==c("Crawford") & state=="Iowa" |
+    county==c("Wapello") & state=="Iowa" |
+    county==c("Lake") & state=="Tennessee" |
+    county=="Texas" & state == c("Oklahoma") |
+    county==c("Duplin") & state=="North Carolina" |
+    county==c("Santa Cruz") & state=="Arizona"|
+    county==c("Titus") & state=="Texas"|
+    county==c("Yakima") & state=="Washington"
+    ) %>%
+  mutate(
+    state_abbr=case_when(
+      state=="Pennsylvania" ~ "Penn.",
+      state=="Iowa" ~ "Iowa",
+      state=="Tennessee" ~ "Tenn.",
+      state=="Oklahoma" ~ "Okla.",
+      state=="Texas" ~ "Texas",
+      state=="North Carolina" ~ "N.C.",
+      state=="Washington" ~ "Wash.",
+      state=="Michigan" ~ "Mich.",
+      state=="Arizona" ~ "Arizona",
+      TRUE ~ ""
+    ),
+    end_rate_round = round(end_rate,0)
+  )
+```
+
+Plotting these is again quite straightforward with `geom_text()`. The `paste0()` function is used to build labels that display `county` and then `state_abbr`. These appear below each county and y-position is offset accordingly. Additionally the counties are given a bold font by passing an argument to `family=` (not in the code below as I have used a font not native to all machines). The same approach is used for the rate labels, but with an incremented y-position offset so that they don't overlap the county name labels.
+
+```{r plot-counties, echo=TRUE, eval=FALSE, message=FALSE}
+county_data %>%
+  ggplot()+
+  geom_sf(data=state_boundaries, fill="#eeeeee", colour="#bcbcbc", size=0.2)+
+  ...
+  geom_text(data=annotate, aes(x=x,y=y-20000,label=paste0(county,", ",state_abbr)), alpha=1, size=3)+
+  geom_text(data=annotate, aes(x=x,y=y-65000,label=paste0(end_rate_round,"X more cases")), alpha=1, size=2.5)+
+  ...
+  ...
+  ...
+```
+
+### Build legend
+
+To generate the legend, we need to know the spatial extent of US mainland so that we can draw outside of this. This can be arrived at using `st_bbox()` and also `width` and `height` dimensions for US expressed in spatial units.
+
+```{r bbox, echo=TRUE, eval=FALSE, message=FALSE}
+# Bounding box for mainland US.
+bbox <- st_bbox(state_boundaries)
+width <- bbox$xmax-bbox$xmin
+height <- bbox$ymax-bbox$ymin
+```
+
+
+We then create a dataset for the top right legend displaying the different categories of growth rate (Figure \@ref(fig:wp-growth-legend)). Counties filtered by their different growth rates (in the `filter()` below) were identified manually. In the `mutate()` we set x-position to start at the right quarter of the graphic (`bbox$xmax-.25*width`) and y-position to start slightly above the top of the graphic `bbox$ymax+.05*height`. `case_rate` is set to a constant as we don't want line width to vary and also a manually created `label` variable.
+
+```{r legend-growth, echo=TRUE, eval=FALSE, message=FALSE}
+# Legend : growth
+legend_growth <- county_data %>%
+  filter(
+    county=="Dubois" & state=="Indiana" |
+    county=="Androscoggin" & state=="Maine" |
+    county=="Fairfax" & state=="Virginia" |
+    county=="Bledsoe" & state=="Tennessee"
+  ) %>%
+  mutate(
+    x=bbox$xmax-.25*width,y=bbox$ymax+.05*height,
+    case_rate=.01,
+    label=case_when(
+      county == "Dubois" ~ "7x more cases than on May 3",
+      county == "Androscoggin" ~ "4x",
+      county == "Fairfax" ~ "2x",
+      county == "Bledsoe" ~ "About the same as on May 3"
+    )
+  )
+```
+
+```{r wp-growth-legend, echo=FALSE, fig.cap="Legend demonstrating growth rates.", fig.align="left", out.width="50%"}
+include_graphics("/class/09-class_files/wp-growth.png", error = FALSE)
+```
+
+A separate dataset is also created for drawing the top left legend (Figure \@ref(fig:wp-case-legend)), showing different case rates relative to population size. In the `mutate()` we set x-position to start towards the left of the graphic (`bbox$xmax-.88*width`) and y-position to start slightly above the top of the graphic `bbox$ymax+.05*height`. We want to draw three lines corresponding to a low, medium and high growth rate and so `pivot_longer()` to duplicate the daily case data over rows. Each line needs to be drawn next to one another and this is achieved with the `offset_day` variable,  a multiple applied to the geographic `width` of US in the eventual `ggplot2` specification.
+
+
+```{r legend-case, echo=TRUE, eval=FALSE, message=FALSE}
+# Legend : case
+legend_case <- county_data %>%
+  filter(
+    county == "Kings" & state=="California" ) %>%
+  mutate(
+    x=bbox$xmax-.88*width,y=bbox$ymax+.05*height,
+    binned_growth_rate=factor(binned_growth_rate)
+  ) %>%
+  select(x, y, day_num, growth_rate, binned_growth_rate, fips) %>%
+  mutate(
+    low=.001, mid=.009, high=.015,
+  ) %>%
+  pivot_longer(cols=c(low, mid, high), names_to="offset", values_to="offset_rate") %>%
+  mutate(
+    offset_day= case_when(
+      offset == "low" ~ 0,
+      offset == "mid" ~ .04,
+      offset == "high" ~ .08
+    )
+  )
+```
+
+```{r wp-case-legend, echo=FALSE, fig.cap="Legend demonstrating case rates.", fig.align="left", out.width="60%"}
+include_graphics("/class/09-class_files/wp-case.png", error = FALSE)
+```
+
+
+### Compose graphic
+
+The code block below demonstrates how derived data for the legends are used in the `ggplot2` specification. Exactly the same mappings is used in the legend as the main graphic, and so the call to `geom_path()` looks similar, except for the different use of x- and y- position. Labels for the legends are generated using `annotate()` and again positioned using location information contained in `bbox`.
+
+```{r full-graphic, echo=TRUE, eval=FALSE, message=FALSE}
+county_data %>%
+  ggplot()+
+  geom_sf(data=state_boundaries, fill="#eeeeee", colour="#bcbcbc", size=0.2)+
+  ...
+  ...
+  ...
+  # Plot growth legend lines.
+  geom_path(
+    data=legend_growth,
+    aes(
+      x=x+(day_num*6000)-6000, y=y+(growth_rate*50000)-50000,
+      group=fips, colour=binned_growth_rate, size=case_rate,
+      alpha=binned_growth_rate
+      ),
+    lineend="round"
+  ) +
+  # Text label for growth legend lines.
+  geom_text(
+    # For appropriate positioning, we manually edit the growth_rate values of
+    # Bledsoe, no growth county.
+    data=legend_growth %>% filter(day_num == max(county_data$day_num)) %>%
+    mutate(growth_rate=if_else(county=="Bledsoe", -1,growth_rate)),
+    aes(
+      x=x+(day_num*6000)+10000,y=y+(growth_rate*50000)-50000,
+      label=str_wrap(label, 15)
+      ),
+      alpha=1, size=2.5, hjust=0, vjust=0
+      )+
+  annotate("text",
+    x=bbox$xmax-.25*width, y=bbox$ymax+.08*height,
+    label=str_wrap("Line height and colour show change in reported cases
+    relative to May 3",35), alpha=1, size=3.5, hjust=1)+
+  # Plot case legend lines.
+  geom_path(
+    data=legend_case,
+    aes(
+      x=x+(day_num*6000)-6000+offset_day*width, y=y+(growth_rate*50000)-50000,
+      group=paste0(fips,offset), colour=binned_growth_rate, size=offset_rate,
+      alpha=binned_growth_rate
+    ),
+    lineend="round"
+    ) +
+  # Text label for case legend lines.
+  annotate("text", x=bbox$xmax-.88*width, y=bbox$ymax+.04*height, label="Less",
+    alpha=1, size=2.5, hjust=0.5)+
+  annotate("text", x=bbox$xmax-.8*width, y=bbox$ymax+.04*height, label="More",
+    alpha=1, size=2.5, hjust=0.5)+
+  annotate("text", x=bbox$xmax-.75*width, y=bbox$ymax+.08*height,
+  label=str_wrap("Line thickness shows current number relative to county population",35),
+  alpha=1, size=3.5, hjust=0)+
+  # Title.
+  annotate("text", x=bbox$xmax-.5*width, y=bbox$ymax+.15*height,
+  label="Change in reported cases since May 3", alpha=1, size=5)+
+  ...
+  ...
+  ...
+```
+
+
+## Conclusions
+
+Data are deeply embedded in most domains and in how we approach most of the world's problems. Communicating with data is, however, not an easy undertaking. Difficult decisions must be made around how much important detail to sacrifice in favour of clarity and simplicity of message. Visual approaches can help here; giving cues that order and prioritise information and that build explanatory narratives using metaphor and other rhetorical devices. There are stellar examples of this from in-house Data Journalism teams, most obviously in recent evidence-based stories around the pandemic.  We have considered some of these and the careful design decisions made when communicating data-driven stories in light of data, audience and intended purpose. Many leading data journalists use `ggplot2` as their visulization toolkit of choice and in the technical session we demonstrated how more deliberatively designed graphics can be generated. This somewhat fiddly approach to creating graphics is different from the style of workflow envisaged for `ggplot2` in the session on [Exploratory Data Analysis](/class/04-class/). <!-- Thinking in terms of coordinate space in which graphical elements can be variously added is more similar to that required by low-level visualization frameworks such as [processing](https://processing.org/) and [d3](https://d3js.org/).  --> However, as demonstrated through John Burn-Murdoch's excellent work and also the [BBC graphics team](https://bbc.github.io/rcookbook/), `ggplot2`
+*can* be used for visualization design, making control over annotations, text labels, and embedded graphics important skills to develop.
+
+<!-- Thinking in terms of coordinate space in which graphical elements can be variously added is more similar to that required by low-level visualization frameworks such as [processing](https://processing.org/) and [d3](https://d3js.org/).
+
+
+* Examples here were quite selective -- approaches to looking at cases/hospitalisation -- honourable mention to [Hary Stevens](https://www.washingtonpost.com/graphics/2020/world/corona-simulator/) explaining exponential doubling and thus the argument for resitrictions.
+ -->
+
+
+## References
+
+
+<!-- Concerns around the _reproducibility crisis_ are not simply a function of transparency in methodology and research design. Rather, they relate to a culture and incentive structure whereby scientific claims are conferred with authority when reported within the (slightly backwards) logic of Null Hypothesis Significance Testing (NHST) and _p-values_. We will cover a little on this in session 7 and 8, but for an accessible read on the phenomenon of _p-hacking_ (with interactive graphic) see [this article](https://fivethirtyeight.com/features/science-isnt-broken/#part1) from the excellent [FiveThirtyEight](http://fivethirtyeight.com) website. Again, the upshot of all this introspection is a rethinking of the way in which Statistics is taught in schools and universities, with greater emphasis on understanding through computational approaches rather than traditional equations, formulas and probability tables. Where does `R` fit within this? Simply put: `R` is far better placed than traditional software tools and point-and-click paradigms for supporting computational approaches to statistics -- with a set of methods and libraries for performing simulations and permutation-based tests. -->

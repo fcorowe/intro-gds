@@ -1,0 +1,32 @@
+---
+title: "Visualization for exploring spatial networks"
+linktitle: "5: Visualization for exploring spatial networks"
+date: "2022-06-06"
+class_date: "2022-06-06"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: false
+menu:
+  reading:
+    parent: Reading
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+
+### Network data in R
+
+- [@wickham_ggplot2_2020]
+-- Chapter 7.\
+[Free online](https://ggplot2-book.org/networks.html).
+
+### Visualizing origin-destination data
+
+- [@wood_visualizing_2011]

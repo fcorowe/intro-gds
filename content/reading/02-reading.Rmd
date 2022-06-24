@@ -1,0 +1,35 @@
+---
+title: "Data fundamentals"
+linktitle: "2: Data fundamentals"
+date: "2022-05-16"
+class_date: "2022-05-16"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: false
+menu:
+  reading:
+    parent: Reading
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+### Tidy Data
+
+- [@wickham_tidy_2014]
+
+### R for Data Science
+
+- [@wickham_r_2017]\
+-- Chapters 2-12.\
+[Free online](https://r4ds.had.co.nz/).
+
+### bikedata
+
+- [@padgham_bikedata_2017]

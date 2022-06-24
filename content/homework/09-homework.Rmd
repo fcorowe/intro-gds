@@ -1,0 +1,29 @@
+---
+title: "Communication and storytelling"
+linktitle: "9: Communication and storytelling"
+date: "2022-07-04"
+class_date: "2022-07-04"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-author-date.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: false
+menu:
+  homework:
+    parent: Homework
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+```
+
+## Session Outcomes
+
+There is no formal homework session this time. There is, however, an extensive set of reading that you may wish to consult.

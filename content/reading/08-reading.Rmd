@@ -1,0 +1,43 @@
+---
+title: "Visualization for uncertainty analysis"
+linktitle: "8: Visualization for uncertainty analysis"
+date: "2022-06-27"
+class_date: "2022-06-27"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: false
+menu:
+  reading:
+    parent: Reading
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+### Uncertainty 'primers'
+
+- [@padilla_uncertainty_2021]
+- [@wilke_fundamentals_2019]\
+-- Chapter 16.\
+[Free online](https://clauswilke.com/dataviz/).
+
+### Ensemble visualizations
+
+- [@quinan_visually_2016]
+- [@liu_uncertainty_2017]
+
+### Visualizing parameter uncertainty
+
+- [@correl_error_2014]
+- [@fernandes_uncertainty_2018]
+- [@kale_hypothetical_2018]
+
+### Uncertainty in election forecasts
+
+- [@gelman_information_2020]

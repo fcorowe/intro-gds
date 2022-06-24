@@ -1,0 +1,77 @@
+---
+title: "Exploring spatial networks"
+linktitle: "5: Exploring spatial networks"
+date: "2022-06-06"
+class_date: "2022-06-06"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-author-date.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+menu:
+  homework:
+    parent: Homework
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+```
+
+## Session Outcomes
+
+By the end of this homework session you should be able to:
+
+{{% callout objective %}}
+- [x] Interpret non-standard data graphics by 'looking-up' specific values/trends.
+- [x] Infer patterns from non-standard data graphics.
+{{% /callout %}}
+
+## Introduction
+
+This homework requires you to apply the concepts and skills developed in the class session on [exploring spatial networks](/class/05-class/). Do complete the task and be sure to save your work as it will be submitted as part of your portfolio for Assignment 1.
+
+## Visualization interpretation challenge
+
+You may be pleased to know that this week's homework does not require you to write a single line of code. Instead, it is designed to get you reading and interpreting data graphics. [OD Maps](https://xeno.graphics/od-map/) are a good candidate here as they have been catalogued by [Marteen Lambrechts](https://www.maartenlambrechts.com) as a Xenographic -- *Weird but (sometimes) useful*. I'd add that within the list of other [Xenographics](https://xeno.graphics), OD Maps are *Not that weird and often useful*. Nevertheless, they do take some interpretation.
+
+
+```{r mode-analysis-od-map, echo=FALSE, fig.cap="OD map of commutes between London boroughs", fig.align="left", out.width="90%"}
+include_graphics("/class/05-class_files/od-maps-mode-homework.png", error = FALSE)
+```
+###  Task 1: Read
+
+For a clear explanation of OD maps and interesting application, read @slingsby_od_2014's very short paper: [*OD maps for showing changes in Irish female migration between 1851 and 1911*](https://openaccess.city.ac.uk/id/eprint/8483/).
+
+### Task 2: Interpret
+
+Considering the OD maps in Figure \@ref(fig:mode-analysis-od-map), try to answer the following tasks. Write your answers in the  [<i class="fab fa-r-project"></i> 05-template.Rmd](/homework/04-homework_files/05-template.Rmd) file.
+
+#### Look-up tasks
+
+* For jobs filled in the City of London (CTY), from which borough does largest number of workers commute using public transport?
+  + *Enter your answer in the template*
+* Which borough in London has the largest *absolute* number living and working in that borough (and travelling to work by public transport)?
+  + *Enter your answer in the template*
+* For workers living in Barnet (BRN), what are the top 3 boroughs to which they commute?
+  + *Enter your answer in the template*
+
+
+#### Insights
+
+Identify three isights that can be made around the geography of commuting patterns in London from reading any/each of the graphics in Figure \@ref(fig:mode-analysis-od-map). Briefly identify which graphic(s) led to the insight and how. Please do not spend too long over this activity -- the idea is to encourage you to make inferences from graphics, as you will do in your coursework.
+
+* Insight 1
+  + *Enter your answer in the template*
+* Insight 2
+  + *Enter your answer in the template*
+* Insight 3
+  + *Enter your answer in the template*
+
+## References

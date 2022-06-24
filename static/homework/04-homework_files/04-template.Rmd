@@ -1,0 +1,175 @@
+---
+author: "<your-name>"
+date: "<the-date>"
+title: "Session 04"
+output: html_document
+---
+
+## Class
+
+Reopen your `vis-for-gds` project and save this `.Rmd` to the `reports` folder. When working through the materials from this session run each code chunk separately by clicking the small green arrow beside each code chunk. By default I have set `eval=FALSE` on most code chunks, so when you knit the code chunk will not execute.
+
+The technical element to this session involves analysing [`stats19`](https://data.gov.uk/dataset/cb7ae6f0-4be6-4935-9277-47e5ce24a11f/road-safety-data) road crash data.
+
+### Setup
+
+The code block below points to the packages you need to do the work discussed in the session. Uncomment the `intall_packages()` lines if you have not already downloaded `stats19` and `trafficalmr`. Note that if you are having problems I ultimately make the main dataset used `ped_veh` available in a separate repo (see below "get-ped-veh" chunk).
+
+```{r setup, echo=TRUE, eval=FALSE, message=FALSE}
+library(tidyverse) # Bundle of packages for doing modern data analysis.
+library(sf) # Spatial operations
+library(here) # For navigating project directory
+library(fst) # For reading/writing large files.
+library(lubridate) # For working with dates.
+
+# remotes::install_github("ropensci/stats19")
+library(stats19)
+
+# remotes::install_github("saferactive/trafficalmr")
+library(trafficalmr)
+```
+
+### Import
+
+Run the code block below to download and process the **crashes**, *vehicles** and **casualties** data. These are large datasets so this may take a little time to execute. **Note: if you are havung problems, skip to the third code block in this section, where the processed data can be loaded from an external repo.**
+
+```{r download-data, echo=TRUE, eval=FALSE, message=FALSE}
+# A vector containing years that we will collect data for.
+years <- 2010:2019
+crashes_all <- get_stats19(year = years, type = "ac")
+casualties_all <- get_stats19(year = years, type = "cas")
+vehicles_all <-  get_stats19(year = years, type = "veh")
+
+# Use trafficalmr package for recoding.
+casualties_all <- casualties_all %>% mutate(casualty_type=tc_recode_casualties(casualty_type))
+vehicles_all <- vehicles_all %>% mutate(vehicle_type=tc_recode_vehicle_type(vehicle_type))
+crashes_all <- crashes_all %>% mutate(speed_limit=tc_recode_speeds_uk(speed_limit))
+
+# Large files, so write out to `.fst`.
+write_fst(crashes_all, here("data", "crashes_all.fst"))
+write_fst(casualties_all, here("data", "casualties_all.fst"))
+write_fst(vehicles_all, here("data", "vehicles_all.fst"))
+
+# And read in as`.fst`.
+vehicles_all <- read_fst(here("data", "vehicles_all.fst"))
+casualties_all <- read_fst(here("data", "casualties_all.fst"))
+crashes_all <- read_fst(here("data", "crashes_all.fst"))
+```
+
+Run the code block below to generate the derived dataset of pedestrian casualties used in the class session and homework.
+
+```{r subset-pedestrians, echo=TRUE, eval=FALSE, message=FALSE}
+# Data frame of all pedestrian casualties.
+ped_veh <- crashes_all %>%
+  left_join(casualties_all %>%
+              select(accident_index, age_of_casualty,sex_of_casualty, casualty_type, casualty_imd_decile, casualty_severity,
+                     pedestrian_location, pedestrian_movement, casualty_reference))  %>%
+  filter(casualty_type=="Pedestrian")
+
+# Ordered factor of vehicle types.
+vehicles_all %>% select(vehicle_type) %>% distinct() %>% pull()
+veh_orders <- c("Bicycle", "Motorcycle","Car", "Taxi", "Other", "Van", "Bus", "HGV")
+# Filtering join to filter all vehicles involved in pedestrian crashes.
+# Then identify largest vehicle involved in each crash and filter on these.
+# Then identify "first" vehicle_reference involved in each crash.
+temp_ped_vehicles <- vehicles_all %>%
+  semi_join(ped_veh) %>%
+  mutate(vehicle_type=factor(vehicle_type, levels = veh_orders, ordered = TRUE)) %>%
+  group_by(accident_index) %>%
+  mutate(largest_vehicle = max(vehicle_type)) %>%
+  filter(vehicle_type==largest_vehicle) %>%
+  mutate(unique_vehicle=min(vehicle_reference)) %>%
+  filter(vehicle_reference==min(vehicle_reference))
+
+ped_veh <- ped_veh %>% left_join(temp_ped_vehicles)
+# Remove temporary/staging data frame.
+rm(temp_ped_vehicles)
+```
+
+**All**: You may have had problems due to the fact that we are working with a large dataset, so I have made `ped_veh` available on a personal repository. Run the block below to download.
+
+```{r get-ped-veh, echo=TRUE, eval=FALSE, message=FALSE}
+# Dataset of pedestrian-vehicle crashes.
+url <- "https://www.roger-beecham.com/datasets/ped_veh.fst"
+download.file(url, here("data", "ped_veh.fst"))
+ped_veh <- fst::read_fst(here("data", "ped_veh.fst"))
+```
+
+Run the code block below  to recode IMD to quintiles.
+
+
+```{r get-imd, echo=TRUE, eval=FALSE, message=FALSE}
+# Recode imd into quintiles.
+ped_veh <- ped_veh %>%
+  mutate(
+    driver_imd_quintile=case_when(
+      driver_imd_decile == "Most deprived 10%" ~ "1 most deprived",
+      driver_imd_decile == "More deprived 10-20%" ~ "1 most deprived",
+      driver_imd_decile == "More deprived 20-30%" ~ "2 more deprived",
+      driver_imd_decile == "More deprived 30-40%" ~ "2 more deprived",
+      driver_imd_decile == "More deprived 40-50%" ~ "3 mid deprived",
+      driver_imd_decile == "Less deprived 40-50%" ~ "3 mid deprived",
+      driver_imd_decile == "Less deprived 30-40%" ~ "4 less deprived",
+      driver_imd_decile == "Less deprived 20-30%" ~ "4 less deprived",
+      driver_imd_decile == "Less deprived 10-20%" ~ "5 least deprived",
+      driver_imd_decile == "Least deprived 10%" ~ "5 least deprived",
+      TRUE ~ driver_imd_decile),
+    casualty_imd_quintile=case_when(
+      casualty_imd_decile == "Most deprived 10%" ~ "1 most deprived",
+      casualty_imd_decile == "More deprived 10-20%" ~ "1 most deprived",
+      casualty_imd_decile == "More deprived 20-30%" ~ "2 more deprived",
+      casualty_imd_decile == "More deprived 30-40%" ~ "2 more deprived",
+      casualty_imd_decile == "More deprived 40-50%" ~ "3 mid deprived",
+      casualty_imd_decile == "Less deprived 40-50%" ~ "3 mid deprived",
+      casualty_imd_decile == "Less deprived 30-40%" ~ "4 less deprived",
+      casualty_imd_decile == "Less deprived 20-30%" ~ "4 less deprived",
+      casualty_imd_decile == "Less deprived 10-20%" ~ "5 least deprived",
+      casualty_imd_decile == "Least deprived 10%" ~ "5 least deprived",
+      TRUE ~ casualty_imd_decile)
+  )
+
+# IMD data from:   https://geoportal.statistics.gov.uk/datasets/3db665d50b1441bc82bb1fee74ccc95a_0
+imd <- read_csv("https://opendata.arcgis.com/datasets/3db665d50b1441bc82bb1fee74ccc95a_0.csv")
+imd <- imd %>% mutate(
+  quintile=ntile(IMD19,5),
+  crash_quintile=case_when(
+    quintile == 1 ~ "1 most deprived",
+    quintile == 2 ~ "2 more deprived",
+    quintile == 3 ~ "3 mid deprived",
+    quintile == 4 ~ "4 less deprived",
+    quintile == 5 ~ "5 least deprived"
+  )
+)
+
+ped_veh <- ped_veh %>%
+  # Crashes in Wales are excluded as English IMD
+  inner_join(imd %>% select(LSOA11CD, crash_quintile), by=c("lsoa_of_accident_location"="LSOA11CD"))
+```
+
+## Homework
+
+### Visualization design challenge
+
+Uncomment the code block below (remove the "#" and insert the path to you figure as an argument to the `include_graphics()` function.
+
+<!-- ![](<insert-path-to-figure-here>) -->
+
+# ```{r vis-design-challenge, echo=FALSE, fig.cap="<insert figure caption here>", fig.align="left",  out.width="100%"}
+# include_graphics("<path-to-figure>", error = FALSE)
+# ```
+
+```{r design-challenge-code, echo=TRUE, eval=FALSE}
+#######################
+# Enter your code in the chunk provided.
+######################
+```
+
+
+| Data item      | Measurement level | Visual mark      | Visual channel  |
+|----------------|-------------------|------------------|-----------------|
+| `location`     | <enter here>      |  <enter here>    | <enter here>    |
+| `...`          |`...`              |  `...`           | `...`           |
+| `...`          |`...`              |  `...`           | `...`           |
+| `...`          |`...`              |  `...`           | `...`           |
+| `...`          |`...`              |  `...`           | `...`           |
+| `...`          |`...`              |  `...`           | `...`           |

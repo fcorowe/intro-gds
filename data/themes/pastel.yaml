@@ -1,0 +1,22 @@
+# Theme metadata
+name: "pastel"
+
+# Is theme light or dark?
+light: true
+
+# Primary
+primary: "#424242"
+
+# Links
+link: "#003c8f"
+link_hover: "#1565c0"
+
+# Menu
+menu_primary: "#fff"
+menu_text: "#003c8f"
+menu_text_active: "#1565c0"
+menu_title: "#003c8f"
+
+# Home sections
+home_section_odd: "rgb(255, 255, 255)"
+home_section_even: "rgb(247, 247, 247)"

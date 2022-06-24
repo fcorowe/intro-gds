@@ -1,0 +1,33 @@
+---
+author: "<your-name>"
+date: "<the-date>"
+title: "Session 09"
+output: html_document
+---
+
+## Class
+
+Reopen your `vis-for-gds` project and save this `.Rmd` to the `reports` folder. When working through the materials from this session run each code chunk separately by clicking the small green arrow beside each code chunk. By default I have set `eval=FALSE` on most code chunks, so when you knit the code chunk will not execute.
+
+The technical element demonstrates how to recreate in `ggplot2` the *glyphmap* appearing in [The Washington Post](https://www.washingtonpost.com/nation/2020/05/24/coronavirus-rural-america-outbreaks/?arc404=true) to tell a story of growth in Covid-19 cases by US county.
+
+### Setup
+
+The code block below points to the packages you need to do the work discussed in the session. U
+
+```{r setup, echo=TRUE, eval=FALSE, message=FALSE}
+library(tidyverse) # Bundle of packages for doing modern data analysis.
+library(sf) # Spatial operations
+```
+
+### Import
+
+Run the code block below to download the staged Covid-19 case data by US county.
+
+```{r download-data, echo=TRUE, eval=FALSE, message=FALSE}
+# Dataset of US county Covid data -- derived fields already incorporated.
+county_data <- read_csv("https://www.roger-beecham.com/datasets/county_data_covid.csv") %>%
+  # Cast binned_growth_rate to factor.
+  mutate(binned_growth_rate=factor(binned_growth_rate))
+state_boundaries <- st_read("https://www.roger-beecham.com/datasets/state_boundaries.geojson")
+```

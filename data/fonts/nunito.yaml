@@ -1,0 +1,11 @@
+# Font style metadata
+name: Fira Sans Condensed + Nunito Sans
+
+# Optional Google font URL
+google_fonts: 'Fira+Sans+Condensed:400,400i,700,700i|Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700'
+
+# Font families
+heading_font: Fira Sans Condensed
+body_font: Nunito Sans
+nav_font: Nunito Sans
+mono_font: 'Consolas, "Liberation Mono", Menlo, Courier, monospace'

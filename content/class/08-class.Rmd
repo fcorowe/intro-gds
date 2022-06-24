@@ -1,0 +1,353 @@
+---
+title: "Visualization for uncertainty analysis"
+linktitle: "8: Visualization for uncertainty analysis"
+date: "2022-06-27"
+class_date: "2022-06-27"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-author-date.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+menu:
+  class:
+    parent: Class
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r setup, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(here)
+```
+By the end of this session you should gain the following **_knowledge_**:
+
+{{% callout objective %}}
+- [x] **Appreciate** the main challenges and objectives of uncertainty representation.
+- [x] **Learn** how visualization techniques can be used to support 'frequency framing' -- the perception of probability and risk.
+- [x] **Understand** how parameter uncertainty can be estimated computationally.
+{{% /callout %}}
+
+By the end of this session you should gain the following **_practical skills_**:
+
+{{% callout objective %}}
+- [x] **Create** uncertainty visualizations in `ggplot2`.
+- [x] **Generate** estimates of parameter uncertainty using bootstrap resampling.
+- [x] **Apply** [functional-style programming](https://purrr.tidyverse.org/articles/other-langs.html) for working over bootstrap resamples.
+{{% /callout %}}
+
+
+## Introduction
+
+Uncertainty is a key preoccupation of those working in statistics and data analysis. A lot of time is spent providing estimates for it, reasoning about it and trying to take it into account when making evidence-based claims and decisions. There are many ways in which uncertainty can enter a data analysis and many ways in which it can be conceptually represented. This session focuses mainly on parameter uncertainty -- that is, quantifying and conveying the different possible values that a quantity of interest might take. Intuitively, visualization should help with providing support here. We can use visuals to represent these different values and give greater emphasis to those for which we have greater certainty -- to communicate or *imply* levels of uncertainty in the background. This is, however, quite challenging. In [session 3](/class/03-class/), we learnt that there is often a gap between the visual encoding of data and its perception and the tendency in standard data graphics to imbue data with marks that over-imply precision. We will consider research in Cartography and Information Visualization on representing uncertainty information, before  exploring and applying techniques for quantifying and visually representing parameter uncertainty.  We will do so using [STATS19](https://data.gov.uk/dataset/cb7ae6f0-4be6-4935-9277-47e5ce24a11f/road-safety-data) road safety data, exploring how injury severity rates in pedestrian-vehicle crashes vary over time and by geographic area.
+
+
+
+{{% callout instruction %}}
+Watch Matt Kay's OpenVis Conf 2018 talk on quantifying and visualizing uncertainty (and in `R`). You may also wish to consult Matt and colleagues' [probabilistic visualization collection](https://mucollective.github.io/visualization/) as you consider the materials in this session.
+{{% /callout %}}
+
+<div class="embed-responsive embed-responsive-16by9">
+<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vqzO-9LSoG4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+## Concepts
+
+### Uncertainty visualization
+
+Cartographers, and more recently those working in Information Visualization, have been concerned for some time with *visual variables*, or adopting @munzner_visualization_2014's vocabulary *visual channels*, that might be used to represent uncertainty information. Figure \@ref(fig:uncertainty-variables) is adapted from @kinkeldey_how_2014 and displays visual variables that could be used to encode uncertainty information. Ideally, visual variables for representing uncertainty should be intuitive, logically related to notions of precision and accuracy, whilst also allowing sufficient discriminative power when deployed in data dense visualizations.
+
+@kinkeldey_how_2014 provides an overview of empirical research (controlled experiments) that explore the effectiveness of proposed visual variables against these criteria. As intuitive signifiers of uncertainty, or lack of precision, *fuzziness* and *location* have been shown to work well. Slightly less intuitive, but nevertheless successful in terms of discrimination are *size*, *transparency* and *colour value*. *Sketchiness* is another intuitive signifier, proposed in @boukhelifa_evaluating_2012 and @wood_sketchy_2012. As with many visual variables, sketchiness is probably best considered as an ordinal visual variable to the extent that there is a limited range of sketchiness levels that can be discriminated. An additional feature of sketchiness is that, different from the other visual variables, it is related to informality -- this may be desirable in certain contexts, less so in others [see @wood_sketchy_2012].
+
+```{r uncertainty-variables, echo=FALSE, fig.cap="Visual variables that can be used to represent levels of uncertainty information.", fig.align="left", out.width="90%"}
+include_graphics("/class/08-class_files/uncertainty_variables.png", error = FALSE)
+```
+
+
+From within the Uncertainty Visualization literature, a key maxim that consistently appears for successful uncertainty visualization is that:
+
+> *Things that are not precise should not be encoded with symbols that look precise.*
+
+The go-to example, which appears in most primers on uncertainty visualization, is the [National Hurricane Center's](https://www.nhc.noaa.gov/refresh/graphics_at1+shtml/030119.shtml?cone#contents) *Cone of Uncertainty* graphic (Figure \@ref(fig:hurricane-vis)) used to represent major storm events. The cone starts at the storm's current location and spreads out to represent the *projected path* of the storm as determined by National Hurricane Center's modelling. The main problem is that the cone implies that the storm is growing as we move away from its current location, when in fact this is not the case. Instead there is *more uncertainty* in the areas that could be affected by the storm the further away those areas are from the storm's current location. The second problem is that the cone uses strong lines that imply precision. The temptation is to think that anything contained by the cone is unsafe and anything outside of it is safe. This is of course not what is suggested by the model; rather that areas beyond the cone fall outside some chosen threshold probability.
+
+In [Jo Wood's](https://www.gicentre.net/jwo/index) redesign, *colour value* is used to represent four binned categories of storm probability suggested by the model. In representing the cone of uncertainty on a map, and incorporating geographic context -- administrative boundaries -- it is also natural to make quite specific and binary judgements about response based on this context. For example, if the cone is *close to* but not overlapping a state boundary, a decision might be made not to mount a response/prepare for the hurricane. Jo's approach is to use curve schematisation [see @van_exploring_2014] to symbolise states using a single line. This provides context but in a way that may discourage binary thinking;  precise inferences of location are not possible as the area and state borders are very obviously not exact.
+
+<!-- 1. Intrinsic vs. Extrinsic. Intrinsic techniques alter existing symbols used to represent uncertainty through manipulation of visual variables. Extrinsic approaches add new objects to the display to depict uncertainty – for example using glyphs or grids.
+2. Coincident vs. Adjacent. This describes the organisation of views: whether or not uncertainty is represented in an integrated view (coincident) or in separate views (adjacent).
+3. Static vs. Dynamic. Uncertainty might be represented dynamically, for example by alternating between visual representations of a dataset and depictions of its uncertainty.
+Kinkeldey et al. (2014) provide a survey of studies that have variously evaluated these visual variables for uncertainty representation.
+ -->
+
+ ```{r hurricane-vis, echo=FALSE, fig.cap="*Cone of Uncertainty* produced by [National Hurricane Center](https://www.nhc.noaa.gov/refresh/graphics_at1+shtml/030119.shtml?cone#contents) and example re-design by [Jo Wood](https://www.gicentre.net/jwo/index).", fig.align="left", out.width="100%"}
+ include_graphics("/class/08-class_files/hurricane_vis.png", error = FALSE)
+ ```
+
+<!-- The extreme abstraction of glyphs limits interprettion to generalised regional spatial patterns that reflect the uncertainty in the data. More precise inferences of location are not possible as area and state borders are not exactly described. -->
+
+
+
+
+
+{{% callout note %}}
+See [Jason Dykes's](https://www.gicentre.net/jsndyks) [blog post](https://www.gicentre.net/blog/2015/7/17/sketchyuncertainty) for discussion of how sketchiness might be applied to some interesting candidate Social Science datasets.
+{{% /callout %}}
+
+
+### Frequency framing
+
+The visual variables in Figure \@ref(fig:uncertainty-variables) could be used to represent different categories of uncertainty information, not just those associated with parameters -- for example, locational or temporal uncertainty at data collection. The rest of the session addresses techniques for quantifying, and charting idioms [@munzner_visualization_2014] for representing, parameter uncertainty: estimated injury severity rates for pedestrian-vehicle crashes in our STATS19 road crash dataset.
+
+Often parameters are represented as probabilities, or *relative frequencies* -- ratios or percentages describing the probability of some event happening. It is notoriously difficult to develop intuition around these sorts of relative frequencies. In the STATS19 dataset, we might wish to compare the injury severity rate  of pedestrain-vehicle road crashes -- the proportion of all crashes that resulted in a serious injury or fatality (KSI) -- taking place between two local authority areas, say Bristol and Sheffield. There is in fact quite a difference in the injury severity rate between these two local authority areas in 2019: 15% for Bristol (35 out of 228 reported crashes were KSI) versus 50% for Sheffield (124 out of 248 reported crashes were KSI).
+
+This feels like quite a large difference, but it is difficult to imagine or experience these differences in probabilities when written down or encoded visually using say bar length.  [Icon arrays](https://mucollective.github.io/visualization/icon-array/) are used extensively in health communication and have been demonstrated to be effective at communicating probabilities of event outcomes. They offload the thinking that happens when comparing ratios -- the internal weighing up of numerators and denominators. In the example in Figure \@ref(fig:icon-arrays-injury), icon arrays are used to compare the two injury severity rates for Bristol and Sheffield.  Each crash is a square and crashes are coloured according to whether they resulted in a serious injury or fatality (KSI, dark red) or slight injury (light red).
+
+```{r icon-arrays-injury, echo=FALSE, fig.cap="Icon array displaying injury severity rates for Pedestrian-Vehicle crashes.", fig.align="left", out.width="90%"}
+include_graphics("/class/08-class_files/icon-arrays.png", error = FALSE)
+```
+
+There are compelling examples of icon arrays being used in data journalism, most obviously to support communication of probabilities in political polling. You might remember that at the time of 2016 US Presidential Election, there was much criticism levelled at pollsters, even the excellent [FiveThirtyEight](https://fivethirtyeight.com/features/why-fivethirtyeight-gave-trump-a-better-chance-than-almost-anyone-else/), for not correctly calling the result. Huffpost gave Trump a 2% chance of winning the election, The New York Times 15% and FiveThirtyEight 28%. Clearly, the Huffpost estimate was really quite off, but thinking about FiveThirtyEight's prediction, how surprised should we be if an outcome does in fact occur, which is predicted to happen with a probability of almost a third?
+
+The [risk theatre](https://mucollective.github.io/visualization/risk-theatre/) (Figure \@ref(fig:risk-theatre)) is a variant of an icon array. In this case it represents polling probabilities as seats of a theatre -- a dark seat represents a Trump victory. If you imagine buying a theatre ticket and being randomly allocated to a seat, how confident would you be about not sitting in a "Trump" seat in the FiveThirtyEight image? The distribution of dark seats suggests that the 28% risk of a Trump victory according to the model is not negligible.
+
+```{r risk-theatre, echo=FALSE, fig.cap="Risk theatre of different election eve forecasts by Justin Gross as it appears in [Washington Post](https://mucollective.github.io/visualization/risk-theatre/)", fig.align="left", out.width="100%"}
+include_graphics("/class/08-class_files/risk-theatre.jpg", error = FALSE)
+```
+
+{{% callout instruction %}}
+For an excellent example of icon arrays applied to road safety, read Jo Wood's blog post on [risk, cycling and denominator neglect](https://www.gicentre.net/blog/2013/11/24/risk-cycling-and-denominator-neglect).
+{{% /callout %}}
+
+### Quantifying uncertainty in frequencies
+
+In the icon arrays above I made little of the fact that the sample size varies between the two recorded crash rates. Partly this was because the differences were reasonably small. When looking at injury severity rates across all local authorities in 2019, however, there is substantial variation in the rates and the sample size. Bromsgrove has a very low injury severity rate based on a small sample size (4%, or one out of 27 crashes resulting in KSI); Cotswold has a very high injury severity rate based on a small sample size (75%, or 14 out of 19 crashes resulting in KSI). With some prior knowledge of these areas, one might expect the difference in KSI rates to be in this direction, but would we expect the difference to be of this order of magnitude? Just eight more KSIs recorded in Bromsgrove makes its KSI rate equivalent to that of Bristol's.
+
+Although STATS19 is a population dataset to the extent that it contains data on every crash recorded by the Police, it makes sense that the more data on which our KSI rates are based, the more certainty we have in them being reliable estimates of injury severity -- ones that  might be used to predict injury severity in future years. So we can treat our observed injury rates as being derived from samples of an (*unobtainable*)  population. Our calculated injury severity rates are *parameters* that try to represent, or estimate, this population.
+
+Although this formulation might seem unnecessary, from here we can apply some statistical concepts to quantify uncertainty around our parameter estimates. We assume:
+
+1. The variable of interest, KSI rate, has an unobtainable population mean and standard deviation.
+2. That a *sample* will consist of a set of observations from this unobtainable population and that these samples could vary in size.
+3. From any *sample* we can calculate a mean and standard deviation, which will differ from the population mean and standard deviation.
+4. That we can derive a *sampling distribution* and generate an array of estimates that could be obtained from repeating the sampling process many, many times.
+5. This range of the *sampling distribution* could then be used to quantify how precise are the estimates. Generally the larger the sampling distribution, the more precise -- the less uncertain -- the estimate.
+
+In [session 6](/class/06-class/) and [session 7](/class/07-class/), we used Confidence Intervals to estimate uncertainty around regression coefficients. These described the range of the sampling distribution -- the range of values that coefficients estimated from a large number of resamples could take. From early stats courses, you might have learnt how these can be calculated using statistical theory. Better still, we can derive these empirically via [bootstrapping](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)). A bootstrap resample involves taking a random sample with replacement from the original sample and of the same size as the original sample. From this resample, a parameter estimate can be derived, in this case the KSI rate. And this process can be repeated many times to generate an empirical *sampling distribution* for the parameter. The standard error can be calculated from the standard deviation of the sampling distribution. There are several reasons why bootstrapping is a really useful procedure: it can be applied to almost any sample statistic, makes no distributional assumptions and can work on quite complicated sampling designs.
+
+Presented in Figure \@ref(fig:bootstrap-selected) are KSI rates with error bars used to display 95% Confidence Intervals generated from a bootstrap procedure in which 1000 resamples were taken with replacement. Upper and lower limits were lifted from .025 and .975 percentile positions of the bootstrap sampling distribution. Assuming that the observed data are drawn from a wider (unobtainable) population, the 95% Confidence Intervals demonstrate that whilst Cotswold recorded a very large KSI rate, sampling variation means that this figure could be much lower (or higher), whereas for Bristol and Sheffield, where our KSI rate is derived from more data, the range of plausible values that the KSI rate might take due to sampling variation is much smaller -- there is less uncertainty associated with their KSI rates.
+
+```{r bootstrap-selected, echo=FALSE, fig.cap="KSI rates for pedestrian-vehicle crashes in selected local authorities with 95% CIs (derived from 1000 resample bootstraps).", fig.align="left", out.width="90%"}
+include_graphics("/class/08-class_files/bootstrap-selected.png", error = FALSE)
+```
+
+
+### Visualizing uncertainty in frequencies
+
+Error bars are a space-efficient way of conveying parameter uncertainty. However, remembering our maxim for uncertainty visualization -- that *things that are not precise should not be encoded with symbols that look precise* -- they do have problems. The hard borders can lead to a binary/categorical thinking [see @correl_error_2014]. Certain values within a Confidence Interval are more probable than others and so we should endeavour to use a visual encoding that reflects this. Matt Kay's excellent [`ggdist`](https://mjskay.github.io/ggdist/) package extends `ggplot2` with a range of chart idioms for representing these sorts of intervals. In Figure \@ref(fig:selected-uncertainty) I have replaced the error bars with  *half eye plots* and *interval bars*, which give greater visual saliency to parameter estimates that are more likely.
+
+```{r selected-uncertainty, echo=FALSE, fig.cap="KSI rates for pedestrian-vehicle crashes in selected local authorities with uncertainty estimates.", fig.align="left", out.width="90%"}
+include_graphics("/class/08-class_files/selected-uncertainty.png", error = FALSE)
+```
+
+The STATS19 dataset is released annually, and given the wide uncertainty bands for certain local authorities, it might be instructive to explore the stability of local authority KSI rates year-on-year. In Figure \@ref(fig:bootstrap-selected) these KSI rates are represented with the bold line and the faint lines are superimposed bootstrap resamples. The overall line probably most clearly demonstrates volatility in the KSI rates for Cotswold and Bromsgrove due to small sample sizes. The observed increase in KSI rates for Sheffield since 2015 does appear to be a genuine one, although may also be affected by uncertainty around data collection -- [changes to how police record injury severity](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/904698/rrcgb-provisional-results-2019.pdf).
+
+
+```{r temporal-uncertainty, echo=FALSE, fig.cap="Year-on-yar KSI rates for pedestrian-vehicle crashes in selected local authorities with bootstrap resamples superimposed.", fig.align="left", out.width="90%"}
+include_graphics("/class/08-class_files/temporal-uncertainty.png", error = FALSE)
+```
+
+The superimposed lines in the figure above are a form of ensemble visualization. An alternative approach might have been to animate over the bootstrap resamples to generate a Hypoethetical Outcome Plot (HOP) [@hullman_hypothetical_2015]. HOPs convey a sense of uncertainty by animating over random draws of a distribution. As there is no single outcome to anchor to (although I have actually included one below), HOPs force viewers to account for uncertainty, recognising that less probable outcomes may be possible -- essentially to think distributionally (e.g. Figure \@ref(fig:hop-uncertainty)).
+
+```{r hop-uncertainty, echo=FALSE, fig.cap="HOP of year-on-yar KSI rates for pedestrian-vehicle crashes in selected local authorities.", fig.align="left", out.width="90%"}
+include_graphics("/class/08-class_files/temporal-uncertainty.gif", error = FALSE)
+```
+{{% callout note %}}
+For an excellent discussion of HOPs, with a popular example that originally appeared in New York Times looking at survey sampling error, I highly recommend [Alex Kale and Jess Hullman's blogpost](https://medium.com/@uwdata/hypothetical-outcome-plots-hops-help-users-separate-signal-from-noise-870d4e2b75d7).
+{{% /callout %}}
+
+### Multiple comparisons
+
+In road safety monitoring, a common ambition is to compare crash rates across local authorities on a map. We might represent injury severity rates as Risk Ratios (RR) comparing the observed injury severity in each local authority to a benchmark, say the injury severity rate we would expect to see nationally. RRs are an intuitive measure of effect size: $RRs >1$ indicate that the injury severity rate is greater than the national average; $RRs <1$ that it is less than the national average. As they are a ratio of ratios, and therefore agnostic to sample size, RRs can nevertheless be unreliable. Two ratios might be compared that have very different sample sizes and no compensation is made for the one that contains more data. We know this to be a problem in our dataset and so we will want to generate confidence intervals for our RRs.
+
+In Figure \@ref(fig:rrs), RRs for each local authority is represented with a <span style="font-weight:bolder">|</span> icon, which is then encoded according RR values by continuously varying icon angles: $RRs >1$ are angled to the right <span style="font-weight:bold">\/</span>, $RRs <1$ to the left <span style="font-weight:bolder">\\</span>. You might remember this approach being used to represent electoral Swing in [session 3](/class/03-class/).
+
+```{r rrs, echo=FALSE, fig.cap="Risk Ratios comparing local authority KSI rates to the GB average in 2019. Significance based on 90% bootstrap CI.", fig.align="left", out.width="90%"}
+include_graphics("/class/08-class_files/rrs.png", error = FALSE)
+```
+
+Whilst this is likely successful at conveying these effect sizes, we will want to de-emphasise those for which there is less certainty. One way of doing this would be to vary the lightness of the icons according to estimated standard errors. In Epidemiology and other domains, more common practice is to use null hypothesis testing (NHST). Here we set up an assumption (null hypothesis) that the difference in the injury severity rate for any local authority and the national average equals zero ($RR = 1.0$). Our bootstrap Confidence Interval is then used to derive probabilities that random sampling generate data similar to what was observed if this null hypothesis were true. The confidence interval can be used to derive this probability. If a 95% confidence interval excludes the expected parameter value under the null hypothesis (i.e. $RR \not= 1.0$), then the null hypothesis is rejected and the observed RR is deemed statistically significant.  In Figure \@ref(fig:rrs) RRs $>1$ that are statistically significant coloured red <span style="color:#DB534D;font-weight:bold">\/</span>, RRs $<1$ that are statistically significant coloured red are coloured blue <span style="color:#3879A1;font-weight:bolder">\\</span>  and those that are not statistically significant are coloured grey (<span style="color:#aeaeae;font-weight:bold">\/</span> <span style="color:#aeaeae;font-weight:bolder">|</span> <span style="color:#aeaeae;font-weight:bolder">\\</span>).
+
+A problem with this approach is one familiar to Statisticians, but that is rarely addressed in visual data analyses: the [multiple comparison problem](https://en.wikipedia.org/wiki/Multiple_comparisons_problem).  Whenever a NHST is made, there is a chance that the result observed is in fact a false alarm. In the plot above which uses a 90% confidence level, the “false positive rate" is expected to be 10% or 1/10. When many tests are considered simultaneously, as in Figure \@ref(fig:rrs), the number of these false alarms begins to accumulate. There are corrections that can be applied for this: test statistics can be adjusted and made more conservative. But these corrections have consequences. Too severe a correction can result in statistical tests that are underpowered and result in an elevated false negative rate, where a statistical test fails to detect an effect that truly exists. See @brunsdon_an_2011 for an interesting discussion of this in the context of mapping crime rates.
+
+So there is no canonical solution to this multiple comparison problem, which I see a lot in Geography where health and other outcomes are mapped visually. Presenting the RRs in their spatial context, and providing full information around RRs that are not significant, helps with making uncertainty type judgements. For example, we can attach more certainty to RRs that are labelled statistically significant and whose direction is consistent with its neighbours than those that are exceptional from their neighbours. But this is certainly an interesting area  for those working in visual data analysis.
+
+{{% callout note %}}
+Again, for an excellent discussion of the multiple comparison problem and visualization, read [this post by Jess Hullman and Jeff Heer](https://medium.com/hci-design-at-uw/multiple-perspectives-on-the-multiple-comparisons-problem-in-visual-analysis-df7493818bbd).
+{{% /callout %}}
+
+
+## Techniques
+
+The technical element demonstrates how the plots and uncertainty estimates of STATS19 road crash data introduced in the session can be produced.  We will again make use of [functional programming](https://adv-r.hadley.nz/fp.html#:~:text=Functional) approaches via the [`purrr`](https://purrr.tidyverse.org/) package, most obviously for generating and working over boostrap resamples.
+
+
+* Download the [<i class="fab fa-r-project"></i> 08-template.Rmd](/homework/08-homework_files/08-template.Rmd) file for this session and save it to the `reports` folder of your `vis-for-gds` project.
+* Open your `vis-for-gds` project in RStudio and load the template file by clicking `File` > `Open File ...` > `reports/08-template.Rmd`.
+
+### Import
+
+The template file lists the required packages -- `tidyverse`, `sf`, `tidymodels` (for working with the bootstraps), [`ggdist`](https://mjskay.github.io/ggdist/) and [`distributional`](https://pkg.mitchelloharawild.com/distributional/) for generating plots of parameter uncertainty and [`gganimate`](https://gganimate.com/index.html) for the hypothetical outcome plot. You may not have saved the dataset of STATS19 pedestrian-vehicle road crashes generated in session 4 (`ped_veh`) and so I have placed this on a repo for download. Code for loading these data into your session is in the [<i class="fab fa-r-project"></i> 08-template.Rmd](/homework/08-homework_files/08-template.Rmd) file.
+
+### Plot icon arrays
+
+```{r icon-arrays-technical, echo=FALSE, fig.cap="Icon array displaying injury severity rates for Pedestrian-Vehicle crashes.", fig.align="left", out.width="70%"}
+include_graphics("/class/08-class_files/icon-arrays-technical.png", error = FALSE)
+```
+
+I quickly explored extensions to `ggplot2` for generating icon arrays, but found no stand-out package. They can be generated reasonably easily using `geom_tile()` and some standard data generation functions. In the example in Figure \@ref(fig:icon-arrays-injury) the icon arrays varied with sample size of the two Local Authorities being compared. A more generalisable approach would be for icon arrays to be regularly sized and used to represent probabilities of, in this case injury severity, if a stated rate of crashes occurred (e.g. Figure \@ref(fig:icon-arrays-technical)).
+
+We need to generate the array data: a data frame of array locations (candidate crashes) with values representing whether the crash is slight or KSI depending on the observed KSI rate. In the code below, we set up a 10x10 grid of row and column locations and populate these with values for the selected local authorities (Oxford and Fareham) using base R's [`sample()`](https://stat.ethz.ch/R-manual/R-patched/library/base/html/sample.html) function.
+
+```{r array-data, echo=TRUE, eval=FALSE, message=FALSE}
+array_data <- tibble(
+  row=rep(1:10, times=1, each=10),
+  col=rep(1:10, times=10, each=1),
+  Oxford=sample(c(FALSE,TRUE), size=100, replace=TRUE, prob=c(.83,.17)),
+  Fareham=sample(c(FALSE,TRUE), size=100, replace=TRUE, prob=c(.59,.41))
+)
+```
+
+Plot code:
+
+```{r plot-array, echo=TRUE, eval=FALSE, message=FALSE}
+array_data %>%
+  pivot_longer(cols=c(Oxford,Fareham), names_to="la", values_to="is_ksi") %>%
+  ggplot(aes(x=row,y=col, fill=is_ksi)) +
+  geom_tile(colour="#ffffff", size=1) +
+  scale_fill_manual(values=c("#fee0d2","#de2d26"), guide=FALSE)+
+  facet_wrap(~la)
+```
+
+Plot specification:
+
+1. **Data**: The array data, with `pivot_longer()` so that we can facet by local authority.
+2. **Encoding**: x- and y-position according to the array locations and filled on whether the sampled crash is KSI or slight.
+3. **Marks**: `geom_tile()` for drawing square icons.
+4. **Scale**: `scale_fill_manual()` is supplied with values that are dark (KSI) and light (slight) red.
+5. **Facets**: `facet_wrap()` for faceting on local authority.
+6. **Setting**: Tiles are given large, white borders (`geom_tile(colour="#ffffff", size=1)`).
+
+
+### Generate bootstrap estimates of parameter uncertainty
+
+The code for generating bootstrap resamples, stored in `rate_boots`, initially looks formidable. It is a template that is nevertheless quite generalisable, and so once learnt can be extended and applied to suit different use cases.
+
+```{r bootstrap-data-code, echo=TRUE, eval=FALSE, message=FALSE}
+rate_boots <- ped_veh %>%
+  mutate(
+    is_ksi=accident_severity!="Slight",
+    year=lubridate::year(date)
+  ) %>%
+  filter(year==2019,
+         local_authority_district %in% c("Bristol, City of", "Sheffield", "Bromsgrove", "Cotswold")
+         ) %>%
+  select(local_authority_district, is_ksi) %>%
+  nest(-local_authority_district) %>%
+  mutate(la_boot=map(data, bootstraps, times=1000, apparent=TRUE)) %>%
+  select(-data) %>%
+  unnest(la_boot) %>%
+  mutate(
+    is_ksi=map(splits, ~ analysis(.) %>% pull(is_ksi)),
+    ksi_rate=map_dbl(is_ksi, ~mean(.x)),
+    sample_size=map_dbl(is_ksi, ~length(.x))
+  ) %>%
+  select(-c(splits, is_ksi))
+```
+
+Code description:
+
+1. **Setup**: The first mutate is straightforward -- we generate a binary `is_ksi` variable identifying whether the crash resulted in a KSI and extract the year from the crash `date`. We then filter on crashes that took place in 2019 and the four comparator local authorities. In order to generate bootstrap resamples for each local authority, we need to [`nest()`](https://cran.r-project.org/web/packages/tidyr/vignettes/nest.html) on local authority. You will remember that `nest()` creates a special type of column (a `list-column`) in which the values of the column is a list of data frames -- in this case the crash data for each local authority. So running the code up to and including the `nest()`, you will notice that a data frame is returned which contains four rows, corresponding to the filtered local authorities, and a `list-column` called `data`, each element of which contains a data frame of varying dimensions (lengths), according to the number of crashes recorded in each local authority.
+2. **Generate bootstraps resamples**: In the `mutate()` that follows `purrr`'s [`map()`](https://purrr.tidyverse.org/reference/map.html) function is used to iterate over the list of datasets and the [`bootstraps()`](https://rsample.tidymodels.org/reference/bootstraps.htmlfit) function is used to generate 1000 bootstrap resamples for each nested dataset. The new column `la_boot` is a `list-column` this time containing a list of bootstrap datasets.
+3. **Calculate sample estimates**: We `unnest()` the `la_boot` column to return a dataset with a row for each boostrap resample and a `list-column` named `splits` which contains the bootstrap data. Again we `map()` over each element of `splits` to calculate the `ksi_rate` for each of the bootstrap datasets. The first call to `map()` extracts the `is_ksi` variable; the second is just a convenient way of calculating a rate from this (remembering that `is_ksi` is a binary variable); the third collects the sample size for each of the bootstraps which of course is the same as the number of crashes recorded for each local authority.
+
+### Plot parameter estimates with uncertainty information
+
+With [`ggdist`](https://mjskay.github.io/ggdist/), the code for generating the plots of KSI rates with estimates of parameter uncertainty is straightforward and very similar to the [error bar plots](/class/06-class/#extracting-and-representing-model-parameters-1) in the previous two sessions.
+
+Plot code:
+
+```{r uncertainty-plot-code, echo=TRUE, eval=FALSE, message=FALSE}
+rate_boots %>%
+  group_by(local_authority_district) %>%
+  mutate(std.error=sd(ksi_rate)) %>%
+  filter(id=="Apparent") %>%
+  ggplot(aes(x=reorder(local_authority_district, ksi_rate), y=ksi_rate)) +
+  stat_dist_gradientinterval(
+    aes(dist = dist_normal(mu=ksi_rate, sigma=std.error)),
+    point_size = 1.5
+    ) +
+  coord_flip()
+```
+
+Plot specification:
+
+1. **Data**: The `rate_boots` data frame is grouped by local authority and in the `mutate()` we calculate an estimate of bootstrap standard error, the standard deviation of the sampling distribution, and filter all rows where `id=="Apparent"` -- this contains the KSI rate for the observed (unsampled) data.
+2. **Encoding**: x- position varies according to local authority and y-position according to KSI rate. The estimated KSI rate and bootsrtap standard error is also passed to `stat_dist_gradientinterval()`, the `ggdist` function for producing gradient plots.
+3. **Marks**: `stat_dist_gradientinterval()` for drawing the gradients and point estimates.
+4. **Setting**: `coord_flip()` for easy reading of local authority names.
+
+
+### Ensemble plots and hypothetical outcome plots
+
+To generate bootstrap resamples on local authority and year, necessary for the year-on-year analysis, we can use the same template for `rate_boots`, the only difference is that we `select()` and `nest()` on the `year` as well as `local_authority_district` column. You may also not wish to resample 1000 times for each year and local authority as this tends to slow down the computation (for obvious reasons).
+
+```{r bootstrap-data, echo=TRUE, eval=FALSE, message=FALSE}
+rate_boots_temporal <- ped_veh %>%
+  ...
+  ... %>%
+  select(local_authority_district, is_ksi, year) %>%
+  nest(-c(local_authority_district, year)) %>%
+  ...
+  ...
+  ..
+```
+
+The ensemble plot is again reasonably straightforward:
+
+```{r plot-ensemble, echo=TRUE, eval=FALSE, message=FALSE}
+rate_boots_temporal %>%
+  ggplot(aes(x=year, y=ksi_rate)) +
+  geom_line(data=. %>%  filter(id=="Apparent"), aes(group=id), size=.7) +
+  geom_line(data=. %>%  filter(id!="Apparent"), aes(group=id), alpha=.05, size=.2) +
+  facet_wrap(~local_authority_district)
+```
+
+Plot specification:
+
+1. **Data**: The `rate_boots_temporal` data frame. Note that we include two line layers, one with the observed data (`data=. %>%  filter(id=="Apparent"`), one with the bootsrap data (`data=. %>%  filter(id!="Apparent"`).
+2. **Encoding**: x- position varies according to year, y-position according to KSI rate.
+3. **Marks**: `geom_line` for drawing lines.
+4. **Facets**: `facet_wrap()` for faceting on local authority.
+5. **Setting**: The bootstrap lines are de-emphasised by making the `alpha` and `size` channels very small.
+
+The Hypothetical Outcome Plot (HOP) can be easily created using the [`gganimate`](https://gganimate.com/index.html) package, simply by adding a call to [`transition_states()`](https://gganimate.com/reference/transition_states.html) at the end of the plot specification:
+
+```{r plot-hop, echo=TRUE, eval=FALSE, message=FALSE}
+rate_boots_temporal %>%
+  filter(id!="Apparent") %>%
+  ggplot(aes(x=year, y=ksi_rate)) +
+  geom_line(aes(group=id), colour=site_colours$primary, size=.6) +
+  transition_states(id, 0,1)
+```
+
+## Conclusions
+
+Uncertainty is fundamental data analysis. Most statisticians and data scientists work on approaches to providing quantitive estimates of uncertainty, reasoning about uncertainty and communicating uncertainty so that it can be taken into account when making evidence-based claims and decisions. Through an analysis of injury severity in the STATS19 road crash dataset, this session has introduced techniques for quantifying and  visually representing parameter uncertainty. There has been much activity in the Information Visualization and Data Journalism communities focussed on uncertainty communication -- on developing approaches that promote intuition and allow users to experience uncertainty. We have covered some of these and demonstrated how they could be incorporated into our road safety analysis.
+
+## References

@@ -1,0 +1,83 @@
+---
+title: "Exploratory data analysis"
+linktitle: "4: Exploratory data analysis"
+date: "2022-05-30"
+class_date: "2022-05-30"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-author-date.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+menu:
+  homework:
+    parent: Homework
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+```
+
+## Session Outcomes
+
+By the end of this homework session you should be able to:
+
+{{% callout objective %}}
+- [x] Write ggplot2 specifications of your own that use colour and layout to support summary and comparison.
+- [x] Formally describe data graphics according to their visual encoding.
+- [x] Identify visual (and computational) techniques for supporting comparison.
+{{% /callout %}}
+
+## Introduction
+
+This homework requires you to apply the concepts and skills developed in the class session on [exploratory data anlsysis](/class/04-class/). Do complete the task and be sure to save your work as this homework will be submitted as part of your portfolio for Assignment 1.
+
+## Visualization design challenge
+
+
+```{r boxplots-class, echo=FALSE, fig.cap="Boxplots of casualty age by vehicle type and class.", fig.align="left", out.width="100%"}
+include_graphics("/class/04-class_files/boxplot-by-class.png", error = FALSE)
+```
+This week's homework is a single visualization design task. Please do not spend too long on this. The aim of this session is to get you to apply some of the technical detail introduced in the session rather than to overly burden you with additional work.
+
+In the session we discussed visual approaches to summarising within-variable variation in a dataset and later the use of layout and colour for supporting *comparison* across categories. In Figure \@ref(fig:boxplots-class) above, boxplots are used to summarise the age distribution of those involved in pedestrian road crashes, comparing the ages of the injured pedestrians, drivers and how this varies by the vehicle types involved.
+
+Your task is to generate a *single* data graphic (I would class Figure \@ref(fig:boxplots-class) as a single graphic) to summarise how casualty age varies by some other interesting combination of categorical variable. For example, you may wish to explore how casualty age varies by injury severity.
+
+Once you have generated the graphic, save it as a `.png` file and insert a link to it in the associated code block in the [<i class="fab fa-r-project"></i> 04-template.Rmd](/homework/04-homework_files/04-template.Rmd). Next, complete the table that asks you to describe your graphic according to its visual encoding. After the table, and using **no more than three sentences**, note how your graphic and any computed values support *comparison* -- e.g. via juxtaposition, superposition and/or direct encoding [@gleicher_visual_2011].
+
+
+* [Save your plot](https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots) as a `.png` file and insert the file as a Figure into your `.Rmd` document ([guidance here](https://rmd4sci.njtierney.com/figures-tables-captions-.html)).
+
+
+```{r design-challenge-code, echo=TRUE, eval=FALSE}
+#######################
+# Enter your code in the chunk provided.
+######################
+```
+
+
+| Data item      | Measurement level | Visual mark      | Visual channel  |
+|----------------|-------------------|------------------|-----------------|
+| `location`     | <enter here>      |  <enter here>    | <enter here>    |
+| `...`          |`...`              |  `...`           | `...`           |
+| `...`          |`...`              |  `...`           | `...`           |
+| `...`          |`...`              |  `...`           | `...`           |
+| `...`          |`...`              |  `...`           | `...`           |
+| `...`          |`...`              |  `...`           | `...`           |
+
+
+```{r comparison, echo=TRUE, eval=FALSE}
+#######################
+# Text here explaining how your graphic, and any computed values, support comparison. No more than three sentences.
+######################
+```
+
+
+## References

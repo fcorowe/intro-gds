@@ -1,0 +1,36 @@
+---
+title: "Visualization fundamentals"
+linktitle: "3: Visualization fundamentals"
+date: "2022-05-23"
+class_date: "2022-05-23"
+citeproc: true
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: false
+menu:
+  reading:
+    parent: Reading
+    weight: 1
+type: docs
+weight: 1
+editor_options:
+  chunk_output_type: console
+---
+
+### Visualization concepts
+
+- [@munzner_visualization_2014]\
+-- Chapters 1,2,5.\
+
+### Data Visualization in ggplot2
+
+- [@healy_data_2018]\
+-- Chapters 1,3,4,7.\
+[Free online](https://socviz.co/).
+
+- [@wickham_r_2017]\
+-- Chapters 3.\
+[Free online](https://r4ds.had.co.nz/).

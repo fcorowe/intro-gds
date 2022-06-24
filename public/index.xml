@@ -1,0 +1,1992 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Course materials | Visualization for Geographic Data Science</title>
+    <link>/</link>
+      <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <description>Course materials</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><lastBuildDate>Mon, 16 May 2022 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/media/vis-for-gds.png</url>
+      <title>Course materials</title>
+      <link>/</link>
+    </image>
+    
+    <item>
+      <title>Data fundamentals: Describe, wrangle, tidy</title>
+      <link>/class/02-class/</link>
+      <pubDate>Mon, 16 May 2022 00:00:00 +0000</pubDate>
+      <guid>/class/02-class/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;./rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;./rmarkdown-libs/lightable/lightable.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;h2&gt;Contents&lt;/h2&gt;
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#session-outcomes&#34;&gt;Session outcomes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#concepts&#34;&gt;Concepts&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#data-structure&#34;&gt;Data structure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#types-of-variable&#34;&gt;Types of variable&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#types-of-observation&#34;&gt;Types of observation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tidy-data&#34;&gt;Tidy data&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#techniques&#34;&gt;Techniques&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#import&#34;&gt;Import&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#describe&#34;&gt;Describe&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#transform&#34;&gt;Transform&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tidy&#34;&gt;Tidy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#conclusions&#34;&gt;Conclusions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session outcomes&lt;/h2&gt;
+&lt;p&gt;By the end of this session you should gain the following &lt;strong&gt;&lt;em&gt;knowledge&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;strong&gt;Learn&lt;/strong&gt; the vocabulary and concepts used to &lt;strong&gt;describe&lt;/strong&gt; data.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;strong&gt;Appreciate&lt;/strong&gt; the characteristics and importance of &lt;strong&gt;tidy data&lt;/strong&gt; &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;Wickham 2014&lt;/a&gt;)&lt;/span&gt; for data processing and analysis.&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;By the end of this session you should gain the following &lt;strong&gt;&lt;em&gt;practical skills&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;strong&gt;Load&lt;/strong&gt; flat file datasets in RStudio via querying an API.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;strong&gt;Calculate&lt;/strong&gt; descriptive summaries over datasets.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;strong&gt;Apply&lt;/strong&gt; high-level functions in &lt;code&gt;dplyr&lt;/code&gt; and &lt;code&gt;tidyr&lt;/code&gt; for working with data.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;strong&gt;Create&lt;/strong&gt; statistical graphics that expose high-level structure in data for cleaning purposes.&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This session covers some of the basics around how to describe and organise data. Whilst this might sound prosaic, there are several reasons why being able to consistently describe a dataset is important. First: it is the initial step in any analysis and helps delimit the research themes and technical procedures that can be deployed. This is especially relevant to modern Data Science-type workflows (like those supported by &lt;code&gt;tidyverse&lt;/code&gt;), where it is common to apply the same analysis templates for working over data. Describing your dataset with a consistent vocabulary enables you to identify which analysis templates to reuse. Second relates to the point in &lt;a href=&#34;./class/01-class/#what-vis-for-gds-1&#34;&gt;session 1&lt;/a&gt; that Geographic Data Science projects usually involve repurposing datasets for social science research for the first time. It is often not obvious whether the data contain sufficient detail and structure to characterise the target behaviours to be researched and the target populations they are assumed to represent. This leads to additional levels of uncertainty and places greater importance on the initial step of data processing, description and exploration.&lt;/p&gt;
+&lt;p&gt;&lt;!-- Data will be &#34;messy&#34;, with missing observations, potentially inconsistent structure and levels of precision.
+Paying attention to   --&gt;&lt;/p&gt;
+&lt;p&gt;Through the session we will learn both language and concepts for describing and thinking about data, but also how to deploy some of the most important data processing and organisation techniques in &lt;code&gt;R&lt;/code&gt; to wrangle over a real dataset. We will be working throughout with data from New York’s &lt;a href=&#34;https://www.citibikenyc.com/&#34;&gt;Citibike&lt;/a&gt; scheme, accessed through the &lt;code&gt;bikedata&lt;/code&gt; package, an API to Citibike’s &lt;a href=&#34;https://www.citibikenyc.com/system-data&#34;&gt;publicly available origin-destination trip data&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The idea of applying a consistent vocabulary to describing your data applies especially to working with modern visualization toolkits (&lt;a href=&#34;https://ggplot2.tidyverse.org/&#34;&gt;ggplot2&lt;/a&gt;, &lt;a href=&#34;https://www.tableau.com/en-gb&#34;&gt;Tableau&lt;/a&gt;, &lt;a href=&#34;https://vega.github.io/vega-lite/&#34;&gt;vega-lite&lt;/a&gt;), and will be covered in some detail during the next session as we introduce Visualization Fundamentals and the &lt;a href=&#34;https://www.springer.com/gp/book/9780387245447&#34;&gt;Grammar of Graphics&lt;/a&gt;.
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;concepts&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Concepts&lt;/h2&gt;
+&lt;div id=&#34;data-structure&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Data structure&lt;/h3&gt;
+&lt;p&gt;In the module we will work with &lt;a href=&#34;http://adv-r.had.co.nz/Data-structures.html#data-frames&#34;&gt;data frames&lt;/a&gt; in R. These are spreadsheet like representations where rows are &lt;strong&gt;observations&lt;/strong&gt; (case/record) and columns are &lt;strong&gt;variables&lt;/strong&gt;. Each variable (column) in a data frame is a &lt;a href=&#34;http://adv-r.had.co.nz/Data-structures.html#vectors&#34;&gt;vector&lt;/a&gt; that must be of equal length. Where observations have missing values for certain variables – that is, where they may violate this equal-length requirement – the missing values must be substituted with something, usually with &lt;code&gt;NA&lt;/code&gt; or similar. This constraint occasionally causes difficulties, for example when working with variables that contain values of different length for an observation. In these cases we create a special class of column, a &lt;a href=&#34;https://jennybc.github.io/purrr-tutorial/ls13_list-columns.html&#34;&gt;&lt;code&gt;list-column&lt;/code&gt;&lt;/a&gt;, something we’ll return to later in the module.&lt;/p&gt;
+&lt;p&gt;Organising data according this simple structure – rows as observations, columns as variables – makes working with data more straightforward. A specific set of tools, made available via the &lt;code&gt;tidyverse&lt;/code&gt;, can be deployed for doing most data &lt;strong&gt;tidy&lt;/strong&gt;ing tasks &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;Wickham 2014&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;types-of-variable&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Types of variable&lt;/h3&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:variable-types&#34;&gt;Table 1: &lt;/span&gt;A breakdown of &lt;span class=&#34;citation&#34;&gt;Stevens (&lt;a href=&#34;#ref-stevens_on_1946&#34; role=&#34;doc-biblioref&#34;&gt;1946&lt;/a&gt;)&lt;/span&gt; variable types, operators and measures of central tendency that can be applied to each.
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Measurement
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Description
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Example
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Operators
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Midpoint
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Dispersion
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr grouplength=&#34;2&#34;&gt;
+&lt;td colspan=&#34;6&#34; style=&#34;border-bottom: 0px solid;&#34;&gt;
+Categories
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left; padding-left:  2em;width: 8em; &#34; indentlevel=&#34;1&#34;&gt;
+&lt;code&gt;Nominal&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Non-orderable categories
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Political parties; street names
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+= ≠
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+mode
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+entropy
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left; padding-left:  2em;width: 8em; &#34; indentlevel=&#34;1&#34;&gt;
+&lt;code&gt;Ordinal&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Orderable categories
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;a href=&#34;https://www.gov.uk/terrorism-national-emergency&#34;&gt;Terrorism threat levels&lt;/a&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | &amp;lt;&amp;gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | median
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | percentile
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr grouplength=&#34;2&#34;&gt;
+&lt;td colspan=&#34;6&#34; style=&#34;border-bottom: 0px solid;&#34;&gt;
+Measures
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left; padding-left:  2em;width: 8em; &#34; indentlevel=&#34;1&#34;&gt;
+&lt;code&gt;Interval&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Numeric measurements
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Temperatures; years
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | + -
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | mean
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | variance
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left; padding-left:  2em;width: 8em; &#34; indentlevel=&#34;1&#34;&gt;
+&lt;code&gt;Ratio&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | Counts
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Distances; prices
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | × ÷
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | mean
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+… | variance
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;A classification you may have encountered for describing variables is that developed by &lt;span class=&#34;citation&#34;&gt;Stevens (&lt;a href=&#34;#ref-stevens_on_1946&#34; role=&#34;doc-biblioref&#34;&gt;1946&lt;/a&gt;)&lt;/span&gt;, which considers the &lt;em&gt;level of measurement&lt;/em&gt; of a variable. &lt;span class=&#34;citation&#34;&gt;Stevens (&lt;a href=&#34;#ref-stevens_on_1946&#34; role=&#34;doc-biblioref&#34;&gt;1946&lt;/a&gt;)&lt;/span&gt; classed variables into two groups: variables that describe &lt;em&gt;categories&lt;/em&gt; of things and variables that describe &lt;em&gt;measurements&lt;/em&gt; of things. Categories include attributes like gender, titles, &lt;code&gt;Subscribers&lt;/code&gt; or &lt;code&gt;Casual&lt;/code&gt; users of a bikeshare scheme and ranked orders (1st, 2nd, 3rd largest etc.). Measurements include quantities like distance, age, travel time, number of journeys made on a bikeshare scheme.&lt;/p&gt;
+&lt;p&gt;Categories can be further subdivided into those that are unordered (&lt;strong&gt;nominal&lt;/strong&gt;) from those that are ordered (&lt;strong&gt;ordinal&lt;/strong&gt;). Measurements can also be subdivided. &lt;strong&gt;Interval&lt;/strong&gt; measurements are quantities that can be ordered and where the difference between two values is meaningful. &lt;strong&gt;Ratio&lt;/strong&gt; measurements have both these properties, but also have a meaningful &lt;code&gt;0&lt;/code&gt; – where &lt;code&gt;0&lt;/code&gt; means the absence of something – and where the ratio of two values can be computed. The most common cited example of an interval measurement is temperature (in degrees C). Temperatures can be ordered and compared additively, but &lt;code&gt;0&lt;/code&gt; degrees C does not mean the absence of temperature and 20 degrees C is not twice as “hot” as 10 degrees C.&lt;/p&gt;
+&lt;p&gt;Why is this important? The measurement level of a variable determines the types of data analysis procedures that can be performed and therefore allows us to efficiently make decisions when working with a dataset for the first time (Table &lt;a href=&#34;#tab:variable-types&#34;&gt;1&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;types-of-observation&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Types of observation&lt;/h3&gt;
+&lt;p&gt;Observations either together form an entire &lt;strong&gt;population&lt;/strong&gt; or a subset, or &lt;strong&gt;sample&lt;/strong&gt; that we expect represents a &lt;strong&gt;target population&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;You no doubt will be familiar with these concepts, but we have to think a little more about this in Geographic Data Science applications as we may often be working with datasets that are so-called population-level. The &lt;a href=&#34;(https://www.citibikenyc.com/system-data)&#34;&gt;Citibike dataset&lt;/a&gt; is a complete, population-level dataset in that every journey made through the scheme is recorded. Whether or not this is truly a population-level dataset, however, depends on the analysis purpose. When analysing the bikeshare dataset are we interested &lt;strong&gt;only&lt;/strong&gt; in describing use within the Citibike scheme? Or are we taking the patterns observed through our analysis to make claims and inferences about cycling more generally?&lt;/p&gt;
+&lt;p&gt;If the latter, then there are problems as the level of detail we have on our sample is pretty trivial compared to traditional datasets, where we deliberately design data collection activities with a specified target population in mind. It may therefore be difficult to gauge how representative Citibike users and Citibike cycling is of New York’s general cycling population. The flipside is that passively collected data do not suffer from the same problems such as non-response bias and social-desirability bias as traditionally collected datasets.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidy-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Tidy data&lt;/h3&gt;
+&lt;p&gt;I mentioned that we would be working with data frames organised such that columns always and only refer to variables and rows always and only refer to observations. This arrangement, called &lt;strong&gt;tidy&lt;/strong&gt; &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;Wickham 2014&lt;/a&gt;)&lt;/span&gt;, has two key advantages. First, if data are arranged in a consistent way, then it is easier to apply and re-use tools for wrangling them due to data having the same underlying structure. Second, placing variables into columns, with each column containing a vector of values, means that we can take advantage of &lt;code&gt;R&lt;/code&gt;’s vectorised functions for transforming data – we will demonstrate this in the technical element of this session.&lt;/p&gt;
+&lt;p&gt;The three rules for tidy data:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Each variable forms a column.&lt;/li&gt;
+&lt;li&gt;Each observation forms a row.&lt;/li&gt;
+&lt;li&gt;Each type of observational unit forms a table.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div id=&#34;drug-treatment-dataset&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Drug treatment dataset&lt;/h4&gt;
+&lt;p&gt;To elaborate further, we can use the example given in &lt;span class=&#34;citation&#34;&gt;Wickham (&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;2014&lt;/a&gt;)&lt;/span&gt;, a drug treatment dataset in which two different treatments were administered to participants.&lt;/p&gt;
+&lt;p&gt;The data could be represented as:&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:drugs-one&#34;&gt;Table 2: &lt;/span&gt;Table 1 of &lt;span class=&#34;citation&#34;&gt;Wickham (&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;2014&lt;/a&gt;)&lt;/span&gt;.
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+person
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+treatment_a
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+treatment_b
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+John Smith
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+–
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jane Doe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Mary Johnson
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;An alternative organisation could be:&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:drugs-two&#34;&gt;Table 3: &lt;/span&gt;Alternative organisation of Table 1 of &lt;span class=&#34;citation&#34;&gt;Wickham (&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;2014&lt;/a&gt;)&lt;/span&gt;.
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+treatment
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+John Smith
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Jane Doe
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Mary Johnson
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+treatment_a
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+–
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+treatment_b
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Both present the same information unambiguously – Table &lt;a href=&#34;#tab:drugs-two&#34;&gt;3&lt;/a&gt; is simply Table &lt;a href=&#34;#tab:drugs-one&#34;&gt;2&lt;/a&gt; transposed. However, neither is &lt;strong&gt;tidy&lt;/strong&gt; as the observations are spread across both the rows and columns. This means that we need to apply different procedures to extract, perform computations on, and visually represent, these data.&lt;/p&gt;
+&lt;p&gt;Much better would be to organise the table into a &lt;strong&gt;tidy&lt;/strong&gt; form. To do this we need to identify the &lt;strong&gt;variables&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;person&lt;/code&gt;: a categorical nominal variable which takes three values: John Smith, Jane Doe, Mary Johnson.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;treatment&lt;/code&gt;: a categorical nominal variable which takes values: a and b.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;result&lt;/code&gt;: a measurement ratio (I think) variable which six recorded values (including the missing value): -, 16, 3, 2, 11,&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Each &lt;strong&gt;observation&lt;/strong&gt; is then a test result returned for each combination of &lt;code&gt;person&lt;/code&gt; and &lt;code&gt;treatment&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;So, a &lt;strong&gt;tidy&lt;/strong&gt; organisation for this dataset would be:&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:drugs-tidy&#34;&gt;Table 4: &lt;/span&gt;Tidy version of Table 1 of &lt;span class=&#34;citation&#34;&gt;Wickham (&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;2014&lt;/a&gt;)&lt;/span&gt;.
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+person
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+treatment
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+result
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+John Smith
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+a
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+–
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+John Smith
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+b
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jane Doe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+a
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jane Doe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+b
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Mary Johnson
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+a
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Mary Johnson
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+b
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gapminder-population-dataset&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Gapminder population dataset&lt;/h4&gt;
+&lt;p&gt;In &lt;a href=&#34;https://r4ds.had.co.nz/tidy-data.html#tidy-data-1&#34;&gt;chapter 12&lt;/a&gt; of &lt;span class=&#34;citation&#34;&gt;Wickham and Grolemund (&lt;a href=&#34;#ref-wickham_r_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt;, the benefits of this layout, particularly for working with R, are demonstrated with the &lt;a href=&#34;https://www.gapminder.org/data/&#34;&gt;&lt;code&gt;gapminder&lt;/code&gt;&lt;/a&gt; dataset. I recommend reading this short chapter in full. We will be applying similar approaches in the technique part of this class (which follows shortly) and also the &lt;a href=&#34;&#34;&gt;homework&lt;/a&gt;. To consolidate our conceptual understanding of &lt;strong&gt;tidy&lt;/strong&gt; data let’s quickly look at the &lt;code&gt;gapminder&lt;/code&gt; data, as it is a dataset we’re probably more likely to encounter.&lt;/p&gt;
+&lt;p&gt;First, a &lt;strong&gt;tidy&lt;/strong&gt; version of the data:&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:gapminder-tidy&#34;&gt;Table 5: &lt;/span&gt;Tidy excerpt from &lt;code&gt;gapminder&lt;/code&gt; dataset.
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+cases
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+population
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+745
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+19987071
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2666
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+20595360
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+37737
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+172006362
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+80488
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+174504898
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+China
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+212258
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1272915272
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+China
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+213766
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1280428583
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;So the &lt;strong&gt;variables&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;country&lt;/code&gt;: a categorical nominal variable.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;year&lt;/code&gt;: a date (cyclic ratio) variable.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cases&lt;/code&gt;: a ratio (count) variable.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;population&lt;/code&gt;: a ratio (count) variable.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Each &lt;strong&gt;observation&lt;/strong&gt; is therefore a recorded count of cases and population for a country in a year.&lt;/p&gt;
+&lt;p&gt;An alternative organisation of this dataset that appears in &lt;span class=&#34;citation&#34;&gt;Wickham and Grolemund (&lt;a href=&#34;#ref-wickham_r_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt; is below. This is &lt;strong&gt;untidy&lt;/strong&gt; as the observations are spread across two rows. This makes operations that we might want to perform on the &lt;code&gt;cases&lt;/code&gt; and &lt;code&gt;population&lt;/code&gt; variables – for example computing exposure rates – somewhat tedious.&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:gapminder-untidy1&#34;&gt;Table 6: &lt;/span&gt;Untidy excerpt of &lt;a href=&#34;https://www.gapminder.org/data/&#34;&gt;&lt;code&gt;gapminder&lt;/code&gt;&lt;/a&gt; dataset: observations spread across rows
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+type
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+count
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cases
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+745
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+population
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+19987071
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cases
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2666
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+population
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+20595360
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cases
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+37737
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+population
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+174504898
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+…
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+…
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+…
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+…
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;This actually doesn’t appear in &lt;span class=&#34;citation&#34;&gt;Wickham and Grolemund (&lt;a href=&#34;#ref-wickham_r_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt;, but imagine that the &lt;code&gt;gapminder&lt;/code&gt; dataset instead reported values of &lt;code&gt;cases&lt;/code&gt; separately by gender. A type of representation I’ve often seen in social science domains, probably as it is helpful for data entry, is where observations are spread across the columns. This too creates problems for performing aggregate functions, but also for specifying visualization designs (in &lt;a href=&#34;https://ggplot2.tidyverse.org/&#34;&gt;&lt;code&gt;ggplot2&lt;/code&gt;&lt;/a&gt;) as we will discover in the next session.&lt;/p&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:gapminder-untidy2&#34;&gt;Table 7: &lt;/span&gt;Untidy possible excerpt of &lt;a href=&#34;https://www.gapminder.org/data/&#34;&gt;&lt;code&gt;gapminder&lt;/code&gt;&lt;/a&gt; dataset: observations spread across columns
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+f_cases
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+m_cases
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+f_population
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+m_population
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+447
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+298
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+9993400
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+9993671
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1599
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1067
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+10296280
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+10299080
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+16982
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+20755
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+86001181
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+86005181
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+39440
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+41048
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+87251329
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+87253569
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+China
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1999
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+104007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+108252
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+636451250
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+636464022
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+China
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+104746
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+109759
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+640212600
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+640215983
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;techniques&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Techniques&lt;/h2&gt;
+&lt;p&gt;The technical element to this session involves importing, describing, transforming and tidying data from a large bikeshare scheme – New York’s &lt;a href=&#34;https://www.citibikenyc.com/&#34;&gt;Citibike&lt;/a&gt; scheme.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Download the &lt;a href=&#34;./homework/02-homework_files/02-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 02-template.Rmd&lt;/a&gt; file for this session and save it to the &lt;code&gt;reports&lt;/code&gt; folder of your &lt;code&gt;vis-for-gds&lt;/code&gt; project that you created in session 1.&lt;/li&gt;
+&lt;li&gt;Open your &lt;code&gt;vis-for-gds&lt;/code&gt; project in RStudio and load the template file by clicking &lt;code&gt;File&lt;/code&gt; &amp;gt; &lt;code&gt;Open File ...&lt;/code&gt; &amp;gt; &lt;code&gt;reports/02-template.Rmd&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;import&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Import&lt;/h3&gt;
+&lt;p&gt;In the template file there is a discussion of how to &lt;strong&gt;setup&lt;/strong&gt; your R session with key packages – &lt;code&gt;tidyverse&lt;/code&gt; , &lt;code&gt;fst&lt;/code&gt;, &lt;code&gt;lubridate&lt;/code&gt;, &lt;code&gt;sf&lt;/code&gt; – and also the &lt;a href=&#34;https://github.com/ropensci/bikedata&#34;&gt;&lt;code&gt;bikedata&lt;/code&gt;&lt;/a&gt; package for accessing bikeshare data.&lt;/p&gt;
+&lt;p&gt;Available via the &lt;code&gt;bikedata&lt;/code&gt; package are trip and occupancy data for a number of bikeshare schemes (as below). We will work with data from New York’s &lt;a href=&#34;https://www.citibikenyc.com/&#34;&gt;Citibike&lt;/a&gt; scheme for June 2020. A list of all cities covered by the &lt;code&gt;bikedata&lt;/code&gt; package is below:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;bike_cities()
+##    city     city_name      bike_system
+## 1    bo        Boston           Hubway
+## 2    ch       Chicago            Divvy
+## 3    dc Washington DC CapitalBikeShare
+## 4    gu   Guadalajara           mibici
+## 5    la   Los Angeles            Metro
+## 6    lo        London        Santander
+## 7    mo      Montreal             Bixi
+## 8    mn   Minneapolis         NiceRide
+## 9    ny      New York         Citibike
+## 10   ph  Philadelphia           Indego
+## 11   sf      Bay Area       FordGoBike&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In the template there are code chunks demonstrating how to download and process these data using &lt;a href=&#34;https://github.com/ropensci/bikedata&#34;&gt;bikedata&lt;/a&gt;’s API. This is mainly for illustrative purposes and the code chunks take some time to execute. We ultimately use the &lt;a href=&#34;https://www.fstpackage.org/&#34;&gt;&lt;code&gt;fst&lt;/code&gt;&lt;/a&gt; package for serializing and reading in the these data. So I suggest you ignore the import code and calls to the &lt;code&gt;bikedata&lt;/code&gt; API and instead follow the instructions for downloading and reading in the &lt;code&gt;.fst&lt;/code&gt; file with the trips data and also the &lt;code&gt;.csv&lt;/code&gt; &lt;i class=&#34;fas fa-file-csv&#34;&gt;&lt;/i&gt; file containing stations data, with:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create subdirectory in data folder for storing bike data.
+if(!dir.exists(here(&amp;quot;data&amp;quot;, &amp;quot;bikedata&amp;quot;))) dir.create(here(&amp;quot;data&amp;quot;, &amp;quot;bikedata&amp;quot;))
+
+# Read in .csv file of stations data from url.
+tmp_file &amp;lt;- tempfile()
+url &amp;lt;- &amp;quot;https://www.roger-beecham.com/datasets/ny_stations.csv&amp;quot;
+curl::curl_download(url, tmp_file, mode=&amp;quot;wb&amp;quot;)
+ny_stations &amp;lt;- read_csv(tmp_file)
+
+# Read in .fst file of trips data from url.
+tmp_file &amp;lt;- tempfile()
+cs_url &amp;lt;- &amp;quot;https://www.roger-beecham.com/datasets/ny_trips.fst&amp;quot;
+curl::curl_download(url, tmp_file, mode=&amp;quot;wb&amp;quot;)
+ny_trips &amp;lt;- read_fst(tmp_file)
+
+# Write out to subdirectory for future use.
+write_fst(trips, here(&amp;quot;data&amp;quot;, &amp;quot;ny_trips.fst&amp;quot;))
+write_csv(stations, here(&amp;quot;data&amp;quot;, &amp;quot;ny_stations.csv&amp;quot;))
+
+# Clean workspace.
+rm(url, tmp_file)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    &lt;code&gt;fst&lt;/code&gt; implements in the background various operations such as multi-threading to reduce load on disk space. It therefore makes it possible to work with large datasets in-memory in &lt;code&gt;R&lt;/code&gt; rather than connecting to a database and serving up summaries/subsets to be loaded into R. We will be working with just 2 million records, but with &lt;code&gt;fst&lt;/code&gt; it is possible to work in-memory with much larger datasets – in &lt;span class=&#34;citation&#34;&gt;Lovelace et al. (&lt;a href=&#34;#ref-lovelace_is_2020&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt; we ended up working with 80 million + trip records.
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;If you completed the reading and research from the &lt;a href=&#34;./homework/01-homework/&#34;&gt;Session 1 Homework&lt;/a&gt;, some of the above should be familiar to you. The key arguments to look at are &lt;code&gt;read_csv()&lt;/code&gt; and &lt;code&gt;read_fst()&lt;/code&gt;, into which we pass the path to the file. In this case we created a &lt;code&gt;tmpfile()&lt;/code&gt; within the R session. We then write these data out and save locally to the project’s &lt;code&gt;data&lt;/code&gt; folder. This is useful as we only want to download the data once. In the &lt;code&gt;write_*&amp;lt;&amp;gt;&lt;/code&gt; functions we reference this location using the &lt;a href=&#34;https://here.r-lib.org/&#34;&gt;&lt;code&gt;here&lt;/code&gt;&lt;/a&gt; package’s &lt;code&gt;here()&lt;/code&gt; function. &lt;a href=&#34;https://here.r-lib.org/&#34;&gt;&lt;code&gt;here&lt;/code&gt;&lt;/a&gt; is really useful for reliably creating paths relative to your project’s root. To read in these data for future sessions:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Read in these local copies of the trips and stations data.
+ny_trips &amp;lt;- read_fst(here(&amp;quot;data&amp;quot;, &amp;quot;ny_trips.fst&amp;quot;))
+ny_stations &amp;lt;- read_csv(here(&amp;quot;data&amp;quot;, &amp;quot;ny_stations.csv&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice that we use &lt;strong&gt;assignment&lt;/strong&gt; here (&lt;code&gt;&amp;lt;-&lt;/code&gt;) so that these data are loaded as objects and appear in the Environment pane of your RStudio window. An efficient description of data import with &lt;code&gt;read_csv()&lt;/code&gt; is also in &lt;a href=&#34;https://r4ds.had.co.nz/data-import.html&#34;&gt;Chapter 11&lt;/a&gt; of &lt;span class=&#34;citation&#34;&gt;Wickham and Grolemund (&lt;a href=&#34;#ref-wickham_r_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;code&gt;ny_stations&lt;/code&gt; and &lt;code&gt;ny_trips&lt;/code&gt; are data frames, spreadsheet type representations containing observations in rows and variables in columns. Inspecting the layout of the stations data with &lt;code&gt;View(ny_stations)&lt;/code&gt; you will notice that the top line is the header and contains column (variable) names.
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:view-annotate&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../../../../../../../../../../../class/02-class_files/view.png&#34; alt=&#34;`ny_trips` and `ny_stations` as they appear when calling `View()`.&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: &lt;code&gt;ny_trips&lt;/code&gt; and &lt;code&gt;ny_stations&lt;/code&gt; as they appear when calling &lt;code&gt;View()&lt;/code&gt;.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;describe&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Describe&lt;/h3&gt;
+&lt;p&gt;There are several functions for generating a quick overview of a data frame’s contents. &lt;code&gt;glimpse&amp;lt;dataset-name&amp;gt;&lt;/code&gt; is particularly useful. It provides a summary of the data frame dimensions – we have c. 1.9 million trip observations in &lt;code&gt;ny_trips&lt;/code&gt; and 11 variables&lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;. The function also prints out the object type for each of these variables, with the variables either of type &lt;code&gt;int&lt;/code&gt; or &lt;code&gt;chr&lt;/code&gt; in this case.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glimpse(ny_trips)
+## Rows: 1,882,273
+## Columns: 11
+## $ id               &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21…
+## $ city             &amp;lt;chr&amp;gt; &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;…
+## $ trip_duration    &amp;lt;dbl&amp;gt; 1062, 3810, 1017, 226, 1437, 355, 99, 1810, 87, 2714, 2096, 1611, 529, 69…
+## $ start_time       &amp;lt;chr&amp;gt; &amp;quot;2020-06-01 00:00:03&amp;quot;, &amp;quot;2020-06-01 00:00:03&amp;quot;, &amp;quot;2020-06-01 00:00:09&amp;quot;, &amp;quot;202…
+## $ stop_time        &amp;lt;chr&amp;gt; &amp;quot;2020-06-01 00:17:46&amp;quot;, &amp;quot;2020-06-01 01:03:33&amp;quot;, &amp;quot;2020-06-01 00:17:06&amp;quot;, &amp;quot;202…
+## $ start_station_id &amp;lt;chr&amp;gt; &amp;quot;ny3419&amp;quot;, &amp;quot;ny366&amp;quot;, &amp;quot;ny389&amp;quot;, &amp;quot;ny3255&amp;quot;, &amp;quot;ny367&amp;quot;, &amp;quot;ny248&amp;quot;, &amp;quot;ny3232&amp;quot;, &amp;quot;ny3263…
+## $ end_station_id   &amp;lt;chr&amp;gt; &amp;quot;ny3419&amp;quot;, &amp;quot;ny336&amp;quot;, &amp;quot;ny3562&amp;quot;, &amp;quot;ny505&amp;quot;, &amp;quot;ny497&amp;quot;, &amp;quot;ny247&amp;quot;, &amp;quot;ny390&amp;quot;, &amp;quot;ny496&amp;quot;,…
+## $ bike_id          &amp;lt;chr&amp;gt; &amp;quot;39852&amp;quot;, &amp;quot;37558&amp;quot;, &amp;quot;37512&amp;quot;, &amp;quot;39674&amp;quot;, &amp;quot;21093&amp;quot;, &amp;quot;39594&amp;quot;, &amp;quot;43315&amp;quot;, &amp;quot;16571&amp;quot;, &amp;quot;…
+## $ user_type        &amp;lt;chr&amp;gt; &amp;quot;Customer&amp;quot;, &amp;quot;Subscriber&amp;quot;, &amp;quot;Customer&amp;quot;, &amp;quot;Customer&amp;quot;, &amp;quot;Customer&amp;quot;, &amp;quot;Subscriber…
+## $ birth_year       &amp;lt;chr&amp;gt; &amp;quot;1997&amp;quot;, &amp;quot;1969&amp;quot;, &amp;quot;1988&amp;quot;, &amp;quot;1969&amp;quot;, &amp;quot;1997&amp;quot;, &amp;quot;1990&amp;quot;, &amp;quot;1938&amp;quot;, &amp;quot;1995&amp;quot;, &amp;quot;1971&amp;quot;, &amp;quot;…
+## $ gender           &amp;lt;dbl&amp;gt; 2, 0, 2, 0, 2, 1, 2, 2, 2, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glimpse(ny_stations)
+## Rows: 1,010
+## Columns: 6
+## $ id        &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 2…
+## $ city      &amp;lt;chr&amp;gt; &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;ny&amp;quot;, &amp;quot;n…
+## $ stn_id    &amp;lt;chr&amp;gt; &amp;quot;ny116&amp;quot;, &amp;quot;ny119&amp;quot;, &amp;quot;ny120&amp;quot;, &amp;quot;ny127&amp;quot;, &amp;quot;ny128&amp;quot;, &amp;quot;ny143&amp;quot;, &amp;quot;ny144&amp;quot;, &amp;quot;ny146&amp;quot;, &amp;quot;ny150&amp;quot;,…
+## $ name      &amp;lt;chr&amp;gt; &amp;quot;W 17 St &amp;amp; 8 Ave&amp;quot;, &amp;quot;Park Ave &amp;amp; St Edwards St&amp;quot;, &amp;quot;Lexington Ave &amp;amp; Classon Ave&amp;quot;, &amp;quot;B…
+## $ longitude &amp;lt;chr&amp;gt; &amp;quot;-74.00149746&amp;quot;, &amp;quot;-73.97803415&amp;quot;, &amp;quot;-73.95928168&amp;quot;, &amp;quot;-74.00674436&amp;quot;, &amp;quot;-74.00297088&amp;quot;, …
+## $ latitude  &amp;lt;chr&amp;gt; &amp;quot;40.74177603&amp;quot;, &amp;quot;40.69608941&amp;quot;, &amp;quot;40.68676793&amp;quot;, &amp;quot;40.73172428&amp;quot;, &amp;quot;40.72710258&amp;quot;, &amp;quot;40.6…&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:data-types&#34;&gt;Table 8: &lt;/span&gt;A breakdown of data types in R.
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Type
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Description
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;lgl&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Logical – vectors that can contain only &lt;code&gt;TRUE&lt;/code&gt; or &lt;code&gt;FALSE&lt;/code&gt; values
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;int&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Integers – whole numbers
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;dbl&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Double – real numbers with decimals
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;chr&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Character – text strings
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;dttm&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Date-times – a date + a time
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;fctr&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Factors – represent categorical variables of fixed and potentially orderable values
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The object type of a variable in a data frame relates to that variable’s &lt;em&gt;measurement level&lt;/em&gt;. It is often useful to convert to types with greater specificity. For example, we may which to convert the &lt;code&gt;start_time&lt;/code&gt; and &lt;code&gt;stop_time&lt;/code&gt; variables to a date-time format so that various time-related functions could be used. For efficient storage, we may wish to convert the &lt;em&gt;station identifier&lt;/em&gt; variables as &lt;code&gt;int&lt;/code&gt; types by removing the redundant “ny” text which prefaces &lt;code&gt;end_station_id&lt;/code&gt;, &lt;code&gt;end_station_id&lt;/code&gt;, &lt;code&gt;stn_id&lt;/code&gt;. The geographic coordinates are currently stored as type &lt;code&gt;chr&lt;/code&gt;. These could be regarded as quantitative variables, floating points with decimals. So converting to type &lt;code&gt;dbl&lt;/code&gt; or as a &lt;a href=&#34;https://r-spatial.github.io/sf/articles/sf1.html#simple-feature-geometry-types&#34;&gt;&lt;code&gt;POINT&lt;/code&gt;&lt;/a&gt; geometry type (more on this later in the module) may be sensible.&lt;/p&gt;
+&lt;p&gt;In the &lt;a href=&#34;./homework/02-homework_files/02-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 02-template.Rmd&lt;/a&gt; file there are code chunks for doing these conversions. There are some slightly more involved data transform procedures in this code. Don’t fixate too much on these, but the upshot can be seen when running &lt;code&gt;glimpse()&lt;/code&gt; on the converted data frames:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glimpse(ny_trips)
+## Rows: 1,882,273
+## Columns: 10
+## $ id               &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 2…
+## $ trip_duration    &amp;lt;dbl&amp;gt; 1062, 3810, 1017, 226, 1437, 355, 99, 1810, 87, 2714, 2096, 1611, 529, 695, 206,…
+## $ start_time       &amp;lt;dttm&amp;gt; 2020-06-01 00:00:03, 2020-06-01 00:00:03, 2020-06-01 00:00:09, 2020-06-01 00:00…
+## $ stop_time        &amp;lt;dttm&amp;gt; 2020-06-01 00:00:03, 2020-06-01 00:00:03, 2020-06-01 00:00:09, 2020-06-01 00:00…
+## $ start_station_id &amp;lt;int&amp;gt; 3419, 366, 389, 3255, 367, 248, 3232, 3263, 390, 319, 237, 3630, 3610, 3708, 465…
+## $ end_station_id   &amp;lt;int&amp;gt; 3419, 336, 3562, 505, 497, 247, 390, 496, 3232, 455, 3263, 3630, 3523, 3740, 379…
+## $ bike_id          &amp;lt;int&amp;gt; 39852, 37558, 37512, 39674, 21093, 39594, 43315, 16571, 28205, 41760, 30745, 380…
+## $ user_type        &amp;lt;chr&amp;gt; &amp;quot;Customer&amp;quot;, &amp;quot;Subscriber&amp;quot;, &amp;quot;Customer&amp;quot;, &amp;quot;Customer&amp;quot;, &amp;quot;Customer&amp;quot;, &amp;quot;Subscriber&amp;quot;, &amp;quot;Sub…
+## $ birth_year       &amp;lt;int&amp;gt; 1997, 1969, 1988, 1969, 1997, 1990, 1938, 1995, 1971, 1989, 1990, 1969, 1984, 19…
+## $ gender           &amp;lt;chr&amp;gt; &amp;quot;female&amp;quot;, &amp;quot;unknown&amp;quot;, &amp;quot;female&amp;quot;, &amp;quot;unknown&amp;quot;, &amp;quot;female&amp;quot;, &amp;quot;male&amp;quot;, &amp;quot;female&amp;quot;, &amp;quot;female&amp;quot;, …&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glimpse(ny_stations)
+## Rows: 1,010
+## Columns: 5
+## $ id        &amp;lt;dbl&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, …
+## $ stn_id    &amp;lt;int&amp;gt; 116, 119, 120, 127, 128, 143, 144, 146, 150, 151, 157, 161, 164, 167, 168, 173, 174, 19…
+## $ name      &amp;lt;chr&amp;gt; &amp;quot;W 17 St &amp;amp; 8 Ave&amp;quot;, &amp;quot;Park Ave &amp;amp; St Edwards St&amp;quot;, &amp;quot;Lexington Ave &amp;amp; Classon Ave&amp;quot;, &amp;quot;Barrow S…
+## $ longitude &amp;lt;dbl&amp;gt; -74.00150, -73.97803, -73.95928, -74.00674, -74.00297, -73.99338, -73.98069, -74.00911,…
+## $ latitude  &amp;lt;dbl&amp;gt; 40.74178, 40.69609, 40.68677, 40.73172, 40.72710, 40.69240, 40.69840, 40.71625, 40.7208…&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;transform&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Transform&lt;/h3&gt;
+&lt;div id=&#34;transform-with-dplyr&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Transform with &lt;code&gt;dplyr&lt;/code&gt;&lt;/h4&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:dplyr-verbs&#34;&gt;Table 9: &lt;/span&gt;dplyr funcitions (verbs) for manipulating data frames.
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+function()
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Description
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;filter()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Picks rows (observations) if their values match a specified criteria
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;arrange()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Reorders rows (observations) based on their values
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;select()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Picks a subset of columns (variables) by name (or name characteristics)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;rename()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Changes the name of columns in the data frame
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;mutate()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Adds new columns (or variables)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;group_by()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Chunks the dataset into groups for grouped operations
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;summarise()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Calculate single-row (non-grouped) or multiple-row (if grouped) summary values
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;..and more&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;a href=&#34;https://dplyr.tidyverse.org/&#34;&gt;&lt;code&gt;dplyr&lt;/code&gt;&lt;/a&gt; is one of the most important packages for supporting modern data analysis workflows. The package provides a &lt;strong&gt;grammar of data manipulation&lt;/strong&gt;, with access to functions that can be variously combined to support most data processing and transformation activity. Once you become familiar with &lt;code&gt;dplyr&lt;/code&gt; functions (or &lt;strong&gt;verbs&lt;/strong&gt;) you will find yourself generating analysis templates to re-use whenever you work on a new dataset.&lt;/p&gt;
+&lt;p&gt;All &lt;code&gt;dplyr&lt;/code&gt; functions work in the same way:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Start with a data frame.&lt;/li&gt;
+&lt;li&gt;Pass some arguments to the function which control what you do to the data frame.&lt;/li&gt;
+&lt;li&gt;Return the updated data frame.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;So every &lt;code&gt;dplyr&lt;/code&gt; function expects a data frame and will always return a data frame.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;use-pipes-with-dplyr&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Use pipes &lt;code&gt;%&amp;gt;%&lt;/code&gt; with &lt;code&gt;dplyr&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;dplyr&lt;/code&gt; is most effective when its functions are chained together – you will see this shortly as we explore the New York bikeshare data. This chaining of functions can be achieved using the &lt;strong&gt;pipe&lt;/strong&gt; operator (&lt;code&gt;%&amp;gt;%&lt;/code&gt;). Pipes are used for passing information in a program. They take the output of a set of code (a &lt;code&gt;dplyr&lt;/code&gt; specification) and make it the input of the next set (another &lt;code&gt;dplyr&lt;/code&gt; specification).&lt;/p&gt;
+&lt;p&gt;Pipes can be easily applied to &lt;code&gt;dplyr&lt;/code&gt; functions, and the functions of all packages that form the &lt;code&gt;tidyverse&lt;/code&gt;. I mentioned in &lt;a href=&#34;./class/01-class&#34;&gt;Session 1&lt;/a&gt; that &lt;code&gt;ggplot2&lt;/code&gt; provides a framework for specifying a &lt;strong&gt;layered grammar of graphics&lt;/strong&gt; (more on this in Session 3). Together with the pipe operator (&lt;code&gt;%&amp;gt;%&lt;/code&gt;), &lt;code&gt;dplyr&lt;/code&gt; supports a &lt;strong&gt;layered grammar of data manipulation&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;count-rows&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;&lt;code&gt;count()&lt;/code&gt; rows&lt;/h4&gt;
+&lt;p&gt;This might sound a little abstract so let’s use and combine some &lt;code&gt;dplyr&lt;/code&gt; functions to generate some statistical summaries on the New York bikeshare data.&lt;/p&gt;
+&lt;p&gt;First we’ll count the number of trips made in Jun 2020 by gender. &lt;code&gt;dplyr&lt;/code&gt; has a convenience function for counting, so we could run the code below, also in the &lt;a href=&#34;./homework/02-homework_files/02-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 02-template.Rmd&lt;/a&gt; for this session. I’ve commented the code block to convey what each line achieves.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ny_trips %&amp;gt;%  # Take the ny_trips data frame.
+  count(gender, sort=TRUE) # Run the count function over the data frame and set the sort parameter to TRUE.
+##    gender       n
+## 1    male 1044621
+## 2  female  586361
+## 3 unknown  251291&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are a few things happening in the &lt;code&gt;count()&lt;/code&gt; function. It takes the &lt;code&gt;gender&lt;/code&gt; variable from &lt;code&gt;ny_trips&lt;/code&gt;, organises or &lt;em&gt;groups&lt;/em&gt; the rows in the data frame according to its values (&lt;code&gt;female&lt;/code&gt; | &lt;code&gt;male&lt;/code&gt; | &lt;code&gt;unknown&lt;/code&gt;), counts the rows and then orders the &lt;em&gt;summarised&lt;/em&gt; output descending on the counts.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;summarise-over-rows&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;&lt;code&gt;summarise()&lt;/code&gt; over rows&lt;/h4&gt;
+&lt;table&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:aggregate-functions&#34;&gt;Table 10: &lt;/span&gt;A breakdown of aggregate functions commonly used with &lt;code&gt;summarise()&lt;/code&gt;.
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Function
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Description
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;n()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Counts the number of observations
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;n_distinct(var)&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Counts the number of unique observations
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;sum(var)&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sums the values of observations
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;max(var)&lt;/code&gt;|&lt;code&gt;min(var)&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Finds the min|max values of observations
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;mean(var)&lt;/code&gt;|&lt;code&gt;median(var)&lt;/code&gt;|&lt;code&gt;sd(var)&lt;/code&gt;| &lt;code&gt;...&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Calculates central tendency of observations
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;code&gt;...&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Many more
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Often you will want to do more than simply counting and you may also want to be more explicit in the way the data frame is &lt;em&gt;grouped&lt;/em&gt; for computation. We’ll demonstrate this here with a more involved analysis of the usage data and using some key aggregate functions (Table &lt;a href=&#34;#tab:aggregate-functions&#34;&gt;10&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;A common workflow is to combine &lt;code&gt;group_by()&lt;/code&gt; and &lt;code&gt;summarise()&lt;/code&gt;, and in this case &lt;code&gt;arrange()&lt;/code&gt; to replicate the &lt;code&gt;count()&lt;/code&gt; example.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ny_trips %&amp;gt;% # Take the ny_trips data frame.
+  group_by(gender) %&amp;gt;% # Group by gender.
+  summarise(count=n()) %&amp;gt;% # Count the number of observations per group.
+  arrange(desc(count)) # Arrange the grouped and summarised (collapsed) rows according to count.
+## # A tibble: 3 x 2
+##  gender    count
+##  &amp;lt;chr&amp;gt;     &amp;lt;int&amp;gt;
+## 1 male    1044621
+## 2 female   586361
+## 3 unknown  251291&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In &lt;code&gt;ny_trips&lt;/code&gt; there is a variable measuring trip duration in seconds (&lt;code&gt;trip_duration&lt;/code&gt;) and distinguishing casual users from those formally registered to use the scheme (&lt;code&gt;user_type&lt;/code&gt; - &lt;code&gt;Customer&lt;/code&gt; vs. &lt;code&gt;Subscriber&lt;/code&gt;). It may be instructive to calculate some summary statistics to see how trip duration varies between these groups.&lt;/p&gt;
+&lt;p&gt;The code below uses &lt;code&gt;group_by()&lt;/code&gt;, &lt;code&gt;summarise()&lt;/code&gt; and &lt;code&gt;arrange()&lt;/code&gt; in exactly the same way, but with the addition of other aggregate functions profiles the &lt;code&gt;trip_duration&lt;/code&gt; variable according to central tendency and by &lt;code&gt;user_type&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ny_trips %&amp;gt;% # Take the ny_trips data frame.
+  group_by(user_type) %&amp;gt;% # Group by user type.
+  summarise( # Summarise over the grouped rows, generate a new variable for each type of summary.
+    count=n(),
+    avg_duration=mean(trip_duration/60),
+    median_duration=median(trip_duration/60),
+    sd_duration=sd(trip_duration/60),
+    min_duration=min(trip_duration/60),
+    max_duration=max(trip_duration/60)
+    ) %&amp;gt;%
+  arrange(desc(count)) # Arrange on the count variable.
+
+## # A tibble: 2 x 6
+##  user_type    count avg_duration median_duration sd_duration min_duration max_duration
+##  &amp;lt;chr&amp;gt;        &amp;lt;int&amp;gt;        &amp;lt;dbl&amp;gt;           &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;
+## 1 Subscriber 1306688         20.2            14.4        110.         1.02         33090
+## 2 Customer    575585         43.6            23.2        393.         1.02         46982&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Clearly there are some outlier trips that may need to be examined. Bikeshare schemes are built to incentivise short journeys of &amp;lt;30 minutes, but the maximum trip duration recorded above is clearly erroneous – 32 days. Ignoring these sorts of outliers by calculating the trip durations at the 95th percentiles is instructive. The max trip duration at the 95th percentile for &lt;code&gt;Subscribers&lt;/code&gt; was almost 27 minutes and for &lt;code&gt;Customers&lt;/code&gt; was 1 hours 26 mins. It makes sense that more casual users may have longer trip durations, as they are more likely to be tourists or occasional cyclists using the scheme for non-utility trips. However, they do skew the mean travel time.&lt;/p&gt;
+&lt;p&gt;Returning to the breakdown of usage by gender, an interesting question is whether or not the male-female split in bikehare is similar to that of the cycling population of New York City as a whole. This might tell us something about whether the bikeshare scheme could be &lt;em&gt;representative&lt;/em&gt; of wider cycling. This could be achieved with the code below. A couple of new additions: we use &lt;code&gt;filter()&lt;/code&gt;, to remove observations where the gender of the cyclist is &lt;code&gt;unknown&lt;/code&gt;. We also use &lt;code&gt;mutate()&lt;/code&gt; for the first time, which allows us to modify or create new variables.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ny_trips %&amp;gt;% # Take the ny_trips data frame.
+  filter(gender != &amp;quot;unknown&amp;quot;) %&amp;gt;% # Filter out rows with the value &amp;quot;unknown&amp;quot; on gender.
+  group_by(gender) %&amp;gt;% # Group by gender.
+  summarise(count=n()) %&amp;gt;% # Count the number of observations per group.
+  mutate(prop=count/sum(count)) %&amp;gt;% # Add a new column called `prop`, divide the value in the row for the variable count by the sum of the count variable across all rows.
+  arrange(desc(count)) # Arrange on the count variable.
+
+## # A tibble: 2 x 3
+##  gender   count  prop
+##  &amp;lt;chr&amp;gt;    &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+## 1 male   1044621 0.640
+## 2 female  586361 0.360&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As I’ve commented each line you hopefully get a sense of what is happening in the code above. I mentioned that &lt;code&gt;dplyr&lt;/code&gt; functions read like &lt;strong&gt;verbs&lt;/strong&gt;. This is a very deliberate design decision. With the code laid out as above – each &lt;code&gt;dplyr&lt;/code&gt; verb occupying a single line, separated by a pipe (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) – you can generally understand the code with a cursory glance. There are obvious benefits to this. Once you become familiar with &lt;code&gt;dplyr&lt;/code&gt; it becomes very easy to read, write and share code.&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    Remembering that &lt;strong&gt;pipes&lt;/strong&gt; (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) take the output of a set of code and make it the input of the next set, what do you think would happen if you were to comment out the call to &lt;code&gt;arrange()&lt;/code&gt; in the code block above? Try it for yourself. You will notice that I use separate lines for each call to the &lt;strong&gt;pipe&lt;/strong&gt; operator. This is good practice for supporting readibility of your code.
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;manipulate-dates-with-lubridate&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Manipulate dates with &lt;a href=&#34;https://lubridate.tidyverse.org/&#34;&gt;&lt;code&gt;lubridate&lt;/code&gt;&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Let’s continue this investigation of usage by gender, and whether bikeshare might be representative of regular cycling, by profiling how usage varies over time. To do this we will need to work with &lt;code&gt;date-time&lt;/code&gt; variables. The &lt;a href=&#34;https://lubridate.tidyverse.org/&#34;&gt;&lt;code&gt;lubridate&lt;/code&gt;&lt;/a&gt; package provides various convenience functions for this.&lt;/p&gt;
+&lt;p&gt;In the code block below we extract the &lt;em&gt;day of week&lt;/em&gt; and &lt;em&gt;hour of day&lt;/em&gt; from the &lt;code&gt;start_time&lt;/code&gt; variable using &lt;code&gt;lubridate&lt;/code&gt;’s &lt;a href=&#34;https://lubridate.tidyverse.org/reference/day.html&#34;&gt;day accessor&lt;/a&gt; functions. Documentation on these can be accessed in the usual way (&lt;code&gt;?&amp;lt;function-name&amp;gt;&lt;/code&gt;), but reading down the code it should be clear to you how this works. Next we count the number of trips made by hour of day, day of week and gender. The summarised data frame will be re-used several times in our analysis, so we store it as an object with a suitable name (&lt;code&gt;ny_temporal&lt;/code&gt;) using the assignment operator.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create a hod dow summary by gender and assign it the name &amp;quot;ny_temporal&amp;quot;.
+ny_temporal &amp;lt;- ny_trips %&amp;gt;%  # Take the ny_trips data frame.
+  mutate(
+    day=wday(start_time, label=TRUE), # Create a new column identify dow.
+    hour=hour(start_time)) %&amp;gt;% # Create a new column identify hod.
+  group_by(gender, day, hour) %&amp;gt;% # Group by day, hour, gender.
+  summarise(count=n()) %&amp;gt;% # Count the grouped rows.
+  ungroup()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    Whether or not to store derived data tables, like the newly assigned &lt;code&gt;ny_temporal&lt;/code&gt;, in a session is not an easy decision. You want to try to avoid cluttering your Environment pane with many data objects. Often when generating charts it is necessary to create these sorts of derived tables as input data (to &lt;code&gt;ggplot2&lt;/code&gt;) – and so when doing visual data analysis you may end up with an unhelpfully large number of these derived tables. The general rule I apply: if the derived table is to be used &amp;gt;3 times in a data analysis or is computationally intensive, assign it (&lt;code&gt;&amp;lt;-&lt;/code&gt;) to an object.
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;In Figure &lt;a href=&#34;#fig:plot-temporal&#34;&gt;2&lt;/a&gt; below these derived data are plotted. The template contains &lt;code&gt;ggplot2&lt;/code&gt; code for creating the graphic. Don’t obsess too much on it – more on this next session. The plot demonstrates a familiar weekday-weekend pattern of usage. Trip frequencies peak in the morning and evening rush hours during weekdays and mid/late-morning and afternoon during weekends. This is consistent with typical travel behaviour. Notice though that the weekday afternoon peak is much larger than the morning peak. There are several speculative explanations for this and re-running the plot on &lt;code&gt;Subscriber&lt;/code&gt; users only may be instructive. A secondary observation is that whilst men and women share this overall pattern of usage, the relative number of trips taken by each day of week varies. Men make many more trips at peak times during the start of the week than they do later in the week. The same pattern does not appear for women. This is certainly something to follow up on, for example by collecting data over a longer period of time.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:plot-temporal&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../../../../../../../../../../../class/02-class_files/hod_dow.png&#34; alt=&#34;Line charts generated with `ggplot2`. Plot data computed using `dplyr` and `lubridate`.&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Line charts generated with &lt;code&gt;ggplot2&lt;/code&gt;. Plot data computed using &lt;code&gt;dplyr&lt;/code&gt; and &lt;code&gt;lubridate&lt;/code&gt;.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    Our analysis is based on data from June 2020, a time when New York residents were emerging from lockdown. It would be instructive to compare with data from a non-Covid year. If there is a very clear contrast in usage between this data and a control (non-Covid) year, this suggests bikeshare data may be used for monitoring &lt;em&gt;behavioural change&lt;/em&gt;. The fact that bikeshare is collected continuously makes this possible. Check out &lt;a href=&#34;https://github.com/jwoLondon/mobv&#34;&gt;Jo Wood’s current work&lt;/a&gt; analysing Covid-related change in movement behaviours across a range of cities.
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;relate-tables-with-join&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Relate tables with &lt;code&gt;join()&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;Trip distance is not recorded directly in the &lt;code&gt;ny_trips&lt;/code&gt; table, but may be important for profiling usage behaviour. Calculating trip distance is eminently achievable as the &lt;code&gt;ny_trips&lt;/code&gt; table contains the origin and destination station of every trip and the &lt;code&gt;ny_stations&lt;/code&gt; table contains coordinates corresponding to those stations. To relate the two tables, we need to specify a &lt;strong&gt;join&lt;/strong&gt; between them.&lt;/p&gt;
+&lt;p&gt;A sensible approach is to:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Select all uniquely cycled trip pairs (origin-destination pairs) that appear in the &lt;code&gt;ny_trips&lt;/code&gt; table.&lt;/li&gt;
+&lt;li&gt;Bring in the corresponding coordinate pairs representing the origin and destination stations by joining on the &lt;code&gt;ny_stations&lt;/code&gt; table.&lt;/li&gt;
+&lt;li&gt;Calculate the distance between the coordinate pairs representing the origin and destination.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The code below is one way of achieving this.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;od_pairs &amp;lt;- ny_trips %&amp;gt;% # Take the ny_trips data frame.
+select(start_station_id, end_station_id) %&amp;gt;% unique() %&amp;gt;% # Select trip origin and destination (OD) station columns and extract unique OD pairs.
+  left_join(ny_stations %&amp;gt;% select(stn_id, longitude, latitude), by=c(&amp;quot;start_station_id&amp;quot;=&amp;quot;stn_id&amp;quot;)) %&amp;gt;% # Select lat, lon columns from ny_stations and join on the origin column.
+  rename(o_lon=longitude, o_lat=latitude) %&amp;gt;% # Rename new lat, lon columns -- associate with origin station.
+  left_join(ny_stations %&amp;gt;% select(stn_id, longitude, latitude), by=c(&amp;quot;end_station_id&amp;quot;=&amp;quot;stn_id&amp;quot;)) %&amp;gt;% # Select lat, lon columns from ny_stations and join on the destination column.
+  rename(d_lon=longitude, d_lat=latitude) %&amp;gt;%  # Rename new lat, lon columns -- associate with destination station.
+  rowwise() %&amp;gt;% # For computing distance calculation one row-at-a-time.
+  mutate(dist=geosphere::distHaversine(c(o_lat, o_lon), c(d_lat, d_lon))/1000) %&amp;gt;% # Calculate distance and express in kms.
+  ungroup()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The code block above introduces some new functions: &lt;code&gt;select()&lt;/code&gt; to pick or drop variables, &lt;code&gt;rename()&lt;/code&gt; to rename variables and a convenience function for calculating straight line distance from polar coordinates (&lt;code&gt;distHaversine()&lt;/code&gt;). The key function to emphasise is the &lt;code&gt;left_join()&lt;/code&gt;. If you’ve worked with relational databases and &lt;code&gt;SQL&lt;/code&gt;, &lt;code&gt;dplyr&lt;/code&gt;’s join functions will be familiar to you. In a &lt;code&gt;left_join&lt;/code&gt;, all the values from the main table are retained, the one on the left – &lt;code&gt;ny_trips&lt;/code&gt;, and variables from the table on the right (&lt;code&gt;ny_stations&lt;/code&gt;) are added. We specify explicitly the variable on which the tables should be joined with the &lt;code&gt;by=&lt;/code&gt; parameter, &lt;code&gt;station_id&lt;/code&gt; in this case. If there is a &lt;code&gt;station_id&lt;/code&gt; in &lt;code&gt;ny_trips&lt;/code&gt; that doesn’t exist in &lt;code&gt;ny_stations&lt;/code&gt; then &lt;code&gt;NA&lt;/code&gt; is returned.&lt;/p&gt;
+&lt;p&gt;Other &lt;strong&gt;join&lt;/strong&gt; functions provided by &lt;code&gt;dplyr&lt;/code&gt; are in the table below. Rather than discussing each, I recommend consulting &lt;a href=&#34;https://r4ds.had.co.nz/relational-data.html&#34;&gt;Chapter 13&lt;/a&gt; of &lt;span class=&#34;citation&#34;&gt;Wickham and Grolemund (&lt;a href=&#34;#ref-wickham_r_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; &#34; colspan=&#34;1&#34;&gt;
+&lt;div style=&#34;border-bottom: 1px solid #ddd; padding-bottom: 5px; &#34;&gt;
+&lt;code&gt;*_join(x, y) ...&lt;/code&gt;
+&lt;/div&gt;
+&lt;/th&gt;
+&lt;th style=&#34;empty-cells: hide;border-bottom:hidden;&#34; colspan=&#34;1&#34;&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:table-joins&#34;&gt;Table 11: &lt;/span&gt;A breakdown of &lt;code&gt;dplyr&lt;/code&gt; join functions.
+&lt;/caption&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;width: 10em; &#34;&gt;
+&lt;code&gt;left_join()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+all rows from x
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;width: 10em; &#34;&gt;
+&lt;code&gt;right_join()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+all rows from y
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;width: 10em; &#34;&gt;
+&lt;code&gt;full_join()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+all rows from both x and y
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;width: 10em; &#34;&gt;
+&lt;code&gt;semi_join()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+all rows from x where there are matching values in y, keeping just columns from x
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;width: 10em; &#34;&gt;
+&lt;code&gt;inner_join()&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+all rows from x where there are matching values in y, return all combination of multiple matches in the case of multiple matches
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;width: 10em; &#34;&gt;
+&lt;code&gt;anti_join&lt;/code&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+return all rows from x where there are not matching values in y, never duplicate rows of x
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:plot-dist&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../../../../../../../../../../../class/02-class_files/dist.png&#34; alt=&#34;Histograms generated with `ggplot2`. Plot data computed using `dplyr` and `lubridate`&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 3: Histograms generated with &lt;code&gt;ggplot2&lt;/code&gt;. Plot data computed using &lt;code&gt;dplyr&lt;/code&gt; and &lt;code&gt;lubridate&lt;/code&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;From the newly created distance variable, we can calculate the average (mean) trip distance for the 1.9m trips – 1.6km. This might seem very short, but remember that the distance calculation is problematic in that these are straight-line distances between pairs of docking stations. Really we should be calculating network distances derived from the cycle network in New York. A separate reason – discovered when generating a histogram on the &lt;code&gt;dist&lt;/code&gt; variable – is that there are a large number of trips (124,403) that start and end at the same docking station. Initially these might seem to be unsuccessful hires – people failing to undock a bike for example. We could investigate this further by paying attention to the docking stations at which same origin-destination trips occur, as in the code block below.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ny_trips %&amp;gt;%
+  filter(start_station_id==end_station_id) %&amp;gt;%
+  group_by(start_station_id) %&amp;gt;% summarise(count=n()) %&amp;gt;%
+  left_join(ny_stations %&amp;gt;%  select(stn_id, name), by=c(&amp;quot;start_station_id&amp;quot;=&amp;quot;stn_id&amp;quot;)) %&amp;gt;%
+  arrange(desc(count))
+
+## # A tibble: 958 x 3
+##    start_station_id count name
+##    &amp;lt;chr&amp;gt;            &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;
+##  1 ny3423            2017 West Drive &amp;amp; Prospect Park West
+##  2 ny3881            1263 12 Ave &amp;amp; W 125 St
+##  3 ny514             1024 12 Ave &amp;amp; W 40 St
+##  4 ny3349             978 Grand Army Plaza &amp;amp; Plaza St West
+##  5 ny3992             964 W 169 St &amp;amp; Fort Washington Ave
+##  6 ny3374             860 Central Park North &amp;amp; Adam Clayton Powell Blvd
+##  7 ny3782             837 Brooklyn Bridge Park - Pier 2
+##  8 ny3599             829 Franklin Ave &amp;amp; Empire Blvd
+##  9 ny3521             793 Lenox Ave &amp;amp; W 111 St
+## 10 ny2006             782 Central Park S &amp;amp; 6 Ave
+## # … with 948 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;All of the top 10 docking stations are either in parks, near parks or located along river promenades. This coupled with the fact that these trips occur in much greater relative number for casual than regular users (&lt;code&gt;Customer&lt;/code&gt; vs &lt;code&gt;Subscriber&lt;/code&gt;) is further evidence that these are valid trips.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;write-functions-of-your-own&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Write functions of your own&lt;/h4&gt;
+&lt;p&gt;Through most of the module we will be making use of functions written by others – mainly those developed for packages that form the &lt;code&gt;tidyverse&lt;/code&gt; and therefore that follow a consistent syntax. However, there may be times where you need to abstract over some of your code to make functions of your own. &lt;a href=&#34;https://r4ds.had.co.nz/functions.html&#34;&gt;Chapter 19&lt;/a&gt; of &lt;span class=&#34;citation&#34;&gt;Wickham and Grolemund (&lt;a href=&#34;#ref-wickham_r_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt; presents some helpful guidelines around the circumstances under which the data scientist typically tends to write functions. Most often this is when you find yourself copy and pasting the same chunks of code with minimal adaptation.&lt;/p&gt;
+&lt;p&gt;Functions have three key characteristics:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;They are (usually) &lt;strong&gt;named&lt;/strong&gt; – the name should be expressive and communicate what the function does (we talk about &lt;code&gt;dplyr&lt;/code&gt; &lt;strong&gt;verbs&lt;/strong&gt;).&lt;/li&gt;
+&lt;li&gt;They have brackets &lt;code&gt;&amp;lt;function()&amp;gt;&lt;/code&gt; usually containing &lt;strong&gt;arguments&lt;/strong&gt; – inputs which determine what the function does and returns.&lt;/li&gt;
+&lt;li&gt;Immediately followed by &lt;code&gt;&amp;lt;function()&amp;gt;&lt;/code&gt; are &lt;code&gt;{}&lt;/code&gt; used to contain the &lt;strong&gt;body&lt;/strong&gt; – in this is code that performs a distinct task, described by the function’s &lt;strong&gt;name&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Effective functions are &lt;strong&gt;short&lt;/strong&gt;, perform &lt;strong&gt;single&lt;/strong&gt; discrete operations and are &lt;strong&gt;intuitive&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;You will recall that in the &lt;code&gt;ny_trips&lt;/code&gt; table there is a variable called &lt;code&gt;birth_year&lt;/code&gt;. From this we can derive cyclists’ approximate age. Below I have written a function &lt;code&gt;get_age()&lt;/code&gt; for doing this. The function expects two &lt;strong&gt;arguments&lt;/strong&gt;: &lt;code&gt;yob&lt;/code&gt; – a year of birth as type &lt;code&gt;chr&lt;/code&gt;; &lt;code&gt;yref&lt;/code&gt; – a reference year. In the &lt;strong&gt;body&lt;/strong&gt;, &lt;code&gt;lubridate&lt;/code&gt;’s &lt;code&gt;as.period&lt;/code&gt; function is used to calculate the time in years that elapsed, the value that the function &lt;strong&gt;returns&lt;/strong&gt;. Once defined, and loaded into the session by being executed, it can be used (as below).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Function for calculating time elapsed between two dates in years (age).
+get_age &amp;lt;- function(yob, yref) {
+    period &amp;lt;- lubridate::as.period(lubridate::interval(yob, yref),unit = &amp;quot;year&amp;quot;)
+    return(period$year)
+}
+
+ny_trips &amp;lt;- ny_trips %&amp;gt;% # Take the ny_trips data frame.
+  mutate(
+    age=get_age(as.POSIXct(birth_year, format=&amp;quot;%Y&amp;quot;), as.POSIXct(&amp;quot;2020&amp;quot;, format=&amp;quot;%Y&amp;quot;)) # Calculate age from birth_date.
+    )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can use the two new derived variables – distance travelled and age – in our analysis. In Figure &lt;a href=&#34;#fig:plot-speeds&#34;&gt;4&lt;/a&gt;, we explore how &lt;strong&gt;approximate&lt;/strong&gt; travel speeds vary by age, gender and trip distance. The code used to generate the summary data and plot is in the template file. Again the average “speed” calculation should be treated very cautiously as it is based on straight line distances and it is very difficult to select out “utility” from “leisure” trips. I have tried to do the latter by selecting trips that occur only on weekdays and that are made by &lt;code&gt;Subscriber&lt;/code&gt; cyclists. Additionally, due to the heavy subsetting data become a little volatile for certain age groups and so I’ve aggregated the age variable into 5-year bands. Collecting more data is probably a good idea.&lt;/p&gt;
+&lt;p&gt;There are nevertheless some interesting patterns. Men tend to cycle at faster speeds than do women, although this gap narrows with the older age groups. The effect of age on speed cycled is more apparent for the longer trips. This trend is reasonably strong, although the volatility in the older age groups for trips &amp;gt;4.5km suggests we probably need more data and a more involved analysis to establish this. For example, it may be that the comparatively rare occurrence of trips in the 65-70 age group is made by only a small subset of cyclists. A larger dataset would result in a regression to the mean effect and negate any noise caused by outlier individuals. Certainly Figure &lt;a href=&#34;#tab:variable-types&#34;&gt;1&lt;/a&gt; is an interesting data graphic – and the type of exploratory analysis demonstrated here, using &lt;code&gt;dplyr&lt;/code&gt; functions, is most definitely consistent with that identified in the previous session when introducing &lt;em&gt;Geographic Data Science&lt;/em&gt;.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:plot-speeds&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../../../../../../../../../../../class/02-class_files/speeds.png&#34; alt=&#34;Line charts generated with `ggplot2`. Plot data computed using `dplyr` and `lubridate`&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 4: Line charts generated with &lt;code&gt;ggplot2&lt;/code&gt;. Plot data computed using &lt;code&gt;dplyr&lt;/code&gt; and &lt;code&gt;lubridate&lt;/code&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidy&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Tidy&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;ny_trips&lt;/code&gt; and &lt;code&gt;ny_stations&lt;/code&gt; data already comply with the rules for &lt;strong&gt;tidy&lt;/strong&gt; data &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;Wickham 2014&lt;/a&gt;)&lt;/span&gt;. Each row in &lt;code&gt;ny_trips&lt;/code&gt; is a distinct trip and each row in &lt;code&gt;ny_stations&lt;/code&gt; a distinct station. However throughout the module we will undoubtedly encounter datasets that need to be reshaped. There are two key functions to learn here, made available via the &lt;a href=&#34;https://tidyr.tidyverse.org/articles/pivot.html&#34;&gt;&lt;code&gt;tidyr&lt;/code&gt;&lt;/a&gt; package: &lt;a href=&#34;https://tidyr.tidyverse.org/reference/pivot_longer.html&#34;&gt;&lt;code&gt;pivot_longer()&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://tidyr.tidyverse.org/reference/pivot_wider.html&#34;&gt;&lt;code&gt;pivot_wider()&lt;/code&gt;&lt;/a&gt;. &lt;code&gt;pivot_longer()&lt;/code&gt; is used to tidy data in which observations are spread across columns, as in Table &lt;a href=&#34;#tab:gapminder-untidy1&#34;&gt;6&lt;/a&gt; (the &lt;code&gt;gapminder&lt;/code&gt; dataset). &lt;code&gt;pivot_wider()&lt;/code&gt; is used to tidy data in which observations are spread across rows, as in Table &lt;a href=&#34;#tab:gapminder-untidy2&#34;&gt;7&lt;/a&gt; (the &lt;code&gt;gapminder&lt;/code&gt; dataset). You will find yourself using these functions, particularly &lt;code&gt;pivot_longer()&lt;/code&gt;, not only for fixing messy data, but for flexibly reshaping data for use in &lt;code&gt;ggplot2&lt;/code&gt; specifications (more on this in sessions 3 and 4) or joining tables.&lt;/p&gt;
+&lt;p&gt;A quick breakdown of &lt;code&gt;pivot_longer&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pivot_longer(
+  data,
+  cols, # Columns to pivot longer (across rows).
+  names_to=&amp;quot;name&amp;quot;, # Name of the column to create from values held in spread *column names*.
+  values_to=&amp;quot;name&amp;quot; # Name of column to create form values stored in spread *cells*
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A quick breakdown of &lt;code&gt;pivot_wider&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;pivot_wider(
+  data,
+  names_from, # Column in the long format which contains what will be column names in the wide format.
+  values_from # Column in the long format which contains what will be values in the new wide format.
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In the homework you will be tidying some messy derived tables based on the bikeshare data using both of these functions, but we can demonstrate their purpose in &lt;strong&gt;tidying&lt;/strong&gt; the messy &lt;code&gt;gapminder&lt;/code&gt; data in Table &lt;a href=&#34;#tab:gapminder-untidy2&#34;&gt;7&lt;/a&gt;. Remember that these data were messy as the observations by gender were spread across the columns:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;untidy_wide
+##   country     year  f_cases m_cases f_population m_population
+##   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;        &amp;lt;chr&amp;gt;
+## 1 Afghanistan 1999  447     298     9993400      9993671
+## 2 Afghanistan 2000  1599    1067    10296280     10299080
+## 3 Brazil      1999  16982   20755   86001181     86005181
+## 4 Brazil      2000  39440   41048   87251329     87253569
+## 5 China       1999  104007  108252  636451250    636464022
+## 6 China       2000  104746  109759  640212600    640215983&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;First we need to gather the problematic columns with &lt;code&gt;pivot_longer()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;untidy_wide %&amp;gt;%
+  pivot_longer(cols=c(f_cases: m_population), names_to=c(&amp;quot;gender_count_type&amp;quot;), values_to=c(&amp;quot;counts&amp;quot;))
+
+##   country     year  gender_count_type       counts
+##   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;                   &amp;lt;chr&amp;gt;
+##  1 Afghanistan 1999  f_cases                447
+##  2 Afghanistan 1999  m_cases                298
+##  3 Afghanistan 1999  f_population           9993400
+##  4 Afghanistan 1999  m_population           9993671
+##  5 Afghanistan 2000  f_cases                1599
+##  6 Afghanistan 2000  m_cases                1067
+##  7 Afghanistan 2000  f_population           10296280
+##  8 Afghanistan 2000  m_population           10299080
+##  9 Brazil      1999  f_cases                16982
+## 10 Brazil      1999  m_cases                20755
+## # … with 14 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So this has usefully collapsed the dataset by gender, we now have a problem similar to that in Table &lt;a href=&#34;#tab:gapminder-untidy1&#34;&gt;6&lt;/a&gt; where observations are spread across the rows – in this instance &lt;code&gt;cases&lt;/code&gt; and &lt;code&gt;population&lt;/code&gt; are better treated as separate variables. This can be fixed by &lt;code&gt;separating&lt;/code&gt; the &lt;code&gt;gender_count_type&lt;/code&gt; variables and then spreading the values of the new &lt;code&gt;count_type&lt;/code&gt; (&lt;code&gt;cases&lt;/code&gt;, &lt;code&gt;population&lt;/code&gt;) across the columns. Hopefully you can see how this gets us to the &lt;strong&gt;tidy&lt;/strong&gt; &lt;code&gt;gapminder&lt;/code&gt; data structure in Table &lt;a href=&#34;#tab:gapminder-tidy&#34;&gt;5&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;untidy_wide %&amp;gt;%
+  pivot_longer(cols=c(f_cases: m_population), names_to=c(&amp;quot;gender_count_type&amp;quot;), values_to=c(&amp;quot;counts&amp;quot;)) %&amp;gt;%
+  separate(col=gender_count_type, into=c(&amp;quot;gender&amp;quot;, &amp;quot;count_type&amp;quot;), sep=&amp;quot;_&amp;quot;)
+
+##    country     year  gender count_type counts
+##    &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;
+##  1 Afghanistan 1999  f      cases      447
+##  2 Afghanistan 1999  m      cases      298
+##  3 Afghanistan 1999  f      population 9993400
+##  4 Afghanistan 1999  m      population 9993671
+##  5 Afghanistan 2000  f      cases      1599
+##  6 Afghanistan 2000  m      cases      1067
+##  7 Afghanistan 2000  f      population 10296280
+##  8 Afghanistan 2000  m      population 10299080
+##  9 Brazil      1999  f      cases      16982
+## 10 Brazil      1999  m      cases      20755
+## # … with 14 more rows
+
+untidy_wide %&amp;gt;%
+  pivot_longer(cols=c(f_cases: m_population), names_to=c(&amp;quot;gender_count_type&amp;quot;), values_to=c(&amp;quot;counts&amp;quot;)) %&amp;gt;%
+  separate(col=gender_count_type, into=c(&amp;quot;gender&amp;quot;, &amp;quot;count_type&amp;quot;), sep=&amp;quot;_&amp;quot;) %&amp;gt;%
+  pivot_wider(names_from=count_type, values_from=counts)
+
+##    country     year  gender cases  population
+##    &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;
+##  1 Afghanistan 1999  f      447    9993400
+##  2 Afghanistan 1999  m      298    9993671
+##  3 Afghanistan 2000  f      1599   10296280
+##  4 Afghanistan 2000  m      1067   10299080
+##  5 Brazil      1999  f      16982  86001181
+##  6 Brazil      1999  m      20755  86005181
+##  7 Brazil      2000  f      39440  87251329
+##  8 Brazil      2000  m      41048  87253569
+##  9 China       1999  f      104007 636451250
+## 10 China       1999  m      108252 636464022
+## 11 China       2000  f      104746 640212600
+## 12 China       2000  m      109759 640215983&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;Developing the vocabulary and technical skills to systematically describe and organise data is crucial to modern data analysis. This session has covered the fundamentals here: that data consist of &lt;strong&gt;observations&lt;/strong&gt; and &lt;strong&gt;variables&lt;/strong&gt; of different types &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-stevens_on_1946&#34; role=&#34;doc-biblioref&#34;&gt;Stevens 1946&lt;/a&gt;)&lt;/span&gt; and that in order to work effectively with datasets, especially in a functional way in &lt;code&gt;R&lt;/code&gt;, these data must be organised according to the rules of &lt;strong&gt;tidy&lt;/strong&gt; data &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;Wickham 2014&lt;/a&gt;)&lt;/span&gt;. Most of the session content was dedicated to the techniques that enable these concepts to be operationalised. We covered how to download, transform and reshape a reasonably large set of data from New York’s &lt;a href=&#34;&#34;&gt;Citibike&lt;/a&gt; scheme. In doing so, we generated insights that might inform further data collection and analysis activity. In the next session we will apply and extend this conceptual and technical knowledge as we introduce the fundamentals of visual data analysis and &lt;code&gt;ggplot2&lt;/code&gt;’s grammar of graphics.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references csl-bib-body hanging-indent&#34;&gt;
+&lt;div id=&#34;ref-lovelace_is_2020&#34; class=&#34;csl-entry&#34;&gt;
+Lovelace, R., R. Beecham, E. Heinen, E. Vidal Tortosa, Y. Yuanxuan, C. Slade, and A. Roberts. 2020. &lt;span&gt;“Is the London Cycle Hire Scheme Becoming More Inclusive? An Evaluation of the Shifting Spatial Distribution of Uptake Based on 70 Million Trips.”&lt;/span&gt; &lt;em&gt;Transportation Research Part A: Policy and Practice&lt;/em&gt; 140 (October): 1–15.
+&lt;/div&gt;
+&lt;div id=&#34;ref-stevens_on_1946&#34; class=&#34;csl-entry&#34;&gt;
+Stevens, S. 1946. &lt;span&gt;“On the Theory of Scales of Measurement.”&lt;/span&gt; &lt;em&gt;Science&lt;/em&gt; 103 (2684): 677–80.
+&lt;/div&gt;
+&lt;div id=&#34;ref-wickham_tidy_2014&#34; class=&#34;csl-entry&#34;&gt;
+Wickham, H. 2014. &lt;span&gt;“Tidy Data.”&lt;/span&gt; &lt;em&gt;Journal of Statistical Software&lt;/em&gt; 59 (10): 1–23.
+&lt;/div&gt;
+&lt;div id=&#34;ref-wickham_r_2017&#34; class=&#34;csl-entry&#34;&gt;
+Wickham, H., and G. Grolemund. 2017. &lt;em&gt;&lt;span&gt;R&lt;/span&gt; for Data Science: Import, Tidy, Transform, Visualize, and Model Data&lt;/em&gt;. Sebastopol, California: O’Reilly Media.
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes footnotes-end-of-document&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Note that the version of the trips data downloaded from my external repo contains a sample of just 500k records – this is not ideal, but was due to data storage limits on my external repo.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction: Vis for Geographic Data Science</title>
+      <link>/class/01-class/</link>
+      <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
+      <guid>/class/01-class/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;h2&gt;Contents&lt;/h2&gt;
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#session-outcomes&#34;&gt;Session outcomes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#welcome-to-visualization-for-geographic-data-science&#34;&gt;Welcome to &lt;em&gt;Visualization for Geographic Data Science&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#why-vis-for-gds&#34;&gt;Why &lt;em&gt;vis-for-gds&lt;/em&gt;?&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#geographic-data-science&#34;&gt;Geographic Data Science&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#geographic-data-science-and-visualization&#34;&gt;Geographic Data Science and &lt;em&gt;Visualization&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#what-vis-for-gds&#34;&gt;What &lt;em&gt;vis-for-gds&lt;/em&gt;?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#how-vis-for-gds&#34;&gt;How &lt;em&gt;vis-for-gds&lt;/em&gt;?&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r-for-modern-data-analysis&#34;&gt;R for modern data analysis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rmarkdown-for-reproducible-research&#34;&gt;Rmarkdown for reproducible research&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#getting-started-with-r-and-rstudio&#34;&gt;Getting started with R and RStudio&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#install-r-and-rstudio&#34;&gt;Install R and RStudio&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#open-the-rstudio-ide&#34;&gt;Open the RStudio IDE&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#compute-in-the-console&#34;&gt;Compute in the console&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#install-some-packages&#34;&gt;Install some packages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#experiment-with-r-markdown&#34;&gt;Experiment with R Markdown&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#r-scripts&#34;&gt;R Scripts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#create-an-rstudio-project&#34;&gt;Create an RStudio Project&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#conclusions&#34;&gt;Conclusions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session outcomes&lt;/h2&gt;
+&lt;p&gt;By the end of this session you should gain the following &lt;strong&gt;&lt;em&gt;knowledge&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;strong&gt;Appreciate&lt;/strong&gt; the motivation for this module – why visualization, why &lt;code&gt;R&lt;/code&gt; and why &lt;code&gt;ggplot2&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- - [x] An **awareness** of the challenges modern data analysis --&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;By the end of this session you should gain the following &lt;strong&gt;&lt;em&gt;practical skills&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Navigate the materials on this course website, having familiarised yourself with its structure&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Open &lt;code&gt;R&lt;/code&gt; using the RStudio Integrated Developer Environment (IDE)&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Install and enable &lt;code&gt;R&lt;/code&gt; packages and query package documentation&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Perform basic calculations via the &lt;code&gt;R  Console&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Render &lt;code&gt;R Markdown&lt;/code&gt; files&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Create &lt;code&gt;R&lt;/code&gt; Projects&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Read-in datasets from external resources as objects (specifically &lt;code&gt;tibbles&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;welcome-to-visualization-for-geographic-data-science&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Welcome to &lt;em&gt;Visualization for Geographic Data Science&lt;/em&gt;&lt;/h2&gt;
+&lt;p&gt;Welcome to &lt;em&gt;Visualization for Geographic Data Science&lt;/em&gt; (&lt;em&gt;vis-for-gds&lt;/em&gt;). In this first session we’ll cover the background to the module – the why, what and how of &lt;em&gt;&lt;strong&gt;vis&lt;/strong&gt;-for-gds&lt;/em&gt;. If you’ve not already you should check out the course outline on the &lt;a href=&#34;./syllabus/&#34;&gt;Syllabus&lt;/a&gt; page for an overall preview of the module.&lt;/p&gt;
+&lt;p&gt;The main home for this module is &lt;a href=&#34;../../&#34;&gt;this website&lt;/a&gt;. However, via &lt;a href=&#34;https://minerva.leeds.ac.uk/webapps/blackboard/execute/announcement?method=search&amp;amp;context=course&amp;amp;course_id=_521510_1&amp;amp;handle=cp_announcements&amp;amp;mode=cpview&#34;&gt;Minerva&lt;/a&gt; you can access the &lt;a href=&#34;https://minerva.leeds.ac.uk/bbcswebdav/pid-8457865-dt-content-rid-18601408_2/courses/202021_37303_GEOG5009M/GEOG5009_handbook.pdf&#34;&gt;Module Handbook&lt;/a&gt;. You will use submission boxes in &lt;a href=&#34;https://minerva.leeds.ac.uk/webapps/blackboard/content/listContentEditable.jsp?content_id=_7985652_1&amp;amp;course_id=_521510_1&amp;amp;mode=reset&#34;&gt;Minerva&lt;/a&gt; to upload coursework in the usual way.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-vis-for-gds&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why &lt;em&gt;vis-for-gds&lt;/em&gt;?&lt;/h2&gt;
+&lt;!-- https://www.forbes.com/sites/bernardmarr/2020/04/09/the-vital-role-of-big-data-in-the-fight-against-coronavirus/ --&gt;
+&lt;div id=&#34;geographic-data-science&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Geographic Data Science&lt;/h3&gt;
+&lt;p&gt;It is now taken-for-granted that over the last decade or so new data, new technology and new ways of doing science have transformed how we approach the world’s problems. Evidence for this can be seen in the response to the Covid-19 pandemic. Enter &lt;a href=&#34;https://www.google.com/search?q=covid-19+github&amp;amp;rlz=1C5CHFA_enGB632GB632&amp;amp;oq=covid-19+github&amp;amp;aqs=chrome..69i57j69i60l3.5575j0j1&amp;amp;sourceid=chrome&amp;amp;ie=UTF-8&#34;&gt;Covid19 github&lt;/a&gt; into a search and you’ll be confronted with hundreds of repositories demonstrating how an ever-expanding array of data related to the pandemic can be collected, processed and analysed. &lt;em&gt;Data Science&lt;/em&gt; is a term used widely to capture this shift and &lt;em&gt;Geographic Data Science&lt;/em&gt; (GDS), probably first discussed coherently by &lt;span class=&#34;citation&#34;&gt;Arribas-Bel and Reades (&lt;a href=&#34;#ref-arribas_geography_2018&#34; role=&#34;doc-biblioref&#34;&gt;2018&lt;/a&gt;)&lt;/span&gt; and &lt;span class=&#34;citation&#34;&gt;Singleton and Arribas-Bel (&lt;a href=&#34;#ref-singleton_geographic_2019&#34; role=&#34;doc-biblioref&#34;&gt;2019&lt;/a&gt;)&lt;/span&gt;, when observing that many of data science’s applications are – or at least should be – of inherent interest to geographers.&lt;/p&gt;
+&lt;p&gt;Since gaining traction in the corporate world, the definition of Data Science has been somewhat stretched, but it has its origins in the work of John Tukey’s &lt;em&gt;The Future of Data Analysis&lt;/em&gt; (1962). Drawing on this, and a survey of more recent work, &lt;span class=&#34;citation&#34;&gt;Donoho (&lt;a href=&#34;#ref-donoho_fifty_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt; neatly identifies six key facets that a data science discipline might encompass &lt;a href=&#34;#fn1&#34; class=&#34;footnote-ref&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; :&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;data gathering, preparation, and exploration;&lt;/li&gt;
+&lt;li&gt;data representation and transformation;&lt;/li&gt;
+&lt;li&gt;computing with data;&lt;/li&gt;
+&lt;li&gt;data visualization and presentation;&lt;/li&gt;
+&lt;li&gt;data modelling;&lt;/li&gt;
+&lt;li&gt;and a more introspective “science about data science”&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;geographic-data-science-and-visualization&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Geographic Data Science and &lt;em&gt;Visualization&lt;/em&gt;&lt;/h3&gt;
+&lt;!-- &gt; Visualization is fundamental to meeting the unprecedented challenges and exploiting the wonderful opportunities of the ever-expanding deluge of data confronting virtually every field.&#34; \
+&gt; -- Prof. Jim Hollan of UC San Diego --&gt;
+&lt;!-- &lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    Visual approaches to data analysis are particularly suited to Geographic Data Science applications because where datasets are being repurposed for social and natural sciences research for the first time,  contain complex structure and geo-spatial relations that cannot be easily captured by statistical summaries alone and so where the types of questions that can be asked and the techniques deployed to answer them cannot be easily specified in advance.
+  &lt;/div&gt;
+&lt;/div&gt;
+ --&gt;
+&lt;p&gt;Glancing at this list, &lt;em&gt;visualization&lt;/em&gt; could be interpreted as a single facet of Data Science process &lt;a href=&#34;#fn2&#34; class=&#34;footnote-ref&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; – something that happens after data gathering, preparation, exploration, but before modelling. In this module you’ll learn that visualization is intrinsic to, and should inform, each of these activities, especially so when working with data sets that are spatial – for Geographic Data Science.&lt;/p&gt;
+&lt;p&gt;Let’s develop this idea by asking &lt;strong&gt;why data visualizations are used in the first place&lt;/strong&gt;. In her book &lt;em&gt;Visualization Analysis and Design&lt;/em&gt;, Tamara &lt;span class=&#34;citation&#34;&gt;Munzner (&lt;a href=&#34;#ref-munzner_visualization_2014&#34; role=&#34;doc-biblioref&#34;&gt;2014&lt;/a&gt;)&lt;/span&gt; considers how humans and computers interface in the decision-making process. She makes the point that data visualization is ultimately about connecting people with data in order to make decisions – or to install humans in a ‘decision-making-loop’. There are occasionally decision-making loops that are entirely computational and where an automated solution exists and is trusted. However, most require some form of human intervention.&lt;/p&gt;
+&lt;p&gt;The canonical example demonstrating how relying on computation alone can be problematic, and so for the use of visualization, is &lt;a href=&#34;https://en.wikipedia.org/wiki/Anscombe%27s_quartet&#34;&gt;Anscombe’s quartet&lt;/a&gt;. Here, &lt;span class=&#34;citation&#34;&gt;Anscombe (&lt;a href=&#34;#ref-anscombe_graphs_1973&#34; role=&#34;doc-biblioref&#34;&gt;1973&lt;/a&gt;)&lt;/span&gt; presents four datasets, each containing eleven observations and two variables for each observation. The data are synthetic, but let’s say that they are the weight and height of independent samples taken from a population of postgraduate students studying Data Science.&lt;/p&gt;
+&lt;p&gt;Presented with a new dataset it makes sense to compute some summaries and doing so, we observe that the data appear identical – they contain the same means, variances and strong positive correlation coefficient. This seems appropriate since the data are measuring weight and height. Although there may be some variation, we’d expect taller students to be heavier. Given these statistical summaries we can be assured that we are drawing samples from the same population of (Data Science) students.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:anscombe-data&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../../../../../../../../../../../class/01-class_files/anscombe_data.png&#34; alt=&#34;Data from Anscombe&#39;s quartet&#34; width=&#34;90%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Data from Anscombe’s quartet
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Laying out the data in a meaningful way, horizontally according to &lt;em&gt;weight&lt;/em&gt; (&lt;em&gt;x&lt;/em&gt;) and vertically according to the &lt;em&gt;height&lt;/em&gt; (&lt;em&gt;y&lt;/em&gt;) to form a scatterplot, we quickly see that whilst these data contain the same statistical properties they are very different. Only &lt;code&gt;dataset #1&lt;/code&gt; now looks plausible if it were truly a measure of weights and heights drawn from a population of students.&lt;/p&gt;
+&lt;p&gt;Anscombe’s is a deliberately contrived example&lt;a href=&#34;#fn3&#34; class=&#34;footnote-ref&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;, but there are real cases of important structure being missed, leading to poorly specified models and potentially faulty claims.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:anscombe-plot&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../../../../../../../../../../../class/01-class_files/anscombe.png&#34; alt=&#34;Plots of Anscombe&#39;s quartet&#34;  /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Plots of Anscombe’s quartet
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;This is not to undermine the importance of numerical analysis. Numeric summaries that simplify patterns are extremely useful and Statistics has at its disposal an array of tools for helping to guard against making false claims from datasets – a theme that we will return to in session 6, 7 and 8 when we think critically about the use of visual approaches for data anlysis. There remain, though, certain classes of relation and context that cannot be easily captured through statistics alone.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Geographic&lt;/em&gt; context is undoubtedly challenging to capture numerically; many of the early examples of data visualization have been of spatial phenomena and generated by Geographers &lt;span class=&#34;citation&#34;&gt;(see &lt;a href=&#34;#ref-friendly_brief_2007&#34; role=&#34;doc-biblioref&#34;&gt;Friendly 2007&lt;/a&gt;)&lt;/span&gt;. We can also probably make a special case for the use of visual approaches in Geographic Data Science (GDS) applications due to its exploratory nature. Often in GDS datasets are being repurposed for social and natural sciences research for the first time; contain complex structure and geo-spatial relations that cannot be easily captured by statistical summaries alone; and so the types of questions that can be asked and the techniques deployed to answer them cannot be easily specified in advance. In this module we will demonstrate this as we &lt;em&gt;explore&lt;/em&gt; (Session 4 and 5), &lt;em&gt;model under uncertainty&lt;/em&gt; (Session 6 and 7) and &lt;em&gt;communicate&lt;/em&gt; (Session 8 and 9) with various social science datasets.&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-instruction&#34;&gt;
+  &lt;div&gt;
+    Watch &lt;a href=&#34;https://www.gicentre.net/jwo/index&#34;&gt;Jo Wood’s&lt;/a&gt; talk demonstrating how visual techniques can be used to analyse urban travel behaviours. In the video Jo argues that bikeshare schemes can help democratise cycling, but also for their potential contributions to research – he briefly contrasts new, passively collected data sets with more “traditional” actively collected data for analysing how people move around cities. A compelling case is then made for the use of visualization to support this activity. Related work and further discussion is published in &lt;span class=&#34;citation&#34;&gt;Beecham and Wood (&lt;a href=&#34;#ref-beecham_exploring_2014&#34; role=&#34;doc-biblioref&#34;&gt;2014&lt;/a&gt;)&lt;/span&gt;.
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;div class=&#34;embed-responsive embed-responsive-16by9&#34;&gt;
+&lt;iframe class=&#34;embed-responsive-item&#34; src=&#34;https://www.youtube.com/embed/FaRBUnO5PZI&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&#34; allowfullscreen&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;!-- &gt; Effective data visualizations should expose structure in data that would be difficult to expose through non-visual means --&gt;
+&lt;!-- Problems are typically ill-specified, the relevant data/information informing the problem are not immediately obvious and analysis procedures and their interpretation are certainly subject to interpretation.
+
+ &#39;computer in the loop&#39; and the &#39;human in the loop&#39;. In other words, what is it that computation can offer in supporting decision making and what is it that humans can offer. --&gt;
+&lt;!-- @donoho_fifty_2017 neatly remarks that _data science_ probably has its origins in the work of John Tukey&#39;s _The Future of Data Analysis_ (1962), and that a _data science_ discipline might incorporate six key facets: data gathering, preparation, and exploration; data representation and transformation; computing with data; data modelling; data visualisation and presentation; and a more introspective “science about data science”. --&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-vis-for-gds&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What &lt;em&gt;vis-for-gds&lt;/em&gt;?&lt;/h2&gt;
+&lt;p&gt;This is a very practical module. With the exception of this Introduction, the weekly sessions will blend both theory and practical coding activity. We will cover fundamentals around visual data analysis from Information Visualization and Statistics. As you read the session materials you will be writing data processing and analysis code and so be generating analysis outputs of your own. We will also be working with real datasets – from the Political Science, Urban and Transport Planning and Health domains. So we will hopefully be generating real findings and knowledge.&lt;/p&gt;
+&lt;p&gt;To do this in a genuine way – to generate real knowledge from datasets – we will have to cover a reasonably broad set of data processing and analysis procedures. As well as developing expertise around designing data-rich, visually compelling graphics (of the sort demonstrated in &lt;a href=&#34;https://www.gicentre.net/jwo/index&#34;&gt;Jo Wood’s TEDx talk&lt;/a&gt;), we will need to cover more tedious aspects of &lt;strong&gt;data processing&lt;/strong&gt; and &lt;strong&gt;wrangling&lt;/strong&gt;. Additionally, if we are to learn how to generate and communicate and make claims under uncertainty with our data graphics, then we will need to cover some aspects of estimation and modelling from Statistics. In short, we will cover most of &lt;span class=&#34;citation&#34;&gt;Donoho (&lt;a href=&#34;#ref-donoho_fifty_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt;’s six key facets of a data science discipline:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;data gathering, preparation, and exploration (Sessions 2, 3, 5);&lt;/li&gt;
+&lt;li&gt;data representation and transformation (Sessions 2, 3);&lt;/li&gt;
+&lt;li&gt;computing with data (Session 2, All sessions);&lt;/li&gt;
+&lt;li&gt;data visualization and presentation (All sessions);&lt;/li&gt;
+&lt;li&gt;data modelling (Sessions 4, 6, 7, 8);&lt;/li&gt;
+&lt;li&gt;and a more introspective “science about data science” (All sessions)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;There is already a rich and impressive set of open &lt;a href=&#34;../useful&#34;&gt;Resources&lt;/a&gt; practically introducing how to do modern &lt;a href=&#34;https://r4ds.had.co.nz/index.html&#34;&gt;Data Science&lt;/a&gt;, &lt;a href=&#34;https://socviz.co/&#34;&gt;Visualization&lt;/a&gt; and &lt;a href=&#34;https://geocompr.robinlovelace.net/&#34;&gt;Geographic Analysis&lt;/a&gt;. We will certainly draw on these at different stages in the module. What makes this module different from these existing resources is that we will be &lt;strong&gt;doing&lt;/strong&gt; applied data science throughout – we will be identifying and diagnosing problems when gathering data, discovering patterns (some maybe even spurious) as we do exploratory analysis, and attempt to make claims under uncertainty as we generate models based on observed patterns. We will work with both new, passively-collected datasets, as well as more traditional, actively collected datasets located within various social science domains.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-vis-for-gds&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How &lt;em&gt;vis-for-gds&lt;/em&gt;?&lt;/h2&gt;
+&lt;div id=&#34;r-for-modern-data-analysis&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R for modern data analysis&lt;/h3&gt;
+&lt;p&gt;Through the module we will apply modern approaches to data analysis. All data collection, analysis and reporting activity will be completed using &lt;a href=&#34;https://www.r-project.org/&#34;&gt;&lt;code&gt;R&lt;/code&gt;&lt;/a&gt; and the &lt;a href=&#34;https://rstudio.com/&#34;&gt;&lt;code&gt;RStudio&lt;/code&gt;&lt;/a&gt; &lt;a href=&#34;https://en.wikipedia.org/wiki/Integrated_development_environment&#34;&gt;Integrated Development Environment&lt;/a&gt; (IDE). Released as open source software as part of a research project in 1995, for some time &lt;code&gt;R&lt;/code&gt; was the preserve of academics. From 2010s onwards, the &lt;code&gt;R&lt;/code&gt; community expanded rapidly and along with &lt;a href=&#34;https://www.python.org/&#34;&gt;&lt;code&gt;Python&lt;/code&gt;&lt;/a&gt; is regarded as the key technology for doing data analysis. &lt;code&gt;R&lt;/code&gt; is used increasingly outside of academia, by organisations such as Google &lt;a href=&#34;https://research.google.com/pubs/pub37483.html&#34;&gt;[example]&lt;/a&gt;, Facebook &lt;a href=&#34;http://flowingdata.com/2010/12/13/facebook-worldwide-friendships-mapped/&#34;&gt;[example]&lt;/a&gt;, Twitter &lt;a href=&#34;https://blog.twitter.com/official/en_us/a/2013/the-geography-of-tweets.html&#34;&gt;[example]&lt;/a&gt;, New York Times &lt;a href=&#34;http://www.nytimes.com/interactive/2012/05/05/sports/baseball/mariano-rivera-and-his-peers.html?ref=baseballexample&#34;&gt;[example]&lt;/a&gt;, BBC &lt;a href=&#34;https://bbc.github.io/rcookbook/&#34;&gt;[example]&lt;/a&gt; and many more.&lt;/p&gt;
+&lt;p&gt;There are many benefits that come from being fully open-source, with a critical mass of users. Firstly, there is an array of online forums, tutorials and code examples from which to learn. Second, with such a large community, there are numerous expert &lt;code&gt;R&lt;/code&gt; users who themselves contribute by developing &lt;strong&gt;libraries&lt;/strong&gt; or &lt;strong&gt;packages&lt;/strong&gt; that extend its use. As a result &lt;code&gt;R&lt;/code&gt; is employed for a very wide set of use cases – this website was even built in &lt;code&gt;R&lt;/code&gt; using amongst other things the &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;&lt;code&gt;blogdown&lt;/code&gt;&lt;/a&gt; package.&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The key reason for our use of &lt;code&gt;R&lt;/code&gt; is the ecosystem of users and &lt;strong&gt;packages&lt;/strong&gt; that have emerged in recent years. An R package is a bundle of code, data and documentation, usually hosted on the &lt;a href=&#34;https://cran.r-project.org/&#34;&gt;CRAN&lt;/a&gt; (Comprehensive R Archive Network).
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;Of particular importance is the &lt;a href=&#34;http://www.tidyverse.org&#34;&gt;&lt;code&gt;tidyverse&lt;/code&gt;&lt;/a&gt; package. This is a set of packages for doing Data Science authored by a software development team at &lt;a href=&#34;https://rstudio.com/&#34;&gt;RStudio&lt;/a&gt; led by &lt;a href=&#34;http://hadley.nz&#34;&gt;Hadley Wickham&lt;/a&gt;. &lt;code&gt;tidyverse&lt;/code&gt; packages share a principled underlying philosophy, syntax and documentation. Contained within the &lt;code&gt;tidyverse&lt;/code&gt; is its data visualization package, &lt;a href=&#34;https://ggplot2.tidyverse.org/&#34;&gt;&lt;code&gt;ggplot2&lt;/code&gt;&lt;/a&gt;. This package pre-dates the &lt;code&gt;tidyverse&lt;/code&gt; – it started as &lt;a href=&#34;http://had.co.nz/thesis/practical-tools-hadley-wickham.pdf&#34;&gt;Hadley Wickham’s PhD thesis&lt;/a&gt; and is one of the most widely-used toolkits for generating data graphics. As with other heavily used visualization toolkits (&lt;a href=&#34;https://www.tableau.com/en-gb&#34;&gt;&lt;code&gt;Tableau&lt;/code&gt;&lt;/a&gt;, &lt;a href=&#34;https://vega.github.io/vega-lite/&#34;&gt;&lt;code&gt;vega-lite&lt;/code&gt;&lt;/a&gt;) it is inspired by Leland Wilkinson’s &lt;a href=&#34;https://www.springer.com/gp/book/9780387245447&#34;&gt;The Grammar of Graphics&lt;/a&gt;, the &lt;code&gt;gg&lt;/code&gt; in &lt;code&gt;ggplot&lt;/code&gt; stands for Grammar of Graphics. Understanding the design principles behind the &lt;em&gt;Grammar of Graphics&lt;/em&gt; (and &lt;code&gt;tidyverse&lt;/code&gt;) is necessary for modern data analysis and so we will cover this in detail in Session 3.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rmarkdown-for-reproducible-research&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Rmarkdown for reproducible research&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reproducible research is the idea that data analyses, and more generally, scientific claims, are published with their data and software code so that others may verify the findings and build upon them.&lt;/p&gt;
+&lt;p&gt;Roger Peng, Jeff Leek and Brian Caffo&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In recent years there has been much introspection into how science works – around how statistical claims are made from reasoning over evidence. This came on the back of, amongst other things, a high profile paper published in &lt;a href=&#34;http://science.sciencemag.org/content/349/6251/aac4716&#34;&gt;Science&lt;/a&gt;, which found that of 100 recent peer-reviewed psychology experiments, the findings of only 39 could be replicated. The upshot is that researchers must now make every possible effort to make their work transparent, such that “&lt;em&gt;all&lt;/em&gt; aspects of the answer generated by any given analysis [can] be tested” &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-brunsdon_opening_2020&#34; role=&#34;doc-biblioref&#34;&gt;Brunsdon and Comber 2020&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;A reproducible research project should be accompanied with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;code&lt;/em&gt; and &lt;em&gt;data&lt;/em&gt; that allows tables and figures presented in research outputs to be regenerated&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;code&lt;/em&gt; and &lt;em&gt;data&lt;/em&gt; that &lt;em&gt;does&lt;/em&gt; what it &lt;em&gt;claims&lt;/em&gt; (the code works)&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;code&lt;/em&gt; and &lt;em&gt;data&lt;/em&gt; that can be justified and explained through proper documentation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If these goals are met, then it may be possible for others to use the code on new and different data to study whether the findings reported in one project might be &lt;strong&gt;replicated&lt;/strong&gt; or to use the same data, but update the code to, for example, extend the original analysis (to perform a re-analysis). This model – generate findings, test for replicability in new contexts and re-analysis – is essentially how knowledge development has always worked. However, to achieve this the data and procedures on which findings were generated must be made open and transparent.&lt;/p&gt;
+&lt;p&gt;In this setting, traditional proprietary data analysis software such as SPSS and Esri’s ArcGIS that support point-and-click interaction is problematic. First, whilst these software may rely on the sorts of packages and libraries with bundled code that &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;Python&lt;/code&gt; uses for implementing statistical procedures, those libraries are closed. It is not possible, and therefore less common, for the researcher to fully interrogate into the underlying processes that are being implemented and the results need to be taken more or less on faith. Second, but probably most significantly (for us), it would be tedious to make notes describing all interactions performed when working with a dataset in SPSS or ArcGIS.&lt;/p&gt;
+&lt;p&gt;As a declarative programming language, it is very easy to provide such a provenance trail for your workflows in &lt;code&gt;R&lt;/code&gt; since this necessarily exists in the analysis scripts. But more importantly, the &lt;a href=&#34;https://en.wikipedia.org/wiki/Integrated_development_environment&#34;&gt;Integrated Development Environments&lt;/a&gt; (IDEs) through which &lt;code&gt;R&lt;/code&gt; (and &lt;code&gt;Python&lt;/code&gt;) are most often accessed provide notebook environments that allow users to curate reproducible computational documents that blend &lt;strong&gt;input code&lt;/strong&gt;, &lt;strong&gt;explanatory prose&lt;/strong&gt; and &lt;strong&gt;outputs&lt;/strong&gt;. In this module we will prepare these sorts of notebooks using &lt;a href=&#34;https://rmarkdown.rstudio.com/&#34;&gt;R Markdown&lt;/a&gt;.&lt;/p&gt;
+&lt;!-- Within Spatial Statistics, results from a Geographically Weighted Regression analysis implemented in ArcGIS were found to be inconsistent with those generated in `R` and `Python` [] -- inconsistencies that could not be examined as the code behind ArcGIS is closed. --&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;getting-started-with-r-and-rstudio&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Getting started with R and RStudio&lt;/h2&gt;
+&lt;p&gt;I mentioned that the weekly sessions will blend both theory and practical coding activity. This Introduction has been dedicated more towards conceptual and procedural matters. For the practical element this time, we want to get you configured and familiar with &lt;code&gt;R&lt;/code&gt; and RStudio.&lt;/p&gt;
+&lt;div id=&#34;install-r-and-rstudio&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Install R and RStudio&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Install the latest version of &lt;a href=&#34;https://cloud.r-project.org/&#34;&gt;R&lt;/a&gt;. Note that there are installations for &lt;a href=&#34;https://cloud.r-project.org/bin/windows/&#34;&gt;Windows&lt;/a&gt;, &lt;a href=&#34;https://cloud.r-project.org/&#34;&gt;macOS&lt;/a&gt; and &lt;a href=&#34;https://cloud.r-project.org/&#34;&gt;Linux&lt;/a&gt;. Run the installation from the file you downloaded (an &lt;code&gt;.exe&lt;/code&gt; or &lt;code&gt;.pkg&lt;/code&gt; extension).&lt;/li&gt;
+&lt;li&gt;Install the latest version of &lt;a href=&#34;https://rstudio.com/products/rstudio/download/#download&#34;&gt;RStudio Desktop&lt;/a&gt;. Note again that there are separate installations depedning on operating system – for Windows an &lt;code&gt;.exe&lt;/code&gt; extension, macOS a &lt;code&gt;.dmg&lt;/code&gt; extension.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;open-the-rstudio-ide&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Open the RStudio IDE&lt;/h3&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:rstudio-annotate&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../../../../../../../../../../../class/01-class_files/rstudio_annotate.png&#34; alt=&#34;The RStudio IDE&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 3: The RStudio IDE
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Once installed, open the RStudio IDE.&lt;/li&gt;
+&lt;li&gt;Open an R Script by clicking &lt;code&gt;File&lt;/code&gt; &amp;gt; &lt;code&gt;New File&lt;/code&gt; &amp;gt; &lt;code&gt;R Script&lt;/code&gt; .&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You should see a set of windows roughly similar to those in the Figure (although I’ve already started on some of the computing exercises in the next section). The top left pane is used either as a &lt;em&gt;Code Editor&lt;/em&gt; (the tab named &lt;code&gt;Untitled1&lt;/code&gt;) or data viewer. This is where you’ll write, organise and comment R code for execution or inspect datasets as a spreadsheet representation. Below this in the bottom left pane is the R Console, in which you write and execute commands directly. To the top right is a pane with the tabs Environment and History. This displays all objects – data and plot items, calculated functions – stored in-memory during an R session. In the bottom right is a pane for navigating through project directories, displaying plots, details of installed and loaded packages and documentation on their functions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;compute-in-the-console&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Compute in the console&lt;/h3&gt;
+&lt;p&gt;You will write and execute almost all code from the code editor pane. To start though let’s use &lt;code&gt;R&lt;/code&gt; as a calculator by typing some commands into the Console. You’ll create an object (&lt;code&gt;x&lt;/code&gt;) and assign it a value using the assignment operator (&lt;code&gt;&amp;lt;-&lt;/code&gt;), then perform some simple statistical calculations using functions that are held within the &lt;code&gt;base&lt;/code&gt; package.&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    The &lt;code&gt;base&lt;/code&gt; package is core and native to &lt;code&gt;R&lt;/code&gt;. Unlike all other packages, it does not need to be installed and called explicitly. One means of checking the package to which a function you are using belongs is to call the help command (&lt;code&gt;?&lt;/code&gt;) on that function: e.g. &lt;code&gt;?mean()&lt;/code&gt;.
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Type the commands contained in the code block below into your R Console. Notice that since you are assigning values to each of these objects they are stored in memory and appear under the Global Environment pane.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create variable and assign a value.
+x &amp;lt;- 4
+# Perform some calculations using R as a calculator.
+x_2 &amp;lt;- x^2
+# Perform some calculations using functions that form baseR.
+x_root &amp;lt;- sqrt(x_2)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;install-some-packages&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Install some packages&lt;/h3&gt;
+&lt;p&gt;There are two steps to getting packages down and available in your working environment:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;install.packages(&#34;&amp;lt;package-name&amp;gt;&#34;)&lt;/code&gt; downloads the named package from a repository.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;library(&amp;lt;package-name&amp;gt;)&lt;/code&gt; makes the package available in your current session.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Install the &lt;code&gt;tidyverse&lt;/code&gt;, the core collection of packages for doing Data Science in &lt;code&gt;R&lt;/code&gt;, by running the code below:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you have little or no experience in &lt;code&gt;R&lt;/code&gt;, it is easy to get confused around downloading and then using packages in a session. For example, let’s say we want to make use of the simple features package (&lt;a href=&#34;https://r-spatial.github.io/sf/index.html&#34;&gt;&lt;code&gt;sf&lt;/code&gt;&lt;/a&gt;), which we will draw on heavily in the module for performing spatial operations.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run the code below:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(sf)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Unless you’ve previously installed &lt;code&gt;sf&lt;/code&gt;, you’ll probably get an error message that looks like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;&amp;gt; Error in library(sf): there is no package called ‘sf’&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So let’s install it.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run the code below:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;sf&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And now it’s installed, why not bring up some documentation on one of its functions (&lt;a href=&#34;https://r-spatial.github.io/sf/reference/geos_binary_pred.html&#34;&gt;&lt;code&gt;st_contains()&lt;/code&gt;&lt;/a&gt;).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run the code below:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;?st_contains()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Since you’ve downloaded the package but not made it available to your session, you should get the message:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;&amp;gt; No documentation for ‘st_contains’ in specified packages and libraries&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So let’s try again, by first calling &lt;code&gt;library(sf)&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run the code below:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(sf)
+## Linking to GEOS 3.7.2, GDAL 2.4.1, PROJ 6.1.0
+?st_contains()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let’s install some of the remaining core packages on which the module depends.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run the block below, which passes a &lt;a href=&#34;https://r4ds.had.co.nz/vectors.html&#34;&gt;vector&lt;/a&gt; of package names to the &lt;code&gt;install.packages()&lt;/code&gt; function:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(c(&amp;quot;devtools&amp;quot;,&amp;quot;here&amp;quot;, &amp;quot;rmarkdown&amp;quot;, &amp;quot;knitr&amp;quot;,&amp;quot;fst&amp;quot;,&amp;quot;tidyverse&amp;quot;,
+&amp;quot;lubridate&amp;quot;, &amp;quot;tidymodels&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    If you wanted to make use of a package only very occasionally in a single session, you could access it without explicitly loading it via &lt;code&gt;library(&amp;lt;package-name&amp;gt;)&lt;/code&gt;, using this syntax: &lt;code&gt;&amp;lt;package-name&amp;gt;::&amp;lt;function_name&amp;gt;&lt;/code&gt;, e.g. &lt;code&gt;?sf::st_contains()&lt;/code&gt;.
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;experiment-with-r-markdown&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Experiment with R Markdown&lt;/h3&gt;
+&lt;p&gt;R Markdown documents are suffixed with the extension &lt;code&gt;.Rmd&lt;/code&gt; and based partly on &lt;a href=&#34;https://en.wikipedia.org/wiki/Markdown&#34;&gt;Markdown&lt;/a&gt;, a lightweight markup language originally used as a means of minimising tedious mark-up tags (&lt;code&gt;&amp;lt;header&amp;gt;&amp;lt;/header&amp;gt;&lt;/code&gt;) when preparing HTML documents. The idea is that you trade some flexibility in the formatting of your HTML for ease-of-writing. Working with R Markdown is very similar to Markdown. Sections are denoted hierarchically with hashes (&lt;code&gt;#&lt;/code&gt;, &lt;code&gt;##&lt;/code&gt;, &lt;code&gt;###&lt;/code&gt;) and emphasis using &lt;code&gt;*&lt;/code&gt; symbols (&lt;code&gt;*emphasis* **added**&lt;/code&gt; reads &lt;em&gt;emphasis&lt;/em&gt; &lt;strong&gt;added&lt;/strong&gt; ). Different from standard Markdown, however, R Markdown documents can also contain code chunks to be run when the document is rendered or typeset – they are a mechanism for producing elegant reproducible notebooks.&lt;/p&gt;
+&lt;p&gt;Each session of the module has an accompanying R Markdown file. In later sessions you will use these to author computational notebooks that blend code, analysis prose and outputs.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Download the &lt;a href=&#34;./homework/01-homework_files/01-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 01-template.Rmd&lt;/a&gt; file for this session and open it in RStudio by clicking &lt;code&gt;File&lt;/code&gt; &amp;gt; &lt;code&gt;Open File ...&lt;/code&gt; &amp;gt; &lt;code&gt;&amp;lt;your-downloads&amp;gt;/01-template.Rmd&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A quick anatomy of an R Markdown files :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/YAML&#34;&gt;YAML&lt;/a&gt; - positioned at the head of the document and contains metadata determining amongst other things the author details and the output format when typesetting.&lt;/li&gt;
+&lt;li&gt;TEXT - incorporated throughout to document and comment on your analysis.&lt;/li&gt;
+&lt;li&gt;CODE chunks - containing discrete that are to be run when the .Rmd file is typeset or &lt;em&gt;knit&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:rmarkdown-annotate&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../../../../../../../../../../../class/01-class_files/rmarkdown_annotate.png&#34; alt=&#34;The anatomy of R Markdown&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 4: The anatomy of R Markdown
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;a href=&#34;https://en.wikipedia.org/wiki/YAML&#34;&gt;YAML&lt;/a&gt; section of an &lt;code&gt;.Rmd&lt;/code&gt; file controls how your file is typeset and consists of &lt;code&gt;key: value&lt;/code&gt; pairs enclosed by &lt;code&gt;---&lt;/code&gt;. Notice that you can change the output format – so should you wish you can generate for example &lt;code&gt;.pdf&lt;/code&gt;, &lt;code&gt;.docx&lt;/code&gt; files for your reports.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;---
+author: &amp;quot;Roger Beecham&amp;quot;
+date: &amp;#39;2021-05-01&amp;#39;
+title: &amp;quot;Session 01&amp;quot;
+output:html_document
+---&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;R Markdown files are rendered or typeset with the &lt;strong&gt;Knit&lt;/strong&gt; button, annotated in the Figure above. This starts the &lt;code&gt;knitr&lt;/code&gt; package and executes all the code chunks and outputs a &lt;strong&gt;markdown&lt;/strong&gt; (&lt;code&gt;.md&lt;/code&gt;) file. The markdown file can then be converted to many different output formats via &lt;a href=&#34;https://pandoc.org/&#34;&gt;pandoc&lt;/a&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Knit&lt;/strong&gt; the &lt;a href=&#34;./homework/01-homework_files/01-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 01-template.Rmd&lt;/a&gt; file for this session, either by clicking the &lt;em&gt;Knit&lt;/em&gt; button or by typing &lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;⇧&lt;/kbd&gt; + &lt;kbd&gt;K&lt;/kbd&gt; on Windows, &lt;kbd&gt;⌘&lt;/kbd&gt; + &lt;kbd&gt;⇧&lt;/kbd&gt; + &lt;kbd&gt;K&lt;/kbd&gt; on macOS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You will notice that R Markdown &lt;strong&gt;code chunks&lt;/strong&gt; can be customised in different ways. This is achieved by populating fields in the curly brackets at the start of the code chunk:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;```{r &amp;lt;chunk-name&amp;gt;, echo=TRUE, eval=FALSE, cache=FALSE}
+  # Some code that is either run or rendered.
+```&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A quick overview of the parameters.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;chunk-name&amp;gt;&lt;/code&gt; - Chunks can be given distinct names. This is useful for navigating R markdown file. It also supports chaching – chunks with distinct names are only run once, important if certain chunks take some time to execute.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;echo=&amp;lt;TRUE|FALSE&amp;gt;&lt;/code&gt; - Determines whether the code is visible or hidden from the typeset file. If you output file is a data analysis report you may not wish to expose lengthy code chunks as these may disrupt the discursive text that appears outside of the code chunks.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;eval=&amp;lt;TRUE|FALSE&amp;gt;&lt;/code&gt; - Determines whether the code is evaluated (executed). This is useful if you wish to present some code in your document for display purposes.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cache=&amp;lt;TRUE|FALSE&amp;gt;&lt;/code&gt; - Determines where the results from the code chunk are cached.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As part of the &lt;a href=&#34;./homework/01-homework/&#34;&gt;homework&lt;/a&gt; from this session you will do some more research on R Markdown. It is worth in advance downloading RStudio’s cheatsheets, which provide comprehensive details on how to configure R Markdown documents:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Open RStudio and select &lt;code&gt;Help&lt;/code&gt; &amp;gt; &lt;code&gt;Cheatsheets&lt;/code&gt; &amp;gt; &lt;code&gt;R Markdown Cheat Sheet&lt;/code&gt; | &lt;code&gt;R Markdown Reference Guide&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;r-scripts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R Scripts&lt;/h3&gt;
+&lt;p&gt;Whilst there are obvious benefits to working in R Markdown documents when doing data analysis, there may be occasions where working in an script is preferable. Scripts are plain text files with the extension &lt;code&gt;.R&lt;/code&gt;. Comments – text that are not executed as code – are denoted with the &lt;code&gt;#&lt;/code&gt; symbol.&lt;/p&gt;
+&lt;p&gt;I tend to use R Scripts for writing discrete but substantial code blocks that are to be executed. For example, I might generate a set of &lt;a href=&#34;https://r4ds.had.co.nz/functions.html&#34;&gt;functions&lt;/a&gt; that relate to a particular use case and bundle these together in an R script. These then might be referred to in a data analysis from an &lt;code&gt;.Rmd&lt;/code&gt;, which makes various use of these functions in a similar way as one might import a package. Below is an example script that we will encounter later in the module when creating flow visualizations in R very similar to those that appear in Jo Wood’s TEDx talk. This script is saved with the fie name &lt;code&gt;bezier_path.R&lt;/code&gt;. If it were stored in a sensible location, like a project’s &lt;code&gt;code&lt;/code&gt; folder, it could be called from an R Markdown file with &lt;code&gt;source(./code/bezier_path)&lt;/code&gt;. R Scripts can be edited in the same way as R Markdown files in RStudio, via the &lt;em&gt;Code Editor&lt;/em&gt; pane.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# bezier_path.R
+#
+# Author: Roger Beecham
+##############################################################################
+
+#&amp;#39; Functions for generating input data for asymmetric bezier curve for OD data,
+#&amp;#39; such that the origin is straight and destination curve. The retuned tibble
+#&amp;#39; is passed to geom_bezier().Parametrtisation follows that published in
+#&amp;#39; Wood et al. 2011. doi: 10.3138/carto.46.4.239.
+#&amp;#39; @param data A df with origin and destination pairs representing 2D locations
+#&amp;#39; (o_east, o_north, d_east, d_north) in cartesian (OSGB) space.
+#&amp;#39; @param degrees For converting to radians.
+#&amp;#39; @return A tibble of coordinate pairs representing asymmetric curve
+
+get_trajectory &amp;lt;- function(data) {
+  o_east=data$o_east
+  o_north=data$o_north
+  d_east=data$d_east
+  d_north=data$d_north
+  od_pair=data$od_pair
+
+  curve_angle=get_radians(-90)
+  east=(o_east-d_east)/6
+  north=(o_north-d_north)/6
+  c_east=d_east + east*cos(curve_angle) - north*sin(curve_angle)
+  c_north=d_north + north*cos(curve_angle) + east*sin(curve_angle)
+  d &amp;lt;- tibble(
+    x=c(o_east,c_east,d_east),
+    y=c(o_north,c_north,d_north),
+    od_pair=od_pair
+  )
+}
+
+# Convert degrees to radians.
+get_radians &amp;lt;- function(degrees) {
+  (degrees * pi) / (180)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To an extent R Scripts are more straightforward than R Markdown files in that you don’t have to worry about configuring code chunks. They are really useful for quickly developing bits of code. This can be achieved by highlighting over the code that you wish to execute and clicking the &lt;code&gt;Run&lt;/code&gt; icon at the top of the &lt;em&gt;Code Editor&lt;/em&gt; pane or by typing &lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;rtn&lt;/kbd&gt; on Windows, &lt;kbd&gt;⌘&lt;/kbd&gt; + &lt;kbd&gt;rtn&lt;/kbd&gt; on macOS&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;create-an-rstudio-project&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Create an RStudio Project&lt;/h3&gt;
+&lt;p&gt;Throughout this module we will use project-oriented workflows. This is where all files pertaining to a data analysis – data, code and outputs – are organised from a single root folder and where &lt;em&gt;file path discipline&lt;/em&gt; is used such that all paths are relative to the project’s root folder (see &lt;a href=&#34;https://rstats.wtf/project-oriented-workflow.html&#34;&gt;Bryan &amp;amp; Hester 2020&lt;/a&gt;). You can imagine that this sort of self-contained project set-up is necessary for achieving reproducibility of your research. It allows anyone to take a project and run it on their own machines without having to make any adjustments.&lt;/p&gt;
+&lt;p&gt;You might have noticed that when you open RStudio it automatically &lt;em&gt;points to&lt;/em&gt; a working directory, likely the home folder for your local machine, denoted with &lt;code&gt;~/&lt;/code&gt; in the Console. RStudio will by default save any outputs to this folder and will also expect any data you use to be saved there. Clearly if you want to incorporate neat, self-contained project workflows then you will want to organise your work from a dedicated project folder rather than the default home folder for your machine. This can be achieved with the &lt;code&gt;setwd(&amp;lt;path-to-your-project&amp;gt;)&lt;/code&gt; function. The problem with doing this is that you insert a path which cannot be understood outside of your local machine at the time it was created. This is a real pain. It makes simple things like moving projects around on your machine an arduous task and most importantly it hinders reproducibility if others are to reuse your work.&lt;/p&gt;
+&lt;p&gt;RStudio Projects are a really excellent feature of the RStudio IDE that resolve these problems. Whenever you load up an RStudio Project, R starts up and the working directory is automatically set to the project’s root folder. If you were to move the project elsewhere on your machine, or to another machine, a new root is automatically generated – so RStudio projects ensure that relative paths work.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:rstudio-project&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../../../../../../../../../../../class/01-class_files/rstudio_project.png&#34; alt=&#34;Creating an RStudio Project&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 5: Creating an RStudio Project
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Let’s create a new Project for this module:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Select &lt;code&gt;File&lt;/code&gt; &amp;gt; &lt;code&gt;New Project&lt;/code&gt; &amp;gt; &lt;code&gt;New Directory&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Browse to a sensible location and give the project a suitable name. Then click &lt;code&gt;Create Project&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You will notice that the top of the Console window now indicates the root for this new project, in my case &lt;code&gt;~projects/vis-for-gds&lt;/code&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In the root of your project, create folders called &lt;code&gt;reports&lt;/code&gt;, &lt;code&gt;code&lt;/code&gt;, &lt;code&gt;data&lt;/code&gt;, &lt;code&gt;figures&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Save this session’s &lt;a href=&#34;./homework/01-homework_files/01-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 01-template.Rmd&lt;/a&gt; file to the &lt;code&gt;reports&lt;/code&gt; folder.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Your project’s folder structure should now look like this:&lt;/p&gt;
+&lt;pre class=&#34;text&#34;&gt;&lt;code&gt;vis-for-gds\
+  vis-for-gds.Rproj
+  code\
+  data\
+  figures\
+  reports\
+    01-template.Rmd&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;Visual data analysis approaches are necessary for exploring complex patterns in data and to make and communicate claims under uncertainty. This is especially true of Geographic Data Science applications, where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;datasets are being repurposed for social and natural sciences research for the first time;&lt;/li&gt;
+&lt;li&gt;contain complex structure and geo-spatial relations that cannot be easily captured by statistical summaries alone;&lt;/li&gt;
+&lt;li&gt;and, consequently, where the types of questions that can be asked and the techniques deployed to answer them cannot be easily specified in advance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In this module we will demonstrate this as we explore (Session 4 and 5), model under uncertainty (Session 6 and 7) and communicate (Session 8 and 9) with various social science datasets. We will work with both new, large-scale behavioural datasets, as well as more traditional, administrative datasets located within various social science domains: Political Science, Crime Science, Urban and Transport Planning.&lt;/p&gt;
+&lt;p&gt;We will do so using the statistical programming environment &lt;code&gt;R&lt;/code&gt;, which along with &lt;a href=&#34;https://www.python.org/&#34;&gt;&lt;code&gt;Python&lt;/code&gt;&lt;/a&gt;, is &lt;em&gt;the&lt;/em&gt; programming environment for modern data analysis. We will make use of various tools and software libraries that form part of the &lt;code&gt;R&lt;/code&gt; ecosystem – the &lt;a href=&#34;https://www.tidyverse.org/&#34;&gt;&lt;code&gt;tidyverse&lt;/code&gt;&lt;/a&gt; for doing modern data science and &lt;a href=&#34;https://rmarkdown.rstudio.com/&#34;&gt;R Markdown&lt;/a&gt; for authoring reproducible research projects.&lt;/p&gt;
+&lt;!-- https://www.sciencedirect.com/science/article/pii/S1353829220311758?via%3Dihub --&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references csl-bib-body hanging-indent&#34;&gt;
+&lt;div id=&#34;ref-anscombe_graphs_1973&#34; class=&#34;csl-entry&#34;&gt;
+Anscombe, F. 1973. &lt;span&gt;“Graphs in Statistical Analysis.”&lt;/span&gt; &lt;em&gt;American Statistician&lt;/em&gt; 27 (1): 17–21. doi:&lt;a href=&#34;https://doi.org/10.1080/00031305.1973.10478966&#34;&gt;10.1080/00031305.1973.10478966&lt;/a&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-arribas_geography_2018&#34; class=&#34;csl-entry&#34;&gt;
+Arribas-Bel, D., and J. Reades. 2018. &lt;span&gt;“Geography and Computers: Past, Present, and Future.”&lt;/span&gt; &lt;em&gt;Geography Compass&lt;/em&gt; 12 (10): e12403. doi:&lt;a href=&#34;https://doi.org/10.1111/gec3.12403&#34;&gt;10.1111/gec3.12403&lt;/a&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-beecham_exploring_2014&#34; class=&#34;csl-entry&#34;&gt;
+Beecham, R., and J. Wood. 2014. &lt;span&gt;“Exploring Gendered Cycling Behaviours Within a Large-Scale Behavioural Data-Set.”&lt;/span&gt; &lt;em&gt;Transportation Planning and Technology&lt;/em&gt; 37 (1). Taylor &amp;amp; Francis: 83–97.
+&lt;/div&gt;
+&lt;div id=&#34;ref-brunsdon_opening_2020&#34; class=&#34;csl-entry&#34;&gt;
+Brunsdon, C., and A. Comber. 2020. &lt;span&gt;“Opening Practice: Supporting Reproducibility and Critical Spatial Data Science.”&lt;/span&gt; &lt;em&gt;Journal of Geographical Systems&lt;/em&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-donoho_fifty_2017&#34; class=&#34;csl-entry&#34;&gt;
+Donoho, D. 2017. &lt;span&gt;“50 Years of Data Science.”&lt;/span&gt; &lt;em&gt;Journal of Computational and Graphical Statistics&lt;/em&gt; 26 (6): 745–66. doi:&lt;a href=&#34;https://doi.org/10.1080/10618600.2017.1384734&#34;&gt;10.1080/10618600.2017.1384734&lt;/a&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-friendly_brief_2007&#34; class=&#34;csl-entry&#34;&gt;
+Friendly, M. 2007. &lt;span&gt;“A Brief History of Data Visualization.”&lt;/span&gt; In &lt;em&gt;Handbook of Computational Statistics: Data Visualization&lt;/em&gt;, edited by C. Chen, W. Härdle, and A Unwin, III:1–34. Heidelberg: Springer-Verlag. &lt;a href=&#34;http://datavis.ca/papers/hbook.pdf&#34;&gt;http://datavis.ca/papers/hbook.pdf&lt;/a&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-matejka_same_2017&#34; class=&#34;csl-entry&#34;&gt;
+Matejka, J., and G. Fitzmaurice. 2017. &lt;span&gt;“Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics Through Simulated Annealing.”&lt;/span&gt; In, 1290–94. CHI ’17. New York, NY, USA: Association for Computing Machinery. doi:&lt;a href=&#34;https://doi.org/10.1145/3025453.3025912&#34;&gt;10.1145/3025453.3025912&lt;/a&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-munzner_visualization_2014&#34; class=&#34;csl-entry&#34;&gt;
+Munzner, T. 2014. &lt;em&gt;Visualization Analysis and Design&lt;/em&gt;. AK Peters Visualization Series. Boca Raton, FL: CRC Press.
+&lt;/div&gt;
+&lt;div id=&#34;ref-singleton_geographic_2019&#34; class=&#34;csl-entry&#34;&gt;
+Singleton, A., and D. Arribas-Bel. 2019. &lt;span&gt;“Geographic Data Science.”&lt;/span&gt; &lt;em&gt;Geographical Analysis&lt;/em&gt;. doi:&lt;a href=&#34;https://doi.org/10.1111/gean.12194&#34;&gt;10.1111/gean.12194&lt;/a&gt;.
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes footnotes-end-of-document&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;For an excellent precis and interpretation of this for geographers, see &lt;span class=&#34;citation&#34;&gt;Arribas-Bel and Reades (&lt;a href=&#34;#ref-arribas_geography_2018&#34; role=&#34;doc-biblioref&#34;&gt;2018&lt;/a&gt;)&lt;/span&gt;.&lt;a href=&#34;#fnref1&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Although not the case when actually reading &lt;span class=&#34;citation&#34;&gt;Donoho (&lt;a href=&#34;#ref-donoho_fifty_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt;.&lt;a href=&#34;#fnref2&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;Checkout &lt;span class=&#34;citation&#34;&gt;Matejka and Fitzmaurice (&lt;a href=&#34;#ref-matejka_same_2017&#34; role=&#34;doc-biblioref&#34;&gt;2017&lt;/a&gt;)&lt;/span&gt;’s Same Stats, Different Graphs paper for a fun take one this.&lt;a href=&#34;#fnref3&#34; class=&#34;footnote-back&#34;&gt;↩︎&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

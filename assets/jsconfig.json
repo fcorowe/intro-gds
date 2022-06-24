@@ -1,0 +1,10 @@
+{
+ "compilerOptions": {
+  "baseUrl": ".",
+  "paths": {
+   "*": [
+    "../themes/hugo-academic/wowchemy/assets/*"
+   ]
+  }
+ }
+}
