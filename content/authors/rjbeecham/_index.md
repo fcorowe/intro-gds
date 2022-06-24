@@ -1,8 +1,8 @@
 ---
 authors:
-- rjbeecham
-name: Roger Beecham
+- fcorowe
+name: Francisco Rowe
 superuser: true
 ---
 
-Roger Beecham is Associate Professor in Visual Data Science at University of Leeds.
+Francisco Rowe is the lead of the Geographic Data Science Lab and Senior Lecturer at University of Liverpool, United Kingdom.

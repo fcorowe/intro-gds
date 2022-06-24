@@ -37,7 +37,7 @@ font_size: "L"
 site_type: "Course"
 
 # Description for social sharing and search engines. If undefined, superuser role is used in place.
-description: "Geographic Data Science and Visualization with R and ggplot"
+description: "Introduction to Geographic Data Science in R"
 
 # Display a logo in navigation bar rather than title (optional).
 #   To enable, place an image in `static/img/` and reference its filename below. To disable, set the value to "".
@@ -74,7 +74,7 @@ privacy_pack: false
 # Enable visitors to edit pages?
 #   `repo` defines the repository URL. `editable` defines which page types can be edited.
 edit_page:
-  repo_url: 'https://github.com/rogerbeecham/vis-for-gds/'
+  repo_url: 'https://github.com/fcorowe/intro-gds'
   content_dir: ''
   repo_branch: main
   editable:
@@ -89,31 +89,31 @@ edit_page:
 ## Additionally, for organizations, these details may be used to enrich search engine results.
 ############################
 
-author: Roger Beecham
+author: Francisco Rowe
 
 instructor:
-  name: Roger Beecham
-  email: r.j.beecham@leeds.ac.uk
-  url: "http://www.roger-beecham.com/"
-  twitter: rjbeecham
-  github: rogerbeecham
-  office: "10.139 Manton Building"
+  name: Francisco Rowe
+  email: f.rowe-gonzalez@liverpool.ac.uk
+  url: "http://www.franciscorowe.com/"
+  twitter: fcorowe
+  github: fcorowe
+  office: "507 Roxby building"
   contact_policy: >-
-   Questions to do with the substantive aspects of the module should be directed to the &#35;general channel of the course Slack in the first instance. For matters such as absences, extensions, email me: r.j.beecham@leeds.ac.uk.
+   email: f.rowe-gonzalez@liverpool.ac.uk
 
 course:
-  number: "GEOG5009M"
-  semester: "Spring/Summer 2022"
-  days: "ODL"
-  time: "ODL"
-  location: "ODL"
-  dates: "9th May - 15th Jul"
-  github: "rogerbeecham/vis-for-gds"
+  number: "Summer School in Computational Social Science"
+  semester: "July 2022"
+  days: "1"
+  time: "TBC"
+  location: "Groningen, The Netherlands"
+  dates: "5th Jul"
+  github: "fcorowe/intro-gds"
   copyrightYear: "2022"
 
 university:
-  name: University of Leeds
-  url: "https://www.leeds.ac.uk/"
+  name: University of Liverpool
+  url: "https://www.liverpool.ac.uk"
 
 school:
   name: School of Geography
@@ -128,7 +128,7 @@ school:
 sharing_image: "vis-for-gds.png"
 
 # Twitter username (without @). Used when a visitor shares your site on Twitter.
-twitter: "rjbeecham"
+twitter: "fcorowe"
 
 
 ############################

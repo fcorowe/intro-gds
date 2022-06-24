@@ -5,7 +5,7 @@ headless: true
 active: true
 weight: 10
 
-title: "Visualization for Geographic Data Science"
+title: "Introduction to Geographic Data Science"
 
 # Hero image (optional). Enter filename of an image in the `static/img/` folder.
 hero_media: vis-for-gds.png
@@ -20,7 +20,6 @@ design:
     text_color_light: false
 
 cta_note:
-  label: Spring/Summer 2022<br>School of Geography<br>University of Leeds
+  label: July 2022<br>School of Geography and Planning<br>University of Liverpool
 ---
 
-**GEOG5009M**

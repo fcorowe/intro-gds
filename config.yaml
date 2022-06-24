@@ -1,6 +1,6 @@
 baseurl: "https://www.roger-beecham.com/vis-for-gds/"
 defaultContentLanguage: "en-uk"
-title: "Visualization for Geographic Data Science"
+title: "Introduction to Geographic Data Science"
 theme: hugo-academic/wowchemy
 canonifyURLs: true
 relativeURLs: true
