@@ -1,6 +1,5 @@
-# GEOG5009M : Visualization for Geographic Data Science
+# Introduction to Geographic Data Science
 
+This repository contains the code and data for the course [Introduction to Geographic Data Science](https://www.roger-beecham.com/vis-for-gds/).
 
-This repository contains the code for generating [vis-for-gds](https://www.roger-beecham.com/vis-for-gds/).
-
-The website is built using hugo and blogdown and takes design templates from [Andrew Heiss's](https://www.andrewheiss.com) excellent [teaching websites](https://datavizf18.classes.andrewheiss.com/) with minimal editing.
+The website is built using hugo and blogdown, and uses the template designed by [Roger Beecham](https://www.roger-beecham.com/) for his course [Visualization for Geographic Data Science](https://www.roger-beecham.com/vis-for-gds/).
