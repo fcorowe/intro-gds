@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en-us" 
+      xmlns:og="http://ogp.me/ns#" 
+      xmlns:fb="https://www.facebook.com/2008/fbml">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.2 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Contents  Session Outcomes Introduction Task 1: Describe and evaluate Task 2: Reproduce  Histograms faceted by region Scatterplots with multiple encodings  Task 3: Create a map References   Session Outcomes By the end of this homework session you should be able to:
+  Formally describe data graphics according to their visual encoding. Reproduce graphics by writing ggplot2 specifications. Combine dplyr and conditional statements to prep data for plotting.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="../../homework/03-homework/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#424242">
+  
+
+  
+  
+  
+  <script src="../../js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous" media="print" onload="this.media='all'">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:ital,wght@0,300;1,300%7CRoboto+Slab:wght@300%7CFjalla+One&display=swap">
+      
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="../../css/wowchemy.dd269ef766d14a5f3446f7ad8c8a19cc.css">
+
+  
+
+
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+  <link rel="manifest" href="../../index.webmanifest">
+  
+
+  <link rel="icon" type="image/png" href="../../images/icon_huc37306104a4011cad6e5f9118ea6dd2c_187381_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../images/icon_huc37306104a4011cad6e5f9118ea6dd2c_187381_180x180_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="../../homework/03-homework/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@fcorowe">
+  <meta property="twitter:creator" content="@fcorowe">
+  
+  <meta property="og:site_name" content="Introduction to Geographic Data Science">
+  <meta property="og:url" content="/homework/03-homework/">
+  <meta property="og:title" content="Visualization fundamentals | Introduction to Geographic Data Science">
+  <meta property="og:description" content="Contents  Session Outcomes Introduction Task 1: Describe and evaluate Task 2: Reproduce  Histograms faceted by region Scatterplots with multiple encodings  Task 3: Create a map References   Session Outcomes By the end of this homework session you should be able to:
+  Formally describe data graphics according to their visual encoding. Reproduce graphics by writing ggplot2 specifications. Combine dplyr and conditional statements to prep data for plotting."><meta property="og:image" content="/media/vis-for-gds.png">
+  <meta property="twitter:image" content="/media/vis-for-gds.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2022-05-23T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2022-06-24T22:06:32&#43;01:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  <link rel="shortcut icon" href="../../favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../../img/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../img/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../img/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../img/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../img/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../img/apple-touch-icon-152x152.png" />
+  <link rel="icon" type="image/png" href="../../img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../../img/favicon-16x16.png" sizes="16x16" />
+  <meta name="application-name" content="Summer School in Computational Social Science: Introduction to Geographic Data Science" />
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta name="msapplication-TileImage" content="/img/mstile-144x144.png" />
+
+
+  <title>Visualization fundamentals | Introduction to Geographic Data Science</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70"
+    data-target="#TableOfContents"
+    >
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="../../">Introduction to Geographic Data Science</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="../../">Introduction to Geographic Data Science</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-end" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../syllabus/"><span>Syllabus</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../schedule/"><span>Schedule</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../reading/"><span>Reading</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../class/"><span>Class</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="../../homework/"><span>Homework</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="../../useful/"><span>Useful</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+            
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="https://vis-for-gds.slack.com" target="_blank" rel="noopener"><span><i class="fab fa-slack"></i></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+
+    
+
+<div class="container-fluid docs">
+    <div class="row flex-xl-nowrap">
+        <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+            
+
+
+
+
+
+  
+    
+  
+
+
+
+
+<form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-3" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <span><i class="fas fa-bars"></i></span>
+  </button>
+
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+
+  
+  
+  
+    
+  
+
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="../../homework/">Overview</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="../../homework/">Homework for sessions</a>
+      </li>
+
+      
+    </ul>
+    
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="../../homework/01-homework/">Homework</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="../../homework/01-homework/">1: Introduction</a>
+      </li>
+
+      
+      <li >
+        <a href="../../homework/02-homework/">2: Data fundamentals</a>
+      </li>
+
+      
+      <li class="active">
+        <a href="../../homework/03-homework/">3: Visualization fundamentals</a>
+      </li>
+
+      
+      <li >
+        <a href="../../homework/04-homework/">4: Exploratory data analysis</a>
+      </li>
+
+      
+      <li >
+        <a href="../../homework/05-homework/">5: Exploring spatial networks</a>
+      </li>
+
+      
+      <li >
+        <a href="../../homework/06-homework/">6: Model building 1</a>
+      </li>
+
+      
+      <li >
+        <a href="../../homework/07-homework/">7: Model building 2</a>
+      </li>
+
+      
+      <li >
+        <a href="../../homework/08-homework/">8: Uncertainty analysis</a>
+      </li>
+
+      
+      <li >
+        <a href="../../homework/09-homework/">9: Communication and storytelling</a>
+      </li>
+
+      
+    </ul>
+    
+
+  </div>
+  
+  
+</nav>
+
+        </div>
+
+        
+
+        <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+            <article class="article">
+
+                <div class="docs-article-container">
+                    <h1>Visualization fundamentals</h1>
+
+                    
+
+                    
+
+                    
+                    <div class="due-date p-2 mb-3 bg-secondary text-white">
+                        Materials from class on Monday, May 23, 2022
+                    </div>
+                    
+
+                    <div class="article-style">
+                        
+<!-- BLOGDOWN-HEAD -->
+<script src="../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#session-outcomes">Session Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#task-1-describe-and-evaluate">Task 1: Describe and evaluate</a></li>
+<li><a href="#task-2-reproduce">Task 2: Reproduce</a>
+<ul>
+<li><a href="#histograms-faceted-by-region">Histograms faceted by region</a></li>
+<li><a href="#scatterplots-with-multiple-encodings">Scatterplots with multiple encodings</a></li>
+</ul></li>
+<li><a href="#task-3-create-a-map">Task 3: Create a map</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+
+<div id="session-outcomes" class="section level2">
+<h2>Session Outcomes</h2>
+<p>By the end of this homework session you should be able to:</p>
+<p><div class="alert alert-objective">
+  <div>
+    <ul>
+<li><input checked="" disabled="" type="checkbox"> Formally describe data graphics according to their visual encoding.</li>
+<li><input checked="" disabled="" type="checkbox"> Reproduce graphics by writing <code>ggplot2</code> specifications.</li>
+<li><input checked="" disabled="" type="checkbox"> Combine <code>dplyr</code> and conditional statements to prep data for plotting.</li>
+</ul>
+
+  </div>
+</div>
+</p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This homework requires you to apply the concepts and skills developed in the class session on <a href="../../class/03-class/">visualization fundamentals</a>. Do complete each of the tasks and be sure to save your work as this homework will be submitted as part of your portfolio for Assignment 1.</p>
+</div>
+<div id="task-1-describe-and-evaluate" class="section level2">
+<h2>Task 1: Describe and evaluate</h2>
+<div class="figure"><span style="display:block;" id="fig:spoke-map"></span>
+<img src="../../class/03-class_files/spoke-map.png" alt="Map of Butler Con-Lab Swing in 2019 General Election." width="100%" />
+<p class="caption">
+Figure 1: Map of Butler Con-Lab Swing in 2019 General Election.
+</p>
+</div>
+<p>Complete the description table below identifying each <strong>data item</strong> that is encoded along with its <strong>measurement level</strong>, <strong>visual mark</strong> and <strong>visual channel</strong> and the effectiveness rank, according to <span class="citation">Munzner (<a href="#ref-munzner_visualization_2014" role="doc-biblioref">2014</a>)</span>, of this encoding.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="19%" />
+<col width="22%" />
+<col width="21%" />
+<col width="20%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data item</th>
+<th>Measurement level</th>
+<th>Visual mark</th>
+<th>Visual channel</th>
+<th>Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>location</code></td>
+<td><enter here></td>
+<td><enter here></td>
+<td><enter here></td>
+<td><enter here></td>
+</tr>
+<tr class="even">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+<tr class="odd">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+<tr class="even">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+<tr class="odd">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+<tr class="even">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="task-2-reproduce" class="section level2">
+<h2>Task 2: Reproduce</h2>
+<div id="histograms-faceted-by-region" class="section level3">
+<h3>Histograms faceted by region</h3>
+<p>Write some code for reproducing something similar to the graphic below – a set of histograms of the Swing variable, faceted by region. Place your code into the <a href="../../homework/03-homework_files/03-template.Rmd"><i class="fab fa-r-project"></i> 03-template.Rmd</a> file for this session.</p>
+<pre class="r"><code>#######################
+# Enter your code in the chunk provided.
+######################</code></pre>
+<ul>
+<li><a href="https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots">Save your plot</a> as a <code>.png</code> file and insert the file as a Figure into your <code>.Rmd</code> document (<a href="https://rmd4sci.njtierney.com/figures-tables-captions-.html">guidance here</a>).</li>
+</ul>
+<div class="figure"><span style="display:block;" id="fig:hist-region"></span>
+<img src="../../class/03-class_files/hist-region.png" alt="Histograms of Swing variable, grouped by region." width="100%" />
+<p class="caption">
+Figure 2: Histograms of Swing variable, grouped by region.
+</p>
+</div>
+</div>
+<div id="scatterplots-with-multiple-encodings" class="section level3">
+<h3>Scatterplots with multiple encodings</h3>
+<p>Write some code for reproducing something similar to the graphic below – a scatterplot comparing 2017 and 2019 vote shares for Labour. Be sure to include <strong>every</strong> encoding as it appears in the graphic (e.g. <code>shape</code> and <code>alpha</code> according to whether constituencies flipped allegiance). Hint: you may need to use a <strong>conditional statement</strong> to generate a variable for emphasising constituencies that flipped parties between 2017 and 2019. Place your code into the <a href="../../homework/03-homework_files/03-template.Rmd"><i class="fab fa-r-project"></i> 03-template.Rmd</a> file for this session.</p>
+<pre class="r"><code>#######################
+# Enter your code in the chunk provided.
+######################</code></pre>
+<ul>
+<li><a href="https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots">Save your plot</a> as a <code>.png</code> file and insert the file as a Figure into your <code>.Rmd</code> document (<a href="https://rmd4sci.njtierney.com/figures-tables-captions-.html">guidance here</a>).</li>
+</ul>
+<div class="figure"><span style="display:block;" id="fig:scatters-lab"></span>
+<img src="../../class/03-class_files/scatters-lab.png" alt="Plots of 2019 versus 2017 vote shares." width="100%" />
+<p class="caption">
+Figure 3: Plots of 2019 versus 2017 vote shares.
+</p>
+</div>
+</div>
+</div>
+<div id="task-3-create-a-map" class="section level2">
+<h2>Task 3: Create a map</h2>
+<p>Write some code for reproducing something similar to the graphic below – a map of the estimated Leave:Remain vote margin by Parliamentary Constituency. Note that I am using a <a href="https://colorbrewer2.org/#type=diverging&amp;scheme=BrBG&amp;n=3">diverging</a> colour scheme here to distinguish whether the Constituency was majority Leave and Remain – brown or green – and also the <em>size</em> of that majority – the darker the colour, the larger the majority.</p>
+<p>Place your code into the <a href="../../homework/03-homework_files/03-template.Rmd"><i class="fab fa-r-project"></i> 03-template.Rmd</a> file for this session.</p>
+<pre class="r"><code>#######################
+# Enter your code in the chunk provided.
+######################</code></pre>
+<ul>
+<li><a href="https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots">Save your plot</a> as a <code>.png</code> file and insert the file as a Figure into your <code>.Rmd</code> document (<a href="https://rmd4sci.njtierney.com/figures-tables-captions-.html">guidance here</a>).</li>
+</ul>
+<div class="figure"><span style="display:block;" id="fig:referendum-map"></span>
+<img src="../../class/03-class_files/referendum-map.png" alt="Map of 2016 EU Referendum vote, estimated by Parliamentary Constituency in GB." width="100%" />
+<p class="caption">
+Figure 4: Map of 2016 EU Referendum vote, estimated by Parliamentary Constituency in GB.
+</p>
+</div>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-munzner_visualization_2014" class="csl-entry">
+Munzner, T. 2014. <em>Visualization Analysis and Design</em>. AK Peters Visualization Series. Boca Raton, FL: CRC Press.
+</div>
+</div>
+</div>
+
+                    </div>
+
+                    
+
+
+
+                    
+                </div>
+
+                <div class="body-footer">
+                    <p> Fri, 24 Jun 2022</p>
+
+                    
+
+
+
+
+
+                    
+
+
+
+                </div>
+
+            </article>
+
+            <footer>
+    <hr>
+
+    <div class="row course-info">
+        <div class="col-md-7">
+            <p>
+                <strong>Summer School in Computational Social Science: Introduction to Geographic Data Science (July 2022)</strong><br>
+
+                <a href="https://www.liverpool.ac.uk" target="_blank" rel="noopener">University of Liverpool</a> &emsp;&emsp;
+                <a href="https://www.liverpool.ac.uk/geography-and-planning/" target="_blank" rel="noopener">School of Geography and Planning</a>
+            </p>
+
+            <p>
+                <a href="http://www.franciscorowe.com/" target="_blank" rel="noopener"><i class="fas fa-user"></i>
+                    Francisco Rowe</a> &emsp;&emsp;
+                <a href="mailto:f.rowe-gonzalez@liverpool.ac.uk"><i class="fas fa-envelope"></i>
+                    f.rowe-gonzalez@liverpool.ac.uk</a>
+            </p>
+
+            <p>
+                <i class="far fa-calendar-alt"></i> 1 &emsp;&emsp;
+                <i class="far fa-clock"></i> TBC <br>
+                <i class="fas fa-university"></i> Groningen, The Netherlands
+            </p>
+        </div>
+
+        <div class="col-md-5 credits">
+            <p>All content licensed under a <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.</p>
+            
+            <p>Content <i class="fab fa-creative-commons"></i> 2022 <a href="http://www.franciscorowe.com/" target="_blank" rel="noopener">Francisco Rowe</a></p>                    
+            
+            <p><a href="https://github.com/fcorowe/intro-gds" target="_blank" rel="noopener"><i class="fab fa-github"></i> View the source at GitHub.</a></p>
+        </div>
+    </div>
+</footer>
+
+
+        </main>
+    </div>
+</div>
+
+        
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script src="../../en-uk/js/wowchemy.min.abf0df1802927998e37dcf3cf6aa05de.js"></script>
+
+    
+
+
+
+
+
+
+    
+    
+
+    
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> 
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> 
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

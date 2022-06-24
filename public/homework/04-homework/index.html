@@ -37,10 +37,11 @@
   
     
   
-  <meta name="description" content="Introduction to Geographic Data Science in R">
+  <meta name="description" content="Contents  Session Outcomes Introduction Visualization design challenge References   Session Outcomes By the end of this homework session you should be able to:
+  Write ggplot2 specifications of your own that use colour and layout to support summary and comparison. Formally describe data graphics according to their visual encoding. Identify visual (and computational) techniques for supporting comparison.     Introduction This homework requires you to apply the concepts and skills developed in the class session on exploratory data anlsysis.">
 
   
-  <link rel="alternate" hreflang="en-us" href="../class/">
+  <link rel="alternate" hreflang="en-us" href="../../homework/04-homework/">
 
   
 
@@ -69,7 +70,7 @@
   
   
   
-  <script src="../js/mathjax-config.js"></script>
+  <script src="../../js/mathjax-config.js"></script>
   
 
   
@@ -244,7 +245,7 @@
   
   
   
-  <link rel="stylesheet" href="../css/wowchemy.dd269ef766d14a5f3446f7ad8c8a19cc.css">
+  <link rel="stylesheet" href="../../css/wowchemy.dd269ef766d14a5f3446f7ad8c8a19cc.css">
 
   
 
@@ -260,17 +261,15 @@
   
 
   
-  <link rel="alternate" href="../class/index.xml" type="application/rss+xml" title="Introduction to Geographic Data Science">
-  
 
   
-  <link rel="manifest" href="../index.webmanifest">
+  <link rel="manifest" href="../../index.webmanifest">
   
 
-  <link rel="icon" type="image/png" href="../images/icon_huc37306104a4011cad6e5f9118ea6dd2c_187381_32x32_fill_lanczos_center_2.png">
-  <link rel="apple-touch-icon" type="image/png" href="../images/icon_huc37306104a4011cad6e5f9118ea6dd2c_187381_180x180_fill_lanczos_center_2.png">
+  <link rel="icon" type="image/png" href="../../images/icon_huc37306104a4011cad6e5f9118ea6dd2c_187381_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../images/icon_huc37306104a4011cad6e5f9118ea6dd2c_187381_180x180_fill_lanczos_center_2.png">
 
-  <link rel="canonical" href="../class/">
+  <link rel="canonical" href="../../homework/04-homework/">
 
   
   
@@ -288,37 +287,43 @@
   <meta property="twitter:creator" content="@fcorowe">
   
   <meta property="og:site_name" content="Introduction to Geographic Data Science">
-  <meta property="og:url" content="/class/">
-  <meta property="og:title" content="Class sessions | Introduction to Geographic Data Science">
-  <meta property="og:description" content="Introduction to Geographic Data Science in R"><meta property="og:image" content="/media/vis-for-gds.png">
+  <meta property="og:url" content="/homework/04-homework/">
+  <meta property="og:title" content="Exploratory data analysis | Introduction to Geographic Data Science">
+  <meta property="og:description" content="Contents  Session Outcomes Introduction Visualization design challenge References   Session Outcomes By the end of this homework session you should be able to:
+  Write ggplot2 specifications of your own that use colour and layout to support summary and comparison. Formally describe data graphics according to their visual encoding. Identify visual (and computational) techniques for supporting comparison.     Introduction This homework requires you to apply the concepts and skills developed in the class session on exploratory data anlsysis."><meta property="og:image" content="/media/vis-for-gds.png">
   <meta property="twitter:image" content="/media/vis-for-gds.png"><meta property="og:locale" content="en-us">
   
     
+      <meta property="article:published_time" content="2022-05-30T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2022-06-24T22:06:32&#43;01:00">
   
 
   
 
 
 
+  
+
 
   
 
 
-  <link rel="shortcut icon" href="../favicon.ico" />
-  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../img/apple-touch-icon-57x57.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../img/apple-touch-icon-114x114.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../img/apple-touch-icon-72x72.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../img/apple-touch-icon-144x144.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../img/apple-touch-icon-120x120.png" />
-  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../img/apple-touch-icon-152x152.png" />
-  <link rel="icon" type="image/png" href="../img/favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="../img/favicon-16x16.png" sizes="16x16" />
+  <link rel="shortcut icon" href="../../favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="../../img/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../../img/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../../img/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../img/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="../../img/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../img/apple-touch-icon-152x152.png" />
+  <link rel="icon" type="image/png" href="../../img/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../../img/favicon-16x16.png" sizes="16x16" />
   <meta name="application-name" content="Summer School in Computational Social Science: Introduction to Geographic Data Science" />
   <meta name="msapplication-TileColor" content="#FFFFFF" />
   <meta name="msapplication-TileImage" content="/img/mstile-144x144.png" />
 
 
-  <title>Class sessions | Introduction to Geographic Data Science</title>
+  <title>Exploratory data analysis | Introduction to Geographic Data Science</title>
 
 </head>
 
@@ -349,7 +354,7 @@
 
     
     <div class="d-none d-lg-inline-flex">
-      <a class="navbar-brand" href="../">Introduction to Geographic Data Science</a>
+      <a class="navbar-brand" href="../../">Introduction to Geographic Data Science</a>
     </div>
     
 
@@ -362,7 +367,7 @@
 
     
     <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
-      <a class="navbar-brand" href="../">Introduction to Geographic Data Science</a>
+      <a class="navbar-brand" href="../../">Introduction to Geographic Data Science</a>
     </div>
     
 
@@ -398,7 +403,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="../syllabus/"><span>Syllabus</span></a>
+          <a class="nav-link " href="../../syllabus/"><span>Syllabus</span></a>
         </li>
 
         
@@ -428,7 +433,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="../schedule/"><span>Schedule</span></a>
+          <a class="nav-link " href="../../schedule/"><span>Schedule</span></a>
         </li>
 
         
@@ -458,7 +463,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="../reading/"><span>Reading</span></a>
+          <a class="nav-link " href="../../reading/"><span>Reading</span></a>
         </li>
 
         
@@ -488,7 +493,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link  active" href="../class/"><span>Class</span></a>
+          <a class="nav-link " href="../../class/"><span>Class</span></a>
         </li>
 
         
@@ -518,7 +523,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="../homework/"><span>Homework</span></a>
+          <a class="nav-link  active" href="../../homework/"><span>Homework</span></a>
         </li>
 
         
@@ -548,7 +553,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="../useful/"><span>Useful</span></a>
+          <a class="nav-link " href="../../useful/"><span>Useful</span></a>
         </li>
 
         
@@ -615,9 +620,9 @@
     
 
 <div class="container-fluid docs">
-  <div class="row flex-xl-nowrap">
-    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
-      
+    <div class="row flex-xl-nowrap">
+        <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+            
 
 
 
@@ -649,11 +654,11 @@
 
   
   <div class="docs-toc-item">
-    <a class="docs-toc-link" href="../class/">Overview</a>
+    <a class="docs-toc-link" href="../../homework/">Overview</a>
     <ul class="nav docs-sidenav">
       
-      <li class="active">
-        <a href="../class/">Class sessions</a>
+      <li >
+        <a href="../../homework/">Homework for sessions</a>
       </li>
 
       
@@ -663,51 +668,51 @@
   </div>
   
   <div class="docs-toc-item">
-    <a class="docs-toc-link" href="../class/01-class/">Class</a>
+    <a class="docs-toc-link" href="../../homework/01-homework/">Homework</a>
     <ul class="nav docs-sidenav">
       
       <li >
-        <a href="../class/01-class/">1: Introduction</a>
+        <a href="../../homework/01-homework/">1: Introduction</a>
       </li>
 
       
       <li >
-        <a href="../class/02-class/">2: Data fundamentals</a>
+        <a href="../../homework/02-homework/">2: Data fundamentals</a>
       </li>
 
       
       <li >
-        <a href="../class/03-class/">3: Visualization fundamentals</a>
+        <a href="../../homework/03-homework/">3: Visualization fundamentals</a>
+      </li>
+
+      
+      <li class="active">
+        <a href="../../homework/04-homework/">4: Exploratory data analysis</a>
       </li>
 
       
       <li >
-        <a href="../class/04-class/">4: Visualization for exploratory data analysis</a>
+        <a href="../../homework/05-homework/">5: Exploring spatial networks</a>
       </li>
 
       
       <li >
-        <a href="../class/05-class/">5: Visualization for exploring spatial networks</a>
+        <a href="../../homework/06-homework/">6: Model building 1</a>
       </li>
 
       
       <li >
-        <a href="../class/06-class/">6: Visualization for model building 1</a>
+        <a href="../../homework/07-homework/">7: Model building 2</a>
       </li>
 
       
       <li >
-        <a href="../class/07-class/">7: Visualization for model building 2</a>
+        <a href="../../homework/08-homework/">8: Uncertainty analysis</a>
       </li>
 
       
       <li >
-        <a href="../class/08-class/">8: Visualization for uncertainty analysis</a>
-      </li>
-
-      
-      <li >
-        <a href="../class/09-class/">9: Visualization for communication and storytelling</a>
+        <a href="../../homework/09-homework/">9: Communication and storytelling</a>
       </li>
 
       
@@ -719,54 +724,174 @@
   
 </nav>
 
-    </div>
-
-    
-
-    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
-
-      <article class="article">
-
-        <div class="docs-article-container">
-          <h1>Class sessions</h1>
-
-          <div class="article-style">
-            
-
-
-<p>The materials for each session are posted here. Work your way through the links on the left and complete the associated homeworks.</p>
-
-          </div>
-
-          
-
-
-
-          
         </div>
 
-        <div class="body-footer">
-          <p> Fri, 24 Jun 2022</p>
+        
 
-          
+        <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+            <article class="article">
+
+                <div class="docs-article-container">
+                    <h1>Exploratory data analysis</h1>
+
+                    
+
+                    
+
+                    
+                    <div class="due-date p-2 mb-3 bg-secondary text-white">
+                        Materials from class on Monday, May 30, 2022
+                    </div>
+                    
+
+                    <div class="article-style">
+                        
+<!-- BLOGDOWN-HEAD -->
+<script src="../../rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#session-outcomes">Session Outcomes</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#visualization-design-challenge">Visualization design challenge</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+
+<div id="session-outcomes" class="section level2">
+<h2>Session Outcomes</h2>
+<p>By the end of this homework session you should be able to:</p>
+<p><div class="alert alert-objective">
+  <div>
+    <ul>
+<li><input checked="" disabled="" type="checkbox"> Write ggplot2 specifications of your own that use colour and layout to support summary and comparison.</li>
+<li><input checked="" disabled="" type="checkbox"> Formally describe data graphics according to their visual encoding.</li>
+<li><input checked="" disabled="" type="checkbox"> Identify visual (and computational) techniques for supporting comparison.</li>
+</ul>
+
+  </div>
+</div>
+</p>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This homework requires you to apply the concepts and skills developed in the class session on <a href="../../class/04-class/">exploratory data anlsysis</a>. Do complete the task and be sure to save your work as this homework will be submitted as part of your portfolio for Assignment 1.</p>
+</div>
+<div id="visualization-design-challenge" class="section level2">
+<h2>Visualization design challenge</h2>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:boxplots-class"></span>
+<img src="../../class/04-class_files/boxplot-by-class.png" alt="Boxplots of casualty age by vehicle type and class." width="100%" />
+<p class="caption">
+Figure 1: Boxplots of casualty age by vehicle type and class.
+</p>
+</div>
+<p>This week’s homework is a single visualization design task. Please do not spend too long on this. The aim of this session is to get you to apply some of the technical detail introduced in the session rather than to overly burden you with additional work.</p>
+<p>In the session we discussed visual approaches to summarising within-variable variation in a dataset and later the use of layout and colour for supporting <em>comparison</em> across categories. In Figure <a href="#fig:boxplots-class">1</a> above, boxplots are used to summarise the age distribution of those involved in pedestrian road crashes, comparing the ages of the injured pedestrians, drivers and how this varies by the vehicle types involved.</p>
+<p>Your task is to generate a <em>single</em> data graphic (I would class Figure <a href="#fig:boxplots-class">1</a> as a single graphic) to summarise how casualty age varies by some other interesting combination of categorical variable. For example, you may wish to explore how casualty age varies by injury severity.</p>
+<p>Once you have generated the graphic, save it as a <code>.png</code> file and insert a link to it in the associated code block in the <a href="../../homework/04-homework_files/04-template.Rmd"><i class="fab fa-r-project"></i> 04-template.Rmd</a>. Next, complete the table that asks you to describe your graphic according to its visual encoding. After the table, and using <strong>no more than three sentences</strong>, note how your graphic and any computed values support <em>comparison</em> – e.g. via juxtaposition, superposition and/or direct encoding <span class="citation">(<a href="#ref-gleicher_visual_2011" role="doc-biblioref">Gleicher and Roberts 2011</a>)</span>.</p>
+<ul>
+<li><a href="https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots">Save your plot</a> as a <code>.png</code> file and insert the file as a Figure into your <code>.Rmd</code> document (<a href="https://rmd4sci.njtierney.com/figures-tables-captions-.html">guidance here</a>).</li>
+</ul>
+<pre class="r"><code>#######################
+# Enter your code in the chunk provided.
+######################</code></pre>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="27%" />
+<col width="25%" />
+<col width="24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data item</th>
+<th>Measurement level</th>
+<th>Visual mark</th>
+<th>Visual channel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>location</code></td>
+<td><enter here></td>
+<td><enter here></td>
+<td><enter here></td>
+</tr>
+<tr class="even">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+<tr class="odd">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+<tr class="even">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+<tr class="odd">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+<tr class="even">
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+<td><code>...</code></td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#######################
+# Text here explaining how your graphic, and any computed values, support comparison. No more than three sentences.
+######################</code></pre>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-gleicher_visual_2011" class="csl-entry">
+Gleicher, Albers, M., and J. Roberts. 2011. <span>“Visual Comparison for Information Visualization. Information Visualization.”</span> <em>Information Visualization</em> 10 (4): 289–309.
+</div>
+</div>
+</div>
+
+                    </div>
+
+                    
+
+
+
+                    
+                </div>
+
+                <div class="body-footer">
+                    <p> Fri, 24 Jun 2022</p>
+
+                    
 
 
 
 
 
-          
+                    
 
 
 
+                </div>
 
-          
+            </article>
 
-
-        </div>
-
-      </article>
-
-      <footer>
+            <footer>
     <hr>
 
     <div class="row course-info">
@@ -803,10 +928,9 @@
 </footer>
 
 
-    </main>
-  </div>
+        </main>
+    </div>
 </div>
-
 
         
 
@@ -880,7 +1004,7 @@
     
     
     
-    <script src="../en-uk/js/wowchemy.min.abf0df1802927998e37dcf3cf6aa05de.js"></script>
+    <script src="../../en-uk/js/wowchemy.min.abf0df1802927998e37dcf3cf6aa05de.js"></script>
 
     
 

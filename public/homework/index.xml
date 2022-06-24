@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Homework for sessions | Introduction to Geographic Data Science</title>
+    <link>/homework/</link>
+      <atom:link href="/homework/index.xml" rel="self" type="application/rss+xml" />
+    <description>Homework for sessions</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator>
+    <image>
+      <url>/media/vis-for-gds.png</url>
+      <title>Homework for sessions</title>
+      <link>/homework/</link>
+    </image>
+    
+    <item>
+      <title>Communication and storytelling</title>
+      <link>/homework/09-homework/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
+      <guid>/homework/09-homework/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;../rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Outcomes&lt;/h2&gt;
+&lt;p&gt;There is no formal homework session this time. There is, however, an extensive set of reading that you may wish to consult.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Uncertainty analysis</title>
+      <link>/homework/08-homework/</link>
+      <pubDate>Mon, 27 Jun 2022 00:00:00 +0000</pubDate>
+      <guid>/homework/08-homework/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;../rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Outcomes&lt;/h2&gt;
+&lt;p&gt;There is no formal homework session this time. There is, however, an extensive set of reading that you may wish to consult.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Model building 2</title>
+      <link>/homework/07-homework/</link>
+      <pubDate>Mon, 20 Jun 2022 00:00:00 +0000</pubDate>
+      <guid>/homework/07-homework/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;../rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Outcomes&lt;/h2&gt;
+&lt;p&gt;There is no formal homework session this time. You may wish to consult &lt;a href=&#34;https://www.roger-beecham.com/data-science-practicals/&#34;&gt;these sessions&lt;/a&gt; on Geographically-Weighted statistics that uses the &lt;a href=&#34;http://gwr.maynoothuniversity.ie/&#34;&gt;&lt;code&gt;GWModel&lt;/code&gt;&lt;/a&gt; to explore how associations with Leave vary continuously over space.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Model building 1</title>
+      <link>/homework/06-homework/</link>
+      <pubDate>Mon, 13 Jun 2022 00:00:00 +0000</pubDate>
+      <guid>/homework/06-homework/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;../rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;h2&gt;Contents&lt;/h2&gt;
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#session-outcomes&#34;&gt;Session Outcomes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-1-calculate-and-plot&#34;&gt;Task 1: Calculate and plot&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-2-explore-model-and-evaluate&#34;&gt;Task 2: Explore, model and evaluate&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Outcomes&lt;/h2&gt;
+&lt;p&gt;By the end of this homework session you should be able to:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Calculate grouped statistics and use those statistics for ordering plot outputs.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Extract parameters from linear regression models and explore their structure graphically.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Make use of functional programming techniques for working over datasets.&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This homework requires you to apply the concepts and skills developed in the class session on &lt;a href=&#34;../class/06-class/&#34;&gt;model building 1&lt;/a&gt;. Do complete the task and be sure to save your work as it will be submitted as part of your portfolio for Assignment 1.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-1-calculate-and-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 1: Calculate and plot&lt;/h2&gt;
+&lt;p&gt;Recreate the &lt;a href=&#34;../class/06-class/#quantifying-and-exploring-co-variation-1&#34;&gt;scatterplots in the class materials&lt;/a&gt; displaying the Leave against candidate explanatory variable – faceted by each explanatory variable and ordered by correlation coefficient.&lt;/p&gt;
+&lt;p&gt;You will need to use the &lt;code&gt;data_for_models&lt;/code&gt; data frame. First, calculate correlation coefficients for each explanatory variable, then generate a vector of variable names, stored in an object, ordered according to correlation coefficient. To help you out, I’ve provided a template of &lt;code&gt;dplyr&lt;/code&gt; commands that you will want to use and some indicative output. In order to summarise over each explanatory variable in a &lt;code&gt;group_by()&lt;/code&gt;, you first need to &lt;code&gt;pivot_longer()&lt;/code&gt; so that all explanatory variables are represented in a single column. Of course you are welcome to take a different approach.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Place your code for calculating correlation coefficients by explanatory
+# variable here.
+
+expl_cors &amp;lt;- data_for_models %&amp;gt;%
+  pivot_longer(...) %&amp;gt;%
+  group_by(...) %&amp;gt;%
+  summarise(...) %&amp;gt;%
+  arrange(...)
+
+expl_cors
+# # A tibble: 10 x 2
+#    expl_var           cor
+#    &amp;lt;chr&amp;gt;            &amp;lt;dbl&amp;gt;
+#  1 degree          -0.772
+#  2 professional    -0.565
+#  3 younger         -0.538
+#  4 eu_born         -0.483
+#  5 no_car          -0.396
+#  6 white            0.411
+#  7 own_home         0.430
+#  8 christian        0.487
+#  9 not_good_health  0.562
+# 10 heavy_industry   0.710
+
+# You will then want to then extract a vector of ordered
+# variable names as an object.
+
+expl_cors_order
+# [1] &amp;quot;degree&amp;quot;          &amp;quot;professional&amp;quot;    &amp;quot;younger&amp;quot;         &amp;quot;eu_born&amp;quot;
+# [5] &amp;quot;no_car&amp;quot;          &amp;quot;white&amp;quot;           &amp;quot;own_home&amp;quot;        &amp;quot;christian&amp;quot;
+# [9] &amp;quot;not_good_health&amp;quot; &amp;quot;heavy_industry&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now generate the scatterplots with Leave against each explanatory variable, faceted by explanatory variable and with the facets ordered according to correlation coefficient.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#######################
+# Enter your code in the chunk provided.
+######################&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots&#34;&gt;Save your plot&lt;/a&gt; as a &lt;code&gt;.png&lt;/code&gt; file and insert the file as a Figure into your &lt;code&gt;.Rmd&lt;/code&gt; document (&lt;a href=&#34;https://rmd4sci.njtierney.com/figures-tables-captions-.html&#34;&gt;guidance here&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-2-explore-model-and-evaluate&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 2: Explore, model and evaluate&lt;/h2&gt;
+&lt;p&gt;A variable that is intuitively relevant to this study, but that behaves counter to expectation is &lt;em&gt;EU-born&lt;/em&gt; – the proportion of residents in a constituency born outside of the UK but within the EU. In the &lt;a href=&#34;../class/06-class/#techniques&#34;&gt;technical&lt;/a&gt; element to the session, you generated a data frame of model outputs regressing each candidate explanatory variable on Leave. This is stored in &lt;code&gt;single_model_fits&lt;/code&gt;. The second set of &lt;a href=&#34;class/06-class/#modelling-for-co-variation-1&#34;&gt;scatterplots&lt;/a&gt; use information contained in &lt;code&gt;single_model_fits&lt;/code&gt; to colour observations according to their residuals from each of these model objects. The scatterplot for &lt;em&gt;EU-born&lt;/em&gt; is interesting – some observations with very large negative coefficients and some with very large positive coefficients.&lt;/p&gt;
+&lt;p&gt;Extract the residuals from the &lt;em&gt;EU-born&lt;/em&gt; model object contained in &lt;code&gt;single_model_fits&lt;/code&gt;. Then map it in a similar way to the &lt;a href=&#34;../class/06-class/#exploring-bias-1&#34;&gt;map-lineup&lt;/a&gt; – that is, a red-blue colour scheme centred on 0 (not the line-up itself).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#######################
+# Enter your code in the chunk provided.
+######################&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots&#34;&gt;Save your plot&lt;/a&gt; as a &lt;code&gt;.png&lt;/code&gt; file and insert the file as a Figure into your &lt;code&gt;.Rmd&lt;/code&gt; document (&lt;a href=&#34;https://rmd4sci.njtierney.com/figures-tables-captions-.html&#34;&gt;guidance here&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What do you notice about the geography of these residuals? Make a few short observations in the template provided.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Insight 1
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Enter your answer in the template&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Insight 2
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Enter your answer in the template&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Insight 3
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Enter your answer in the template&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Exploring spatial networks</title>
+      <link>/homework/05-homework/</link>
+      <pubDate>Mon, 06 Jun 2022 00:00:00 +0000</pubDate>
+      <guid>/homework/05-homework/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;../rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;h2&gt;Contents&lt;/h2&gt;
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#session-outcomes&#34;&gt;Session Outcomes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#visualization-interpretation-challenge&#34;&gt;Visualization interpretation challenge&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#task-1-read&#34;&gt;Task 1: Read&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-2-interpret&#34;&gt;Task 2: Interpret&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Outcomes&lt;/h2&gt;
+&lt;p&gt;By the end of this homework session you should be able to:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Interpret non-standard data graphics by ‘looking-up’ specific values/trends.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Infer patterns from non-standard data graphics.&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This homework requires you to apply the concepts and skills developed in the class session on &lt;a href=&#34;../class/05-class/&#34;&gt;exploring spatial networks&lt;/a&gt;. Do complete the task and be sure to save your work as it will be submitted as part of your portfolio for Assignment 1.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualization-interpretation-challenge&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualization interpretation challenge&lt;/h2&gt;
+&lt;p&gt;You may be pleased to know that this week’s homework does not require you to write a single line of code. Instead, it is designed to get you reading and interpreting data graphics. &lt;a href=&#34;https://xeno.graphics/od-map/&#34;&gt;OD Maps&lt;/a&gt; are a good candidate here as they have been catalogued by &lt;a href=&#34;https://www.maartenlambrechts.com&#34;&gt;Marteen Lambrechts&lt;/a&gt; as a Xenographic – &lt;em&gt;Weird but (sometimes) useful&lt;/em&gt;. I’d add that within the list of other &lt;a href=&#34;https://xeno.graphics&#34;&gt;Xenographics&lt;/a&gt;, OD Maps are &lt;em&gt;Not that weird and often useful&lt;/em&gt;. Nevertheless, they do take some interpretation.&lt;/p&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: left&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:mode-analysis-od-map&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../class/05-class_files/od-maps-mode-homework.png&#34; alt=&#34;OD map of commutes between London boroughs&#34; width=&#34;90%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: OD map of commutes between London boroughs
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-1-read&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Task 1: Read&lt;/h3&gt;
+&lt;p&gt;For a clear explanation of OD maps and interesting application, read &lt;span class=&#34;citation&#34;&gt;Slingsby, Kelly, and Dykes (&lt;a href=&#34;#ref-slingsby_od_2014&#34; role=&#34;doc-biblioref&#34;&gt;2014&lt;/a&gt;)&lt;/span&gt;’s very short paper: &lt;a href=&#34;https://openaccess.city.ac.uk/id/eprint/8483/&#34;&gt;&lt;em&gt;OD maps for showing changes in Irish female migration between 1851 and 1911&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-2-interpret&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Task 2: Interpret&lt;/h3&gt;
+&lt;p&gt;Considering the OD maps in Figure &lt;a href=&#34;#fig:mode-analysis-od-map&#34;&gt;1&lt;/a&gt;, try to answer the following tasks. Write your answers in the &lt;a href=&#34;../homework/04-homework_files/05-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 05-template.Rmd&lt;/a&gt; file.&lt;/p&gt;
+&lt;div id=&#34;look-up-tasks&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Look-up tasks&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;For jobs filled in the City of London (CTY), from which borough does largest number of workers commute using public transport?
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Enter your answer in the template&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Which borough in London has the largest &lt;em&gt;absolute&lt;/em&gt; number living and working in that borough (and travelling to work by public transport)?
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Enter your answer in the template&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;For workers living in Barnet (BRN), what are the top 3 boroughs to which they commute?
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Enter your answer in the template&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;insights&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Insights&lt;/h4&gt;
+&lt;p&gt;Identify three isights that can be made around the geography of commuting patterns in London from reading any/each of the graphics in Figure &lt;a href=&#34;#fig:mode-analysis-od-map&#34;&gt;1&lt;/a&gt;. Briefly identify which graphic(s) led to the insight and how. Please do not spend too long over this activity – the idea is to encourage you to make inferences from graphics, as you will do in your coursework.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Insight 1
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Enter your answer in the template&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Insight 2
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Enter your answer in the template&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Insight 3
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Enter your answer in the template&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references csl-bib-body hanging-indent&#34;&gt;
+&lt;div id=&#34;ref-slingsby_od_2014&#34; class=&#34;csl-entry&#34;&gt;
+Slingsby, A., M. Kelly, and J. Dykes. 2014. &lt;span&gt;“&lt;span class=&#34;nocase&#34;&gt;OD maps for showing changes inIrish female migration between 1851 and 1911&lt;/span&gt;.”&lt;/span&gt; &lt;em&gt;&lt;span&gt;Environment and Planning A: Economy and Space&lt;/span&gt;&lt;/em&gt; 46 (12): 2795--2797.
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Exploratory data analysis</title>
+      <link>/homework/04-homework/</link>
+      <pubDate>Mon, 30 May 2022 00:00:00 +0000</pubDate>
+      <guid>/homework/04-homework/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;../rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;h2&gt;Contents&lt;/h2&gt;
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#session-outcomes&#34;&gt;Session Outcomes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#visualization-design-challenge&#34;&gt;Visualization design challenge&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Outcomes&lt;/h2&gt;
+&lt;p&gt;By the end of this homework session you should be able to:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Write ggplot2 specifications of your own that use colour and layout to support summary and comparison.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Formally describe data graphics according to their visual encoding.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Identify visual (and computational) techniques for supporting comparison.&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This homework requires you to apply the concepts and skills developed in the class session on &lt;a href=&#34;../class/04-class/&#34;&gt;exploratory data anlsysis&lt;/a&gt;. Do complete the task and be sure to save your work as this homework will be submitted as part of your portfolio for Assignment 1.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualization-design-challenge&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualization design challenge&lt;/h2&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: left&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:boxplots-class&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../class/04-class_files/boxplot-by-class.png&#34; alt=&#34;Boxplots of casualty age by vehicle type and class.&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Boxplots of casualty age by vehicle type and class.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;This week’s homework is a single visualization design task. Please do not spend too long on this. The aim of this session is to get you to apply some of the technical detail introduced in the session rather than to overly burden you with additional work.&lt;/p&gt;
+&lt;p&gt;In the session we discussed visual approaches to summarising within-variable variation in a dataset and later the use of layout and colour for supporting &lt;em&gt;comparison&lt;/em&gt; across categories. In Figure &lt;a href=&#34;#fig:boxplots-class&#34;&gt;1&lt;/a&gt; above, boxplots are used to summarise the age distribution of those involved in pedestrian road crashes, comparing the ages of the injured pedestrians, drivers and how this varies by the vehicle types involved.&lt;/p&gt;
+&lt;p&gt;Your task is to generate a &lt;em&gt;single&lt;/em&gt; data graphic (I would class Figure &lt;a href=&#34;#fig:boxplots-class&#34;&gt;1&lt;/a&gt; as a single graphic) to summarise how casualty age varies by some other interesting combination of categorical variable. For example, you may wish to explore how casualty age varies by injury severity.&lt;/p&gt;
+&lt;p&gt;Once you have generated the graphic, save it as a &lt;code&gt;.png&lt;/code&gt; file and insert a link to it in the associated code block in the &lt;a href=&#34;../homework/04-homework_files/04-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 04-template.Rmd&lt;/a&gt;. Next, complete the table that asks you to describe your graphic according to its visual encoding. After the table, and using &lt;strong&gt;no more than three sentences&lt;/strong&gt;, note how your graphic and any computed values support &lt;em&gt;comparison&lt;/em&gt; – e.g. via juxtaposition, superposition and/or direct encoding &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-gleicher_visual_2011&#34; role=&#34;doc-biblioref&#34;&gt;Gleicher and Roberts 2011&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots&#34;&gt;Save your plot&lt;/a&gt; as a &lt;code&gt;.png&lt;/code&gt; file and insert the file as a Figure into your &lt;code&gt;.Rmd&lt;/code&gt; document (&lt;a href=&#34;https://rmd4sci.njtierney.com/figures-tables-captions-.html&#34;&gt;guidance here&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#######################
+# Enter your code in the chunk provided.
+######################&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col width=&#34;22%&#34; /&gt;
+&lt;col width=&#34;27%&#34; /&gt;
+&lt;col width=&#34;25%&#34; /&gt;
+&lt;col width=&#34;24%&#34; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;Data item&lt;/th&gt;
+&lt;th&gt;Measurement level&lt;/th&gt;
+&lt;th&gt;Visual mark&lt;/th&gt;
+&lt;th&gt;Visual channel&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;location&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;enter here&gt;&lt;/td&gt;
+&lt;td&gt;&lt;enter here&gt;&lt;/td&gt;
+&lt;td&gt;&lt;enter here&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#######################
+# Text here explaining how your graphic, and any computed values, support comparison. No more than three sentences.
+######################&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references csl-bib-body hanging-indent&#34;&gt;
+&lt;div id=&#34;ref-gleicher_visual_2011&#34; class=&#34;csl-entry&#34;&gt;
+Gleicher, Albers, M., and J. Roberts. 2011. &lt;span&gt;“Visual Comparison for Information Visualization. Information Visualization.”&lt;/span&gt; &lt;em&gt;Information Visualization&lt;/em&gt; 10 (4): 289–309.
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Visualization fundamentals</title>
+      <link>/homework/03-homework/</link>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate>
+      <guid>/homework/03-homework/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;../rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;h2&gt;Contents&lt;/h2&gt;
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#session-outcomes&#34;&gt;Session Outcomes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-1-describe-and-evaluate&#34;&gt;Task 1: Describe and evaluate&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-2-reproduce&#34;&gt;Task 2: Reproduce&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#histograms-faceted-by-region&#34;&gt;Histograms faceted by region&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#scatterplots-with-multiple-encodings&#34;&gt;Scatterplots with multiple encodings&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-3-create-a-map&#34;&gt;Task 3: Create a map&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Outcomes&lt;/h2&gt;
+&lt;p&gt;By the end of this homework session you should be able to:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Formally describe data graphics according to their visual encoding.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Reproduce graphics by writing &lt;code&gt;ggplot2&lt;/code&gt; specifications.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Combine &lt;code&gt;dplyr&lt;/code&gt; and conditional statements to prep data for plotting.&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This homework requires you to apply the concepts and skills developed in the class session on &lt;a href=&#34;../class/03-class/&#34;&gt;visualization fundamentals&lt;/a&gt;. Do complete each of the tasks and be sure to save your work as this homework will be submitted as part of your portfolio for Assignment 1.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-1-describe-and-evaluate&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 1: Describe and evaluate&lt;/h2&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:spoke-map&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../class/03-class_files/spoke-map.png&#34; alt=&#34;Map of Butler Con-Lab Swing in 2019 General Election.&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Map of Butler Con-Lab Swing in 2019 General Election.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Complete the description table below identifying each &lt;strong&gt;data item&lt;/strong&gt; that is encoded along with its &lt;strong&gt;measurement level&lt;/strong&gt;, &lt;strong&gt;visual mark&lt;/strong&gt; and &lt;strong&gt;visual channel&lt;/strong&gt; and the effectiveness rank, according to &lt;span class=&#34;citation&#34;&gt;Munzner (&lt;a href=&#34;#ref-munzner_visualization_2014&#34; role=&#34;doc-biblioref&#34;&gt;2014&lt;/a&gt;)&lt;/span&gt;, of this encoding.&lt;/p&gt;
+&lt;table style=&#34;width:100%;&#34;&gt;
+&lt;colgroup&gt;
+&lt;col width=&#34;19%&#34; /&gt;
+&lt;col width=&#34;22%&#34; /&gt;
+&lt;col width=&#34;21%&#34; /&gt;
+&lt;col width=&#34;20%&#34; /&gt;
+&lt;col width=&#34;16%&#34; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;Data item&lt;/th&gt;
+&lt;th&gt;Measurement level&lt;/th&gt;
+&lt;th&gt;Visual mark&lt;/th&gt;
+&lt;th&gt;Visual channel&lt;/th&gt;
+&lt;th&gt;Rank&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;location&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;enter here&gt;&lt;/td&gt;
+&lt;td&gt;&lt;enter here&gt;&lt;/td&gt;
+&lt;td&gt;&lt;enter here&gt;&lt;/td&gt;
+&lt;td&gt;&lt;enter here&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-2-reproduce&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 2: Reproduce&lt;/h2&gt;
+&lt;div id=&#34;histograms-faceted-by-region&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Histograms faceted by region&lt;/h3&gt;
+&lt;p&gt;Write some code for reproducing something similar to the graphic below – a set of histograms of the Swing variable, faceted by region. Place your code into the &lt;a href=&#34;../homework/03-homework_files/03-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 03-template.Rmd&lt;/a&gt; file for this session.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#######################
+# Enter your code in the chunk provided.
+######################&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots&#34;&gt;Save your plot&lt;/a&gt; as a &lt;code&gt;.png&lt;/code&gt; file and insert the file as a Figure into your &lt;code&gt;.Rmd&lt;/code&gt; document (&lt;a href=&#34;https://rmd4sci.njtierney.com/figures-tables-captions-.html&#34;&gt;guidance here&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:hist-region&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../class/03-class_files/hist-region.png&#34; alt=&#34;Histograms of Swing variable, grouped by region.&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 2: Histograms of Swing variable, grouped by region.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;scatterplots-with-multiple-encodings&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Scatterplots with multiple encodings&lt;/h3&gt;
+&lt;p&gt;Write some code for reproducing something similar to the graphic below – a scatterplot comparing 2017 and 2019 vote shares for Labour. Be sure to include &lt;strong&gt;every&lt;/strong&gt; encoding as it appears in the graphic (e.g. &lt;code&gt;shape&lt;/code&gt; and &lt;code&gt;alpha&lt;/code&gt; according to whether constituencies flipped allegiance). Hint: you may need to use a &lt;strong&gt;conditional statement&lt;/strong&gt; to generate a variable for emphasising constituencies that flipped parties between 2017 and 2019. Place your code into the &lt;a href=&#34;../homework/03-homework_files/03-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 03-template.Rmd&lt;/a&gt; file for this session.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#######################
+# Enter your code in the chunk provided.
+######################&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots&#34;&gt;Save your plot&lt;/a&gt; as a &lt;code&gt;.png&lt;/code&gt; file and insert the file as a Figure into your &lt;code&gt;.Rmd&lt;/code&gt; document (&lt;a href=&#34;https://rmd4sci.njtierney.com/figures-tables-captions-.html&#34;&gt;guidance here&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:scatters-lab&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../class/03-class_files/scatters-lab.png&#34; alt=&#34;Plots of 2019 versus 2017 vote shares.&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 3: Plots of 2019 versus 2017 vote shares.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-3-create-a-map&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 3: Create a map&lt;/h2&gt;
+&lt;p&gt;Write some code for reproducing something similar to the graphic below – a map of the estimated Leave:Remain vote margin by Parliamentary Constituency. Note that I am using a &lt;a href=&#34;https://colorbrewer2.org/#type=diverging&amp;amp;scheme=BrBG&amp;amp;n=3&#34;&gt;diverging&lt;/a&gt; colour scheme here to distinguish whether the Constituency was majority Leave and Remain – brown or green – and also the &lt;em&gt;size&lt;/em&gt; of that majority – the darker the colour, the larger the majority.&lt;/p&gt;
+&lt;p&gt;Place your code into the &lt;a href=&#34;../homework/03-homework_files/03-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 03-template.Rmd&lt;/a&gt; file for this session.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#######################
+# Enter your code in the chunk provided.
+######################&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://r4ds.had.co.nz/graphics-for-communication.html#saving-your-plots&#34;&gt;Save your plot&lt;/a&gt; as a &lt;code&gt;.png&lt;/code&gt; file and insert the file as a Figure into your &lt;code&gt;.Rmd&lt;/code&gt; document (&lt;a href=&#34;https://rmd4sci.njtierney.com/figures-tables-captions-.html&#34;&gt;guidance here&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:referendum-map&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;../class/03-class_files/referendum-map.png&#34; alt=&#34;Map of 2016 EU Referendum vote, estimated by Parliamentary Constituency in GB.&#34; width=&#34;100%&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 4: Map of 2016 EU Referendum vote, estimated by Parliamentary Constituency in GB.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references csl-bib-body hanging-indent&#34;&gt;
+&lt;div id=&#34;ref-munzner_visualization_2014&#34; class=&#34;csl-entry&#34;&gt;
+Munzner, T. 2014. &lt;em&gt;Visualization Analysis and Design&lt;/em&gt;. AK Peters Visualization Series. Boca Raton, FL: CRC Press.
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Data fundamentals</title>
+      <link>/homework/02-homework/</link>
+      <pubDate>Mon, 16 May 2022 00:00:00 +0000</pubDate>
+      <guid>/homework/02-homework/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;../rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;h2&gt;Contents&lt;/h2&gt;
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#session-outcomes&#34;&gt;Session Outcomes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-1-describe-data&#34;&gt;Task 1: Describe data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-2-diagnose-data&#34;&gt;Task 2: Diagnose data&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#uk-general-election-results-2019&#34;&gt;UK General Election Results 2019&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#uk-general-election-results-2017-and-2019&#34;&gt;UK General Election Results 2017 and 2019&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-3-fix-data&#34;&gt;Task 3: Fix data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-4-compute-from-data&#34;&gt;Task 4: Compute from data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#references&#34;&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Outcomes&lt;/h2&gt;
+&lt;p&gt;By the end of this homework session you should be able to:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Describe data according to its structure and contents.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Calculate descriptive summaries over datasets.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Apply high-level functions in &lt;code&gt;dplyr&lt;/code&gt; and &lt;code&gt;tidyr&lt;/code&gt; for working with data.&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This homework requires you to apply the concepts and skills developed in the class session on &lt;a href=&#34;../class/02-class/&#34;&gt;data fundamentals&lt;/a&gt;. Do complete each of the tasks and be sure to save your work as this homework will be submitted as part of your portfolio for Assignment 1.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-1-describe-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 1: Describe data&lt;/h2&gt;
+&lt;p&gt;Complete the data description table below identifying the &lt;strong&gt;measurement level&lt;/strong&gt; of each variable in the (fictional) New York bikeshare stations dataset below.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;Variable name&lt;/th&gt;
+&lt;th&gt;Variable value&lt;/th&gt;
+&lt;th&gt;Measurement level&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;name&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;“Central Park”&lt;/td&gt;
+&lt;td&gt;&lt;enter here&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;capacity&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;80&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;rank_capacity&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;45&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;date_opened&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;“2014-05-23”&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;longitude&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;-74.00149746&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;latitude&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;40.74177603&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-2-diagnose-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 2: Diagnose data&lt;/h2&gt;
+&lt;p&gt;Below are two different tables with results from UK General Elections. We will be working with these data in the next session. Identify whether or not each is in &lt;strong&gt;tidy&lt;/strong&gt; format &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;Wickham 2014&lt;/a&gt;)&lt;/span&gt;. If they are not, provide a layout for a tidy version. No need to use code here, just edit the markdown table. If you’re struggling to work out how to organise markdown tables, you may wish to use this &lt;a href=&#34;https://www.tablesgenerator.com/markdown_tables&#34;&gt;tables generator&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;uk-general-election-results-2019&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;UK General Election Results 2019&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;party&lt;/th&gt;
+&lt;th&gt;percent_vote&lt;/th&gt;
+&lt;th&gt;num_mps&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Conservative&lt;/td&gt;
+&lt;td&gt;43.6&lt;/td&gt;
+&lt;td&gt;365&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;Labour&lt;/td&gt;
+&lt;td&gt;32.2&lt;/td&gt;
+&lt;td&gt;202&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Scottish National Party&lt;/td&gt;
+&lt;td&gt;3.9&lt;/td&gt;
+&lt;td&gt;48&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;Liberal Democrats&lt;/td&gt;
+&lt;td&gt;11.6&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Democratic Union Party&lt;/td&gt;
+&lt;td&gt;0.8&lt;/td&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;uk-general-election-results-2017-and-2019&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;UK General Election Results 2017 and 2019&lt;/h3&gt;
+&lt;table&gt;
+&lt;colgroup&gt;
+&lt;col width=&#34;27%&#34; /&gt;
+&lt;col width=&#34;21%&#34; /&gt;
+&lt;col width=&#34;15%&#34; /&gt;
+&lt;col width=&#34;20%&#34; /&gt;
+&lt;col width=&#34;15%&#34; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;party&lt;/th&gt;
+&lt;th&gt;percent_vote_2017&lt;/th&gt;
+&lt;th&gt;num_mps_2017&lt;/th&gt;
+&lt;th&gt;percent_vote_2019&lt;/th&gt;
+&lt;th&gt;num_mps_2019&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Conservative&lt;/td&gt;
+&lt;td&gt;42.4&lt;/td&gt;
+&lt;td&gt;317&lt;/td&gt;
+&lt;td&gt;43.6&lt;/td&gt;
+&lt;td&gt;365&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;Labour&lt;/td&gt;
+&lt;td&gt;40.0&lt;/td&gt;
+&lt;td&gt;262&lt;/td&gt;
+&lt;td&gt;32.2&lt;/td&gt;
+&lt;td&gt;202&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Scottish National Party&lt;/td&gt;
+&lt;td&gt;3.0&lt;/td&gt;
+&lt;td&gt;35&lt;/td&gt;
+&lt;td&gt;3.9&lt;/td&gt;
+&lt;td&gt;48&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;Liberal Democrats&lt;/td&gt;
+&lt;td&gt;7.4&lt;/td&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;11.6&lt;/td&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Democratic Union Party&lt;/td&gt;
+&lt;td&gt;0.9&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;0.8&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-3-fix-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 3: Fix data&lt;/h2&gt;
+&lt;p&gt;In the &lt;a href=&#34;../homework/02-homework_files/02-template.Rmd&#34;&gt;&lt;i class=&#34;fab fa-r-project&#34;&gt;&lt;/i&gt; 02-template.Rmd&lt;/a&gt; file for this session I have provided links to two derived tables (&lt;code&gt;ny_spread_columns&lt;/code&gt; and &lt;code&gt;ny_spread_rows&lt;/code&gt;) from the New York bikeshare trip data that are not in a tidy format.&lt;/p&gt;
+&lt;p&gt;Using functions from &lt;code&gt;dplyr&lt;/code&gt; and &lt;code&gt;tidyr&lt;/code&gt; reorganise these data so that they conform to the rules of &lt;strong&gt;tidy&lt;/strong&gt; data &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-wickham_tidy_2014&#34; role=&#34;doc-biblioref&#34;&gt;Wickham 2014&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;A candidate tidy organisation of the data is below. Each row is an origin-destination pair for a weekday or weekend, and each variable describes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;o_station&lt;/code&gt;: station id of the origin station&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d_station&lt;/code&gt;: station id of the destination station&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;wkday&lt;/code&gt;: identifies whether the OD pair describes weekday or weekend ny_trips&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;count&lt;/code&gt;: count of trips recorded for that observation (OD pair and weekday/weekend)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dist&lt;/code&gt;: total distance (cumulative) in kms of all trips recorded for that observation (OD pair and weekday/weekend)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;duration&lt;/code&gt;: total duration in minutes (cumulative) of all trips recorded for that observation (OD pair and weekday/weekend)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-note&#34;&gt;
+  &lt;div&gt;
+    You may wish to start with reorganising &lt;code&gt;ny_spread_rows&lt;/code&gt; as I deliberately made &lt;code&gt;ny_spread_columns&lt;/code&gt; quite challenging. The intention here was to replicate the sorts of arduous data formatting operations that need to be performed when working with real datasets. As always there are different approaches to this, but it can be achieved with use of &lt;code&gt;pivot_longer&lt;/code&gt;, &lt;code&gt;pivot_wider&lt;/code&gt;, plus a call to &lt;code&gt;separate()&lt;/code&gt;. This may be one to post to the course Slack.
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 386,762 x 6
+##    o_station d_station wkday   count  dist duration
+##        &amp;lt;int&amp;gt;     &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;   &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+##  1        72       116 weekend     1  1.15     18.2
+##  2        72       127 weekend    10 18.0     339.
+##  3        72       128 weekend     2  3.18     69.6
+##  4        72       146 weekend    12 27.6     402.
+##  5        72       151 weekend     2  2.87     54.9
+##  6        72       161 weekend     2  2.52     64.8
+##  7        72       164 weekend     5 13.3      73.3
+##  8        72       167 weekend     1  2.07     17.2
+##  9        72       168 weekend     2  1.70     42.7
+## 10        72       173 weekend     9  9.59    194.
+## # … with 386,752 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-4-compute-from-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 4: Compute from data&lt;/h2&gt;
+&lt;p&gt;Using &lt;code&gt;dplyr&lt;/code&gt; functions, calculate the average distance, duration and speed of trips occurring for each observation. Print out to the Console the top 10 most heavily cycled OD pairs (and their associated summary statistics) separately for weekdays and weekends. You may wish to join on your &lt;code&gt;ny_stations&lt;/code&gt; table in order to fetch the station names corresponding to the origin and destination stations.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references csl-bib-body hanging-indent&#34;&gt;
+&lt;div id=&#34;ref-wickham_tidy_2014&#34; class=&#34;csl-entry&#34;&gt;
+Wickham, H. 2014. &lt;span&gt;“Tidy Data.”&lt;/span&gt; &lt;em&gt;Journal of Statistical Software&lt;/em&gt; 59 (10): 1–23.
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction</title>
+      <link>/homework/01-homework/</link>
+      <pubDate>Mon, 09 May 2022 00:00:00 +0000</pubDate>
+      <guid>/homework/01-homework/</guid>
+      <description>
+&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;script src=&#34;../rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;h2&gt;Contents&lt;/h2&gt;
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#session-outcomes&#34;&gt;Session Outcomes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#introduction&#34;&gt;Introduction&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-1-read-and-complete-basicbasics&#34;&gt;Task 1: &lt;strong&gt;Read&lt;/strong&gt; and complete BasicBasics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#task-2-watch-thomas-mocks-introduction-to-tidy-statistics&#34;&gt;Task 2: &lt;strong&gt;Watch&lt;/strong&gt; Thomas Mock’s Introduction to Tidy Statistics&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;session-outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Session Outcomes&lt;/h2&gt;
+&lt;p&gt;By the end of this homework session you should:&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;alert alert-objective&#34;&gt;
+  &lt;div&gt;
+    &lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Be familiar with RStudio, R Markdown and R Projects.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Know how to install and enable R packages and query package documentation.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Understand the purpose R Markdown files and their anatomy.&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Know how to create R Projects and understand their benefits&lt;/li&gt;
+&lt;/ul&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;For most sessions I will post some additional exercises that relate to the practical learning you will be doing in-class. You will be populating R Markdown files as you complete the exercises. The exercises will vary in detail and challenge but you should try your best effort to complete them as they will form a portfolio of work that will contribute 30% of the module mark. Doing these exercises will also help you build the skills necessary to complete the project coursework that forms the main contribution to your module mark (70%).&lt;/p&gt;
+&lt;p&gt;There has been a lot to take in this session. There are no formal exercises to complete as part of this session’s homework. Instead we want you to really try to solidify your understanding of the core technology for the module.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-1-read-and-complete-basicbasics&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 1: &lt;strong&gt;Read&lt;/strong&gt; and complete BasicBasics&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/R-Ladies&#34;&gt;R-Ladies&lt;/a&gt; is an excellent initiative and the &lt;a href=&#34;https://rladiessydney.org/courses/ryouwithme/01-basicbasics-0/&#34;&gt;R-Ladies Sydney BasicBasics&lt;/a&gt; pages are really great for introducing the R and RStudio ecosystem, and a little of the &lt;code&gt;tidyverse&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Read and work your way through:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://rladiessydney.org/courses/ryouwithme/01-basicbasics-1/&#34;&gt;BasicBasics 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://rladiessydney.org/courses/ryouwithme/01-basicbasics-2/&#34;&gt;BasicBasics 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://rladiessydney.org/courses/ryouwithme/01-basicbasics-3/&#34;&gt;BasicBasics 3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This repeats some of the work that you have done in class this session. If you’re entirely new to R programming, this repetition is probably useful (and necessary) at this stage.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;task-2-watch-thomas-mocks-introduction-to-tidy-statistics&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Task 2: &lt;strong&gt;Watch&lt;/strong&gt; Thomas Mock’s Introduction to Tidy Statistics&lt;/h2&gt;
+&lt;p&gt;Thomas Mock’s &lt;a href=&#34;https://rstudio.com/resources/webinars/a-gentle-introduction-to-tidy-statistics-in-r/&#34;&gt;Gentle Introduction to Tidy Statistics&lt;/a&gt; is pitched those coming to R after previously working with point-and-click interfaces (SPSS, STATA, ArcGIS). I strongly recommend that you watch this now as you start to embark on the “pain” of doing data analysis programmatically.&lt;/p&gt;
+&lt;!-- &lt;div class=&#34;embed-responsive embed-responsive-16by9&#34;&gt;
+&lt;iframe class=&#34;embed-responsive-item&#34; src=&#34;https://rstudio.com/resources/webinars/a-gentle-introduction-to-tidy-statistics-in-r/&#34; frameborder=&#34;0&#34; allow=&#34;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&#34; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt; --&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

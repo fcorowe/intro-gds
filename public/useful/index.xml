@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Useful | Introduction to Geographic Data Science</title>
+    <link>/useful/</link>
+      <atom:link href="/useful/index.xml" rel="self" type="application/rss+xml" />
+    <description>Useful</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator>
+    <image>
+      <url>/media/vis-for-gds.png</url>
+      <title>Useful</title>
+      <link>/useful/</link>
+    </image>
+    
+  </channel>
+</rss>
