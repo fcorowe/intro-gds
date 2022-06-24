@@ -1,6 +1,6 @@
 main:
-  - name: Syllabus
-    url: /syllabus/
+  - name: Overview
+    url: /overview/
     weight: 1
   - name: Schedule
     url: /schedule/
@@ -11,15 +11,8 @@ main:
   - name: Class
     url: /class/
     weight: 4
-  - name: Homework
-    url: /homework/
-    weight: 5
-  - name: Useful
-    url: /useful/
-    weight: 6
-  - name: "<i class=\"fab fa-slack\"></i>"
-    url: https://vis-for-gds.slack.com
-    weight: 7
+
+
 
 reading:
   - name: Overview
