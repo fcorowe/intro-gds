@@ -1,4 +1,4 @@
-baseurl: "https://www.franciscorowe.com/intro-gds/"
+baseurl: "https://fcorowe.github.io/intro-gds/"
 defaultContentLanguage: "en-uk"
 title: "Introduction to Geographic Data Science"
 theme: hugo-academic/wowchemy
