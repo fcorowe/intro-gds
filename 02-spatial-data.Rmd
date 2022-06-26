@@ -1,0 +1,207 @@
+---
+title: "Spatial Data"
+author: "Francisco Rowe ([`@fcorowe`](http://twitter.com/fcorowe))"
+date: "`r Sys.Date()`"
+output: tint::tintHtml
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(sf)
+library(tint)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'), class.source = "col-source")
+options(htmltools.dir.version = FALSE)
+```
+
+```{css, echo=FALSE}
+.col-source {
+  background-color: #E5E7E9;
+  border: 3px #000000;
+}
+```
+
+# Fundamental Geographic Data Structures
+
+Three main structures are generally used to organise geographic data:
+
+1.  [Vector data structure]{.underline}: The vector data structures record geographic information using points, lines and polygons in a geographic table. These tables contain information about geographic objects. Columns store information about geographic objects, attributes or features, and rows represent individual geographic objects.
+
+2.  [Raster data structures]{.underline}: The raster data structures record geographic data in an uniform way over a space in the form of grids. It divides geographic surfaces up into cells of constant size. Rows and columns provide information about the geographic location of a grid.
+
+3.  [Spatial graphs]{.underline}: Spatial graphs store connections between objects through space. These connections may derive from geographical topology (e.g. contiguity), distance, or more sophisticated dimensions, such as interaction flows (e.g. human mobility, trade and information).
+
+Vector data structures tend to dominate the social sciences are the interest is often in capturing discrete geographic units containing populations. Here therefore we focus on vector data structures.
+
+## Vector data
+
+To understand the structure of vector data, let's read a dataset (`Liverpool_OA.shp`) describing output areas within Liverpool in the United Kingdom. To read in the data, we use the `st_read()` from the package `sf`. `sf` supports geometry collections, which can contain multiple geometry types in a single object. `sf` provides the same functionality previously provided in three separate packages `sp`, `rgdal` and `rgeos` (Robin et al. 2021). `sf` can also be used in combination with `tidyverse`!
+
+Reading the data set via `sf` returns its geographic metadata (i.e. `Geometry type`, `Dimension`, `Bounding box` and coordinate reference system information on the line beginning `Projected CRS`).
+
+```{marginfigure}
+For raster data, I would recommend using the package `terra`.
+```
+
+```{marginfigure}
+If you are interested in learning more about mapping geographic data, I cannot recommend enough: Lovelace, R., Nowosad, J. and Muenchow, J., 2019. "*Geocomputation with R*". Chapman and Hall/CRC.
+```
+
+```{r}
+oa_shp <- st_read("./data/Liverpool_OA.shp")
+```
+
+We read a `sf` data frame containing spatial and attribute columns. We can examine the content of the data frame by using the function `head()`. We called the first four columns. The last column in this example contains the geographic information i.e. `geometry`.
+
+```{r}
+class(oa_shp)
+head(oa_shp[,1:4])
+```
+
+Each row represents an output area. Each output area has multiple attributes (i.e. columns): administrative areas codes and geometry, as well as information on the local population in these areas; however, this information is not displayed above (can you access it?).
+
+The content of the geometry column gives `sf` objects their spatial powers. `oa_shp$geometry` is a 'list column' that contains all the coordinates of the output areas polygons. `sf` objects can be plotted quickly with the base R function `plot()`.
+
+```{marginfigure}
+For more advanced map making, use dedicated visualisation packages such as `tmap` or `ggplot2`.
+```
+
+ 
+```{r}
+plot(oa_shp$geometry)
+```
+
+```{r}
+oa_cents = st_centroid(oa_shp)
+plot(st_geometry(oa_cents))
+```
+
+
+
+```{r}
+plot(oa_shp["unemp"])
+```
+
+# Spatial Data is *Special*
+
+-   Type of data
+-   Distinctive attributes
+-   Challenges
+
+# Traditional data
+
+Attributes:
+
+-   Collected for a purpose
+-   Granular information (deep)
+-   High quality
+
+Challenges:
+
+-   Costly - resource intensive
+-   Coarse aggregations
+-   Temporally slow
+
+# New forms of data
+
+```{marginfigure}
+Rowe, F. 2021. [Big Data and Human Geography](https://doi.org/10.31235/osf.io/phz3e). In: Demeritt, D. and Lees L. (eds) ConciseEncyclopedia of Human Geography. Edward Elgar Encyclopedias in the Social Sciences series. 
+```
+
+## Spatial Data types
+
+```{marginfigure}
+Rowe, F. Arribas-Bel, D. 2021. [Spatial Modelling for Data Scientists](https://gdsl-ul.github.io/san/).
+```
+
+Different classifications of spatial data types exist. Knowing the structure of the data at hand is important to think of appropriate analytical methods.
+
+![Fig. 1. Data Types.](./figs/datatypes.png) Area / Lattice data source: [Önnerfors et al. (2019)](https://www.scribd.com/document/428488199/Eurostat-regional-yearbook-2019). Point data source: [Tao et al. (2018)](https://doi.org/10.1016/j.trc.2017.11.005). Flow data source: [Rowe and Patias (2020)](https://doi.org/10.1080/21681376.2020.1811139). Trajectory data source: [Kwan and Lee (2004)](http://www.meipokwan.org/Paper/Best_2003.pdf).
+
+*Lattice/Areal Data*
+
+-   Correspond to records of attribute values (e.g. population counts) for a fixed geographical area.
+-   Regular (e.g. grids or pixels) or irregular shapes (e.g. states, counties or travel-to-work areas).
+
+*Point Data*
+
+-   Records of the geographic location of an discrete event.\
+-   Number of occurrences of geographical process at a given location.
+
+*Flow Data*
+
+-   Records of measurements for a pair of geographic point locations or pair of areas.\
+-   Capture the linkage or spatial interaction between two locations.
+
+*Trajectory Data*
+
+-   Records of moving objects at various points in time.
+-   Composed of a single string of data recording the geographic location of an object at various points in time.
+
+# Hierarchical Structure of Data
+
+Smaller geographical units are organised within larger geographical units.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results="hide"}
+library(sf)
+oa_shp <- st_read("./data/Liverpool_OA.shp")
+```
+
+```{r, echo=FALSE}
+head(oa_shp[,1:4])
+```
+
+# Key Challenges
+
+Major challenges exist when working with spatial data.
+
+## Modifible Area Unit Problem (MAUP)
+
+The MAUP represents a challenge that has troubled geographers for decades.
+
+Two aspects of the MAUP are normally recognised in empirical analysis:
+
+-   *Scale*. The idea that a geographical area can be divided into geographies with differing numbers of spatial units.
+
+-   *Zonation*. The idea that a geographical area can be divided into the same number of units in a variety of ways.
+
+![Fig. 2. MAUP effect. (a) scale effect; and, (b) zonation effect.](./figs/maup.png) Source: [Loidl et al (2016)](https://doi.org/10.3390/safety2030017)
+
+```{marginfigure}
+Loidl, M., Wallentin, G., Wendel, R. and Zagel, B., 2016. [Mapping bicycle crash risk patterns on the local scale](https://doi.org/10.3390/safety2030017). Safety, 2(3), p.17.
+```
+
+> MAUP can greatly impact our results and capacity to make inferences, leading to wrong conclusions
+
+### Solutions?
+
+No solution!
+
+Potential mitigation strategies:
+
+-   Analysis at different geographical scales\
+-   Use the smallest geography available \> create random aggregations \> assess changes to the results
+-   Use functional areas
+
+## Ecological Fallacy
+
+An error in the interpretation of statistical data based on aggregate information e.g.
+
+-   [Robinson (1950)](https://doi.org/10.1093/ije/dyn357): country of birth and literacy
+
+```{marginfigure}
+WS Robinson, [Ecological Correlations and the Behavior of Individuals](https://doi.org/10.1093/ije/dyn357), International Journal of Epidemiology, Volume 38, Issue 2, April 2009, Pages 337–341.
+```
+
+## Spatial Dependence
+
+Refers to the spatial association of values for an indicator, esp. **spatial proximity of more similar (or less similar)** than expected for randomly associated pairs of observations.
+
+## Spatial Heterogeneity
+
+Refers to the **uneven distribution** of a variable's values across space.
+
+## Spatial nonstationarity
+
+It refers to **variations in the relationship** between an outcome variable and a set of predictor variables **across space**.

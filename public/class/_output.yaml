@@ -1,3 +1,0 @@
-blogdown::html_page:
-  fig_retina: 2
-  new_session: true

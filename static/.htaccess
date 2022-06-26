@@ -1,7 +1,0 @@
-Options -Indexes
-
-ErrorDocument 404 /404.html
-
-<ifmodule mod_rewrite.c="">RewriteEngine on
-  RewriteCond %{HTTP_HOST} ^www\.visualizingsociety\.com$ [NC]
-  RewriteRule ^(.*)$ https://visualizingsociety.com/$1 [L,R=301]</ifmodule> 

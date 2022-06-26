@@ -1,3 +1,108 @@
 ---
-site: blogdown:::blogdown_site
+title: "Introduction to Geographic Data Science"
+author: "Francisco Rowe ([`@fcorowe`](http://twitter.com/fcorowe))"
+date: "`r Sys.Date()`"
+output: tint::tintHtml
+bibliography: skeleton.bib
+link-citations: yes
 ---
+
+```{r setup, include=FALSE}
+library(tint)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'))
+options(htmltools.dir.version = FALSE)
+```
+
+
+
+# Description
+
+This workshops offers an introduction to *Geographic Data Science*. It provides an introduction to fundamental concepts of geographic data science using a hands-on approach in *R*. It offers an overview of various types of spatial data, key challenges of working with these data, and some basic analytical techniques. 
+
+# Structure
+
+The workshop is structured as follows:
+
+* [*What is geographic data science?*]()
+* [**Spatial data**]()  
+* [**Spatial weights**]()  
+* [**Spatial autocorrelation**]()  
+
+# Philosophy
+
+* Focus on **methods** and tools
+  - General overview
+  - Intuition
+  - Very little math 
+  - Opportunities to continue on your own
+* Emphasis on the **application** and **use**
+* Focus on **real-world** applications
+
+# Resources
+
+All this course material is available on Github and you can download it [**here**](https://github.com/fcorowe/udd_gds_course/archive/refs/heads/main.zip). Once you have download it, ensure it is in a safe place on your computer.
+
+# Computational Environment
+
+You need the most recent version of R and packages. These can be installed following the instructions provided in our [R installation guide](https://gdsl-ul.github.io/r_install/).
+
+## Dependency list
+
+The list of libraries that we will use is provided below. If you have followed the instructions provided in our [R installation guide](https://gdsl-ul.github.io/r_install/) and will be using Docker, you can relax and these libraries have already been installed for you. 
+
+If you have `natively` installed *R* and *RStudio*, you need to ensure you have installed the list of libraries used in this book following the steps provided [here](https://gdsl-ul.github.io/r_install/otherWin.html#install-packages).
+
+* `arm`
+* `car`
+* `corrplot`
+* `FRK`
+* `gghighlight`
+* `ggplot2`
+* `ggpubr`
+* `ggmap`
+* `GISTools`
+* `gridExtra`
+* `gstat`
+* `jtools`
+* `kableExtra`
+* `knitr`
+* `lme4`
+* `lmtest`
+* `lubridate`
+* `MASS`
+* `merTools`
+* `plyr`
+* `RColorBrewer`
+* `rgdal`
+* `sf`
+* `sjPlot`
+* `sp`
+* `spgwr`
+* `spatialreg`
+* `spacetime`
+* `stargazer`
+* `tidyverse`
+* `tint`
+* `tmap`
+* `viridis`
+
+
+You can get the materials from this course as a [download](https://github.com/fcorowe/udd_gds_course/archive/refs/heads/main.zip) of a .zip file or by going directly to the [GitHub repository](https://github.com/fcorowe/udd_gds_course).
+
+
+
+
+
+```{r eval=FALSE, include=FALSE}
+file.edit(
+  tint:::template_resources(
+    'tint', '..', 'skeleton', 'skeleton.Rmd'
+  )
+)
+```
+
+```{r bib, include=FALSE}
+# create a bib file for the R packages used in this document
+knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib')
+```
