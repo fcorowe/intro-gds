@@ -29,7 +29,7 @@ The workshop is structured as follows:
 * [**What is geographic data science?**](01-gds.html)
 * [**Spatial data**](02-spatial-data.html)  
 * [**Spatial weights**](03-spatial_weights.html)  
-* [**Spatial autocorrelation**]()  
+* [**Spatial autocorrelation**](04-spatial_econometrics.html)  
 
 
 # Resources
