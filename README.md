@@ -1,4 +1,4 @@
-# Geographic Data Science for Public Policy
+# Introduction to Geographic Data Science
 
 [Francisco Rowe](http://www.franciscorowe.com) [[`@fcorowe`](http://twitter.com/fcorowe)]<sup>1*</sup>
 
@@ -9,50 +9,29 @@ F.Rowe-Gonzalez@liverpool.ac.uk
 
 # Description
 
-This course offers an introduction to *Geographic Data Science for Public Policy*. It provides a general framework to develop understanding of the ways in which geographic data analytics can be used to turn raw data into actionable information that can inform decision making. The course adopts a problem-to-solution teaching approach, defining a practical problem and illustrating how geographic data science can enable understanding to make critically informed decisions. It uses a learning-by-doing approach based on real-world examples. This also teaches how to conduct statistical and geographic data analysis in *R*. 
+This workshops offers an introduction to *Geographic Data Science*. It provides an introduction to fundamental concepts of geographic data science using a hands-on approach in *R*. It offers an overview of various types of spatial data, key challenges of working with these data, and some basic analytical techniques. 
 
 # Aims
 
-This module aims to provide an introduction to geographic data science and illustrate how geographic data science  data can be used to produce evidence and inform decision making:
-* Understand how geographic data science can support data-driven decision making;
-* Provide an understanding of the core principles of geographic data science;
-* Offer programming and technical skills to apply geographic data science;
-* Develop skills to enable you to identify a significant research or applied problem;
-* Apply geographic data science to real-world examples.
+This module aims to provide an introduction to geographic data science, core concepts and ideas.
 
-# Learning outcomes
+The workshop is structured as follows:
 
-By the end of the module, you should be able to:
-
-* Demonstrate understanding of core geographic data science concepts and tools;
-* Understand how to programmatically import, manipulate, visualise, map and analyse geographic data frames;
-* Apply geographic modelling techniques to real world data;
-* Develop critical skills to design a research project.
-
-# Structure
-
-The course is structured as follows:
-
-* [**Introduction to Geographic Data Science for Public Policy**](index.html)  
-  - [*Structure of the course*](index.html)
-  - [*Geographic data science*](01b-gds.html)
-  - [*Geographic data science as a planning tool*](01c-gds_as_tool.html)  
-* [**Introduction to R**](02-introR.html)
-* [**Spatial data**](03a-spatial-data.html)  
-  - [*Spatial data is special*](03a-spatial-data.html)
-  - [*Understanding spatial data*](03b-spatial-data.html)
-* **Hands-on** 
+* [**What is geographic data science?**](01-gds.html)
+* [**Spatial data**](02-spatial-data.html)  
+* [**Spatial weights**](03-spatial_weights.html)  
+* [**Spatial autocorrelation**](04-spatial_econometrics.html)  
 
 ## Citation
 
 If you use the material, code or processed data, you can give appropriate attribution by using the following citation:
 
 ```
-@article{rowe_gds21,
+@article{rowe_gds22,
   author = {Francisco Rowe},
-  title = {Geographic Data Science for Public Policy},
-  year = 2021,
-  url = {fcorowe.github.io/udd_gds_course/},
+  title = {Introduction to Geographic Data Science},
+  year = 2022,
+  url = {fcorowe.github.io/intro-gds/},
   doi = {forthcoming},
 }
 ```
