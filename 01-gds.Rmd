@@ -21,6 +21,12 @@ options(htmltools.dir.version = FALSE)
 }
 ```
 
+```{marginfigure}
+[**Back**](index.html) \
+  
+[**Next**](02-spatial-data.html)
+```
+
 # Rise of data
 
 We are experiencing a data revolution. Technological advances in computational power, storage and network platforms have enabled the emergence of *Big Data*. These technological innovations have facilitated the production, processing, analysis and storage of large volumes of digital data. Information that previously could not be stored, or used to be captured using analog devices can now be recorded digitally. We can now digitally generate, store, manage and analyse data that were previously very challenging to access, such as books, newspapers, photographs and art work. Mobile phones, social media platforms, satellites, emails, smart cards, CCTV and The Internet have all led to the current data revolution we are living in.
@@ -40,9 +46,13 @@ Arribas-Bel, Dani, Mark Green, Francisco Rowe, and Alex Singleton. 2021. “Open
 
 # Geographic Data Science
 
-Geographic data science is a subfield of research in geography and sits at the intersection between geography and data science (Singleton and Arribas-Bel, 2019). Geographic data science entails a bidirectional relationship between geography and data science. Geographic data science argues for the benefits of *Geography* for *Data Science* to address spatially explicit problems, especially because much *Big Data* are spatial. At the same time, *Geography* has much to gain from *Data Science*, particularly in the methodological and technical aspects of working with *Big Data*.
+```{marginfigure}
+Singleton, A., and Arribas-Bel, D. 2019. “Geographic Data Science.” *Geographical Analysis*. 53 (1): 61–75. https://doi.org/10.1111/gean.12194.
+```
+
+Geographic data science is a subfield of research in geography and sits at the intersection between geography and data science (Singleton and Arribas-Bel, 2019). Geographic data science entails a bidirectional relationship between geography and data science. Geographic data science argues for the benefits of *Geography* for *Data Science* to address spatially explicit problems, especially because much *Big Data* are spatial. Explicitly consideration of space is not adding an additional variable in regression models, but understanding the conceptual and methodological complexities and understanding of geographical context, such as *spatial autocorrelation*, *spatial non-stationarity*, *spatial heterogeneity* and *local contextual contingencies* (see Rowe and Arribas-Bel 2022). At the same time, *Geography* has much to gain from *Data Science*, particularly in the methodological and technical aspects of working with *Big Data*.
 
 ```{marginfigure}
-Singleton, Alex, and Daniel Arribas-Bel. 2019. “Geographic Data Science.” *Geographical Analysis*. 53 (1): 61–75. https://doi.org/10.1111/gean.12194.
+Rowe, F. and Arribas-Bel, D. 2022. “Spatial Modelling for Data Scientists.” https://doi.org/10.17605/OSF.IO/8F6XR.
 ```
 

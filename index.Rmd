@@ -14,7 +14,9 @@ knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'))
 options(htmltools.dir.version = FALSE)
 ```
 
-
+```{marginfigure}
+[**Next**](01-gds.html)
+```
 
 # Description
 
@@ -24,9 +26,9 @@ This workshops offers an introduction to *Geographic Data Science*. It provides 
 
 The workshop is structured as follows:
 
-* [*What is geographic data science?*]()
-* [**Spatial data**]()  
-* [**Spatial weights**]()  
+* [**What is geographic data science?**](01-gds.html)
+* [**Spatial data**](02-spatial-data.html)  
+* [**Spatial weights**](03-spatial_weights.html)  
 * [**Spatial autocorrelation**]()  
 
 # Philosophy

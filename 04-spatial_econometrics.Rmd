@@ -1,0 +1,335 @@
+---
+title: "Spatial Econometrics: Fundamentals"
+author: "Francisco Rowe ([`@fcorowe`](http://twitter.com/fcorowe))"
+date: "`r Sys.Date()`"
+output: tint::tintHtml
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tint)
+# handle spatial data
+library(sf)
+library(spdep)
+# manipulate data
+library(tidyverse)
+library(lubridate)
+# create maps
+library(tmap)
+# create interactive maps
+library(leaflet)
+# nice colour schemes
+library(viridis) 
+library(viridisLite)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'), class.source = "col-source")
+options(htmltools.dir.version = FALSE)
+```
+
+
+```{css, echo=FALSE}
+.col-source {
+  background-color: #E5E7E9;
+  border: 3px #000000;
+}
+```
+
+```{marginfigure}
+[**Back**](03-spatial_weights.html) \
+```
+
+# Key idea
+
+We want to analyse the extent of spatial auto-correlation in anti-immigration sentiment based on Twitter data.
+
+# Data
+
+We will be using a sample of data obtained via the [Twitter Academic Application Programming Interface (API)](https://developer.twitter.com/en/products/twitter-api/academic-research). 
+
+I obtained a sample of migration-related geolocated tweets for the United Kingdom. I used a bounding box containing the United Kingdom. Some tweets had the exact location. The majority had information about the name location and were geolocated using their corresponding bounding box. The search terms to identify migration related tweets can be found [here](https://github.com/fcorowe/stigma_covid). The same list of terms was used in Rowe et al (2021).
+
+```{marginfigure}
+Rowe, F., Mahony, M., Graells-Garrido, E., Rango, M. and Sievers, N., 2021. Using Twitter to track immigration sentiment during early stages of the COVID-19 pandemic. *Data & Policy*, 3.
+```
+
+I then used the tweet text content to measure the sentiment using an algorithm known as *VADER* (Valence Aware Dictionary and sEntiment Reasoner). If you are interested in how to do this in *R*, see [this code](05-sentiment-analysis.html). For details on the algorithm, see Hutto and Gilbert (2014) - and on how to interpret the results in the context of migration, see Rowe et al (2021).
+
+```{marginfigure}
+Hutto, C and Gilbert, E (2014) VADER: A parsimonious rule-based model for sentiment analysis of social media text. In Eighth International Conference on Weblogs and Social Media (ICWSM-14). Menlo Park, CA: *Association for the Advancement of Artificial Intelligence*, pp. 216–225
+```
+
+
+We now read and inspect the Twitter data
+```{r, output=FALSE, message=FALSE}
+# clean workspace
+rm(list=ls())
+
+# read twitter data
+tweet_df <- read_csv("./data/uk-sentiment-data.csv")
+
+# show head
+head(tweet_df)
+```
+
+We will be mapping the data so we first transform the non-spatial data frame of tweets to a spatial data frame using the coordinate reference system `crs` `EPSG:4326`. Learn more about CRS in [Lovelace et al (2019) Chapter 7](https://geocompr.robinlovelace.net/reproj-geo-data.html).
+
+```{marginfigure}
+Lovelace, R., Nowosad, J. and Muenchow, J., 2019. Geocomputation with R. Chapman and Hall/CRC.
+```
+
+```{r}
+# from non-spatial data frame to a spatial data frame
+tweet_df.geo <- tweet_df %>% 
+  #filter(compound < -0.05 | compound > 0.05) %>% 
+  st_as_sf(coords = c("long", "lat"), 
+                                      crs = "EPSG:4326")
+```
+
+Second, we read a shapefile containing the polygons for local authority districts in the United Kingdom. We simplify these polygons as they are very detailed and may take a long time to render. We will be using these polygons for data visualisation so precision so less important.
+
+```{r}
+# read shapefile
+la_shp <- st_read("./data/Local_Authority_Districts_(May_2021)_UK_BFE_V3/LAD_MAY_2021_UK_BFE_V2.shp")
+
+# simplify boundaries
+la_shp_simple <- st_simplify(la_shp, 
+                             preserveTopology =T,
+                             dTolerance = 1000) # 1km
+
+# ensure geometry is valid
+la_shp_simple <- sf::st_make_valid(la_shp_simple)
+```
+
+# Exploratory Spatial Data Analysis
+
+Before diving into more sophisticated analysis, a good starting point is to run exploratory spatial data analysis (ESDA). 
+ESDAs are usually divided into two main groups: 
+(1) **global** spatial autocorrelation: which focuses on the overall trend or the degree of spatial clustering in a variable;  
+(2) **local** spatial autocorrelation: which focuses on spatial instability: the departure of parts of a map from the general trend. it is useful to identify hot or cold spots.
+
+```{marginfigure}
+Recall: **Spatial autocorrelation** relates to the degree to which the similarity in values between observations in a variable in neighbouring areas.
+```
+
+A key idea to develop some intuition here is the idea of **spatial randomness** i.e. a situation in which values of an observation is unrelated to location, and therefore a variable's distribution does not follow a no discernible pattern over space. 
+
+Spatial autocorrelation can be defined as the "absence of spatial randomness". 
+This gives rise to two main classes of autocorrelation:  
+(1) **Positive** spatial autocorrelation: when similar values tend to group together in similar locations; and,  
+(2) **Negative** spatial autocorrelation, where similar values tend to be dispersed and further apart from each other in nearby locations.
+
+Here we will explore spatial autocorrelation looking at how we can identify its presence, nature, and strength.
+
+Let's start with some simple exploration of the data creating a point map. 
+  
+We can use `ggplot` to draw the polygons of local authority districts in the United Kingdom.
+  
+```{r}
+p <- ggplot(data = la_shp_simple) + 
+  geom_sf(color = "gray60", 
+          size = 0.1)
+p
+```
+
+We don't really need the axes or background here, so let's remove:
+
+```{r}
+p +
+  theme_void() 
+```
+We can now visualise the tweets using `geom_point`:
+
+```{r}
+p + 
+  geom_point(data = tweet_df.geo,
+    aes(color = neg, geometry = geometry),
+    stat = "sf_coordinates"
+  ) +
+  theme_void() 
+```
+
+We can adjust the colour palette using `scale_color_viridis_c`:
+
+```{r}
+p + 
+  geom_point(data = tweet_df.geo,
+    aes(color = neg, geometry = geometry),
+    stat = "sf_coordinates"
+  ) +
+  theme_void() +
+  scale_color_viridis_c(option = "C") +
+# you could also try: scale_colour_distiller(palette = "RdBu", direction = -1)
+  labs(color= 'Negative sentiment score')
+
+```
+If you are not familiar with the geography of the United Kingdom, this map may not be very informative. So let's add more context by adding an interactive map using the package `leaflet`.
+
+```{r}
+leaflet() %>%
+  addProviderTiles("Stamen.TonerLite") %>%
+  addCircles(data = tweet_df.geo, 
+             color = "blue")
+```
+
+```{marginfigure}
+What do we learn from these maps?
+```
+
+There seems to be some slight spatial pattering: similar values tend to cluster together in space. 
+
+```{marginfigure}
+How can we measure this apparently spatial clustering or spatial dependence? 
+  Is it statistically significant?
+```
+
+# Spatial lag
+
+To measure spatial dependence and further explore it, we will need to create an spatial lag. 
+An spatial lag is the product of a spatial weight matrix and a given variable. 
+The spatial lag of a variable is the average value of that variable in the neighborhood; that is, using the values of all the areas which are defined as neighbours; hence, the concept of spatial lag is inherently related to the concept of spatial weight matrix.
+
+## Creating a spatial weight matrix
+
+So first let's build and standardise a spatial weight matrix. 
+For this example, we'll use the 10 k nearest neighbours.
+
+```{marginfigure}
+Can you try other spatial weights matrices definitions?
+```
+
+
+```{r, warning=FALSE}
+# create knn list
+coords <- st_centroid(st_geometry(tweet_df.geo))
+col_knn <- knearneigh(coords, k=10)
+# create nb object
+hnb <- knn2nb(col_knn)
+# create spatial weights matrix (note it row-standardizes by default)
+hknn <- nb2listw(hnb)
+hknn
+```
+
+```{marginfigure}
+Have a go at interpreting the summary of the spatial weight matrix
+```
+
+# Creating a spatial lag
+
+Once we have built a spatial weights matrix, we can compute an spatial lag. 
+A spatial lag offers a quantitative way to represent spatial dependence, specifically the degree of connection between geographic units. 
+
+Remember: the spatial lag is the product of a spatial weights matrix and a given variable and amounts to the average value of the variable in the neighborhood of each variable's value.
+
+We use the row-standardised matrix for this and compute the spatial lag of the migration outflows. 
+
+```{r}
+neg_lag <- lag.listw(hknn, tweet_df.geo$neg)
+head(neg_lag)
+```
+
+The way to interpret the spatial lag `compound_lag` for the first observation: Islington, where a tweet scored a negative sentiment score of 0.033 is surrounded by neighbouring data points which, on average, scored a sentiment score of 0.0679375.
+
+# Spatial Autocorrelation
+
+We first start exploring global spatial autocorrelation. 
+To this end, we will focus on the Moran Plot and Moran's I statistics.
+
+## Moran Plot
+
+The Moran Plot is a way of visualising the nature and strength of spatial autocorrelation. 
+It's essentially a scatter plot between a variable and its spatial lag. 
+To more easily interpret the plot, variables are standardised. 
+
+```{r, fig.margin = TRUE, message=FALSE, warning=FALSE}
+ggplot(tweet_df.geo, aes(x = neg, y = neg_lag)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  ylab("Negative sentiment lag") + 
+  xlab("Negative sentiment") +
+  theme_classic()
+```
+
+```{r}
+tweet_df.geo <- cbind(tweet_df.geo, as.data.frame(neg_lag))
+
+tweet_df.geo <- tweet_df.geo %>% 
+  mutate(
+    st_neg = ( neg - mean(neg)) / sd(neg),
+    st_neg_lag = ( neg_lag - mean(neg_lag)) / sd(neg_lag)
+  )
+
+```
+
+In a standardised *Moran Plot*, average values are centered around zero and dispersion is expressed in standard deviations. 
+The rule of thumb is that values greater or smaller than two standard deviations can be considered outliers. 
+A standardised Moran Plot can also be used to visualise *local spatial autocorrelation*.
+
+```{marginfigure}
+Do you recall what *local spatial autocorrelation* is?
+```
+
+We can observe local spatial autocorrelation by partitioning the Moran Plot into four quadrants that represent different situations:
+
+* High-High (HH): values above average surrounded by values above average.  
+* Low-Low (LL): values below average surrounded by values below average.  
+* High-Low (HL): values above average surrounded by values below average.  
+* Low-High (LH): values below average surrounded by values above average.  
+
+```{r}
+ggplot(tweet_df.geo, aes(x = st_neg, y = st_neg_lag)) + 
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  geom_hline(yintercept = 0, color = "grey", alpha =.5) +
+  geom_vline(xintercept = 0, color = "grey", alpha =.5) +
+  ylab("Negative sentiment lag \n (standardised)") + 
+  xlab("Negative sentiment \n (standardised)") +
+  theme_classic()
+```
+
+```{marginfigure}
+What do we learn from the Moran Plot?
+```
+
+## Moran's I
+
+To measure global spatial autocorrelation, we can use the *Moran's I*. 
+The Moran Plot and intrinsically related. 
+The value of Moran’s I corresponds with the slope of the linear fit on the Moran Plot.
+We can compute it by running: 
+
+```{r}
+moran.test(tweet_df.geo$neg, listw = hknn, zero.policy = TRUE, na.action = na.omit)
+```
+
+```{marginfigure}
+What does the Moran's I tell us?
+```
+
+# Exogenous spatial effects model
+
+```{marginfigure}
+Rowe, F. and Arribas-Bel, D. 2022. “Spatial Modelling for Data Scientists.” https://doi.org/10.17605/OSF.IO/8F6XR.
+```
+
+A natural step is to then explore how we can use our spatial lag variable in a regression model and what it can tell us. 
+So far, we have measured spatial dependence in isolation. 
+But that spatial dependence could be associated to a particular factor that could be explicitly measured and included in a model. 
+So it is worth considering spatial dependence in a wider context, analysing its degree as other variables are accounted in a regression model. 
+We can do this plugging our spatial lag variable into a regression model.
+But this goes beyond the scope of this workshop. 
+If you are interested in how to get started with spatial econometrics modelling in *R*, check out [Chapter 6 of our book Spatial Modelling for Data Scientists](https://gdsl-ul.github.io/san/spatialecon.html).
+
+```{marginfigure}
+Excellent references  to continue your learning on spatial econometrics are:  
+Anselin, Luc. 1988. [Spatial Econometrics: Methods and Models](https://doi.org/10.1007/978-94-015-7799-1). Vol. 4. Springer Science & Business Media.  
+Anselin, Luc. 2003. [Spatial Externalities, Spatial Multipliers, and Spatial Econometrics.](https://doi.org/10.1177/0160017602250972) International Regional Science Review 26 (2): 153–66.  
+Anselin, Luc, and Sergio J. Rey. 2014. [Modern Spatial Econometrics in Practice: A Guide to Geoda, Geodaspace and Pysal.](Anselin, L. and Rey, S.J., 2014. Modern spatial econometrics in practice: A guide to GeoDa, GeoDaSpace and PySAL. GeoDa Press LLC.) GeoDa Press LLC.  
+```
+
+> Final Note: Introducing a spatial lag of an explanatory variable is the most straightforward way of incorporating the notion of spatial dependence in a linear regression framework. 
+It does not require additional changes to the modelling structure, can be estimated via OLS and the interpretation is similar to interpreting non-spatial variables. 
+However, other model specifications are more common in the field of spatial econometrics, specifically: the **spatial lag** and **spatial error** model. 
+While both built on the notion of spatial lag, they require a different modelling and estimation strategy.
+
+

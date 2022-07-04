@@ -1,0 +1,79 @@
+---
+title: "Sentiment analysis: Appendix"
+author: "Francisco Rowe ([`@fcorowe`](http://twitter.com/fcorowe))"
+date: "`r Sys.Date()`"
+output: tint::tintHtml
+bibliography: skeleton.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+library(tint)
+# handle spatial data
+library(sf)
+library(spdep)
+# manipulate data
+library(tidyverse)
+# sentiment analysis
+library(vader)
+# create maps
+library(tmap)
+# nice colour schemes
+library(viridis) 
+library(viridisLite)
+# invalidate cache when the package version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('tint'), class.source = "col-source")
+options(htmltools.dir.version = FALSE)
+```
+
+
+```{css, echo=FALSE}
+.col-source {
+  background-color: #E5E7E9;
+  border: 3px #000000;
+}
+```
+
+```{marginfigure}
+[**Back**](04-spatial-econometrics.html) \
+```
+
+This notebook contains the code to obtain sentiment analysis scores for a sample of tweets relating to public opinion on migration originated from the United Kingdom during January 1st to December 31st 2019.
+ 
+# Data
+```{r}
+df <- read_csv("./data/uk_geo_tweets_01012019_31012019.csv")
+head(df)
+```
+
+# Compute sentiment scores
+
+```{r, warning=FALSE}
+vader_sentiment <- vader_df(df$text)
+```
+# Output
+
+```{r}
+final_df <- cbind(df$tweet_id, df$created_at, df$place_name, df$full_place_name, df$lat, df$long, df$exact_coords, df$place_type, df$country_code, df$username, vader_sentiment) %>% 
+  rename( 
+    tweet_id = "df$tweet_id",
+    created_at = "df$created_at", 
+    place_name = "df$place_name", 
+    full_place_name = "df$full_place_name", 
+    lat = "df$long",
+    long = "df$lat",
+    exact_coords = "df$exact_coords",
+    place_type = "df$place_type", 
+    country_code = "df$country_code", 
+    username = "df$username"
+  )
+
+```
+
+
+# Save
+```{r}
+write_csv(final_df, "./data/uk-sentiment-data.csv")
+```
+
+ 
