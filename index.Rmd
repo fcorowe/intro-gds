@@ -31,15 +31,6 @@ The workshop is structured as follows:
 * [**Spatial weights**](03-spatial_weights.html)  
 * [**Spatial autocorrelation**]()  
 
-# Philosophy
-
-* Focus on **methods** and tools
-  - General overview
-  - Intuition
-  - Very little math 
-  - Opportunities to continue on your own
-* Emphasis on the **application** and **use**
-* Focus on **real-world** applications
 
 # Resources
 
@@ -51,60 +42,21 @@ You need the most recent version of R and packages. These can be installed follo
 
 ## Dependency list
 
-The list of libraries that we will use is provided below. If you have followed the instructions provided in our [R installation guide](https://gdsl-ul.github.io/r_install/) and will be using Docker, you can relax and these libraries have already been installed for you. 
+Ensure you have installed the list of libraries used:
 
-If you have `natively` installed *R* and *RStudio*, you need to ensure you have installed the list of libraries used in this book following the steps provided [here](https://gdsl-ul.github.io/r_install/otherWin.html#install-packages).
-
-* `arm`
-* `car`
-* `corrplot`
-* `FRK`
-* `gghighlight`
-* `ggplot2`
-* `ggpubr`
-* `ggmap`
-* `GISTools`
-* `gridExtra`
-* `gstat`
-* `jtools`
-* `kableExtra`
 * `knitr`
-* `lme4`
-* `lmtest`
-* `lubridate`
-* `MASS`
-* `merTools`
-* `plyr`
-* `RColorBrewer`
+* `leaflet`
 * `rgdal`
 * `sf`
-* `sjPlot`
 * `sp`
-* `spgwr`
-* `spatialreg`
-* `spacetime`
-* `stargazer`
+* `spdep`
 * `tidyverse`
 * `tint`
 * `tmap`
 * `viridis`
+* `viridisLite`
 
 
-You can get the materials from this course as a [download](https://github.com/fcorowe/udd_gds_course/archive/refs/heads/main.zip) of a .zip file or by going directly to the [GitHub repository](https://github.com/fcorowe/udd_gds_course).
+You can get the materials from this course as a [download](https://github.com/fcorowe/intro-gds/archive/refs/heads/main.zip) of a .zip file or by going directly to the [GitHub repository](https://github.com/fcorowe/intro-gds).
 
 
-
-
-
-```{r eval=FALSE, include=FALSE}
-file.edit(
-  tint:::template_resources(
-    'tint', '..', 'skeleton', 'skeleton.Rmd'
-  )
-)
-```
-
-```{r bib, include=FALSE}
-# create a bib file for the R packages used in this document
-knitr::write_bib(c('base', 'rmarkdown'), file = 'skeleton.bib')
-```
