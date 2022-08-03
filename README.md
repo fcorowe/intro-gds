@@ -32,6 +32,6 @@ If you use the material, code or processed data, you can give appropriate attrib
   title = {Introduction to Geographic Data Science},
   year = 2022,
   url = {fcorowe.github.io/intro-gds/},
-  doi = {forthcoming},
+  doi = {https://doi.org/10.17605/OSF.IO/VHY2P},
 }
 ```
